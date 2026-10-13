@@ -1,0 +1,43 @@
+# Cấu hình Lexo (mục 6, 7.7 của kế hoạch v2).
+# KHÔNG đặt API key ở đây — key nằm trong .env (xem .env.example).
+# Các ô để trống "" là quyết định còn mở, chốt khi tới bước tương ứng.
+
+paths:
+  raw: raw
+  inbox: inbox
+  db: db/luat.sqlite
+  index: db/chi_muc.sqlite       # chỉ mục tìm kiếm (FTS5 + vector), dẫn xuất, dựng lại được
+
+# Văn bản mà dự án ÁP DỤNG sửa đổi (Bước 2). Lệnh nhắm văn bản khác chỉ được ghi nhận, không áp.
+pham_vi_sua_doi:
+  van_ban: ["100/2015/QH13"]
+  ten_goi:                        # tên viết thường -> số hiệu, dùng khi câu lệnh không nêu số hiệu
+    "bộ luật hình sự": "100/2015/QH13"
+
+# Đọc hiểu văn bản sửa đổi qua API (Bước 2) — mục 4, 16.1 của kế hoạch
+llm_extract:
+  provider: ""                    # chọn API cụ thể (mục 16.1)
+  model: ""                       # tên + phiên bản mô hình, ghi vào lenh_sua_doi
+  endpoint: ""                    # để trống nếu dùng endpoint mặc định của nhà cung cấp
+  api_key_env: LEXO_LLM_API_KEY   # tên biến trong .env chứa key
+  temperature: 0
+
+# LLM local qua Ollama — agent (Bước 6) và phương án thay thế cho trích xuất
+llm_local:
+  endpoint: http://localhost:11434
+  agent_model: ""                 # cỡ nhỏ 1.7B–4B; kiểm tra tên chính xác trên Ollama trước khi điền
+  extract_model: qwen3:8b         # Qwen3-8B (đã chọn); cũng là model viết câu hỏi sinh sẵn (scripts/sinh_cau_hoi.py)
+  think: false                    # tắt thinking khi trích xuất JSON, nếu không parse JSON sẽ hỏng
+
+embedding:
+  model: BAAI/bge-m3              # mặc định; chọn lại sau khi đo Recall@k (Bước 5)
+  device: cpu
+  query_prefix: ""                # e5 cần "query: " / "passage: "; bge-m3 không cần
+  passage_prefix: ""
+  provider: ollama                # Bước 4 dùng Ollama (không cần cài torch)
+  ollama_model: bge-m3            # tên trong Ollama; chạy: ollama pull bge-m3
+  batch_size: 16
+
+vector_store:
+  backend: numpy                  # Bước 4: quét chính xác bằng numpy (~6 nghìn vector, đủ nhanh). Vector lưu dạng BLOB float32
+                                  # tương thích sqlite-vec, nên chuyển sang sqlite-vec sau này không phải tính lại.

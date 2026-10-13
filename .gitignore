@@ -1,0 +1,27 @@
+# Bí mật — KHÔNG commit
+.env
+.env.*
+!.env.example
+
+# Dữ liệu (nặng, nạp lại được từ nguồn)
+/raw/
+/db/
+/models/
+/inbox/*
+!/inbox/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+*.egg-info/
+
+# Công cụ
+.vscode/
+.idea/
+
+# Bản xuất dẫn xuất (dựng lại được từ CSDL)
+/xuat/

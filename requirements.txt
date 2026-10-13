@@ -1,0 +1,10 @@
+
+PyYAML==6.0.3
+python-dotenv==1.2.3
+python-docx==1.2.0
+pypdf==6.19.0
+pdfplumber==0.11.10
+streamlit==1.64.0
+pytest==9.1.1
+numpy==2.2.6
+# Tùy chọn, chỉ cho thí nghiệm xếp lại top-N bằng bge-reranker (scripts/thu_xep_lai.py): pip install onnxruntime tokenizers

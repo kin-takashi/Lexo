@@ -1,0 +1,3429 @@
+{
+ "phien_ban": 1,
+ "ghi_chu": "MỘT file nguồn duy nhất cho mọi câu hỏi đánh giá (gom từ cau_hoi_dev.json, cau_hoi_dev2.json, cau_hoi_thu.json ngày 2026-10-13, giữ nguyên chữ và id). Chia tập bằng trường `tap`; quy ước các trường xem src/index/bo_cau_hoi.py. Sửa nhãn / thêm câu: chỉ sửa file này rồi chạy python scripts/kiem_tra_bo_cau_hoi.py. Tập xac_nhan, kiem_tra và phu chỉ chạy với tham số đã chốt, không quét, không chỉnh theo kết quả. Mọi câu hiện có do Claude soạn (nguon = claude); câu do bạn tự viết hoặc lấy từ bản án thật nên ghi nguon = nguoi_dung / ban_an để báo cáo riêng.",
+ "mo_ta_tap": {
+  "dev": "Tập DEV (chỉnh tham số / chẩn đoán), soạn nháp bởi Claude 2026-10-07, CHƯA được người dùng duyệt (trang_thai = nhap). Tách khỏi tập kiểm tra eval/cau_hoi_thu.json: không dùng để sinh câu hỏi cho LLM; đáp án nằm ở các Điều khác tập kiểm tra. Lưu ý: cùng một người soạn với tập kiểm tra và nhiều câu bám sát tên tội nên dễ hơn thực tế; nhờ người khác viết thêm sẽ tốt hơn.",
+  "xac_nhan": "Bộ dev2 (độc lập): 70 câu, mỗi câu một Điều, các Điều KHÔNG nằm trong đáp án của bộ dev lẫn bộ kiểm tra. Dùng để xác nhận độc lập cấu hình chọn trên bộ dev (xếp lại top 5 bằng Qwen3-8B, w = 0.25). Chưa duyệt nhãn (Claude soạn nháp). Không dùng để chỉnh tham số; không đưa nội dung câu vào lời nhắc của bất kỳ bộ sinh nào.",
+  "kiem_tra": "Soạn nháp bởi Claude, người dùng (Kintakashi) đã xem eval/xem_duyet.md và xác nhận ổn (2026-10-07). Tập KIỂM TRA: không được dùng để sinh dữ liệu hay chỉnh tham số theo từng câu.",
+  "phu": "Tập PHỦ NỐT: 112 câu, mỗi câu một Điều về tội phạm chưa có câu nào ở ba tập dev / xac_nhan / kiem_tra, soạn nháp bởi Claude 2026-10-13, CHƯA được người dùng duyệt (trang_thai = nhap). Dùng để đo độ phủ trên toàn bộ luật (mọi Điều về tội phạm có ít nhất một câu), không để chỉnh tham số. Lưu ý: các Điều anh em gần như trùng nghĩa (263/264, 270/271, 275/276, 138/139, 148/149, 411/412, 404/406...) chỉ khác nhau ở một động từ, nên nhãn dễ lệch; cần người duyệt."
+ },
+ "cau_hoi": [
+  {
+   "id": "d01",
+   "cau_hoi": "ép vợ hoặc chồng phải ly hôn, hoặc cấm không cho hai người yêu nhau cưới nhau",
+   "dieu": [
+    "181"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d02",
+   "cau_hoi": "cha mẹ đánh đập, hành hạ con cái thường xuyên",
+   "dieu": [
+    "185"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d03",
+   "cau_hoi": "tổ chức cho hai đứa trẻ còn nhỏ tuổi cưới nhau",
+   "dieu": [
+    "183"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d04",
+   "cau_hoi": "thuê người đẻ thuê để kiếm tiền",
+   "dieu": [
+    "187"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d05",
+   "cau_hoi": "quảng cáo sai sự thật về sản phẩm để lừa khách mua",
+   "dieu": [
+    "197"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d06",
+   "cau_hoi": "bán thuốc giả cho bệnh nhân",
+   "dieu": [
+    "194"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d07",
+   "cau_hoi": "bán cám, thức ăn chăn nuôi giả cho nông dân",
+   "dieu": [
+    "195"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d08",
+   "cau_hoi": "mua bán hóa đơn khống để hợp thức chi phí",
+   "dieu": [
+    "203"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d09",
+   "cau_hoi": "dùng thông tin nội bộ của công ty để mua bán cổ phiếu kiếm lời",
+   "dieu": [
+    "210"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d10",
+   "cau_hoi": "tung tin và đẩy giá cổ phiếu lên xuống để thao túng thị trường",
+   "dieu": [
+    "211"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d11",
+   "cau_hoi": "khai man để hưởng trợ cấp thất nghiệp",
+   "dieu": [
+    "214"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d12",
+   "cau_hoi": "công ty cố tình không đóng bảo hiểm xã hội cho nhân viên",
+   "dieu": [
+    "216"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d13",
+   "cau_hoi": "sao chép bán sách và phần mềm lậu",
+   "dieu": [
+    "225"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d14",
+   "cau_hoi": "vứt chất thải độc hại ra môi trường bừa bãi",
+   "dieu": [
+    "236"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d15",
+   "cau_hoi": "dùng điện, thuốc nổ đánh bắt cá ở sông hồ",
+   "dieu": [
+    "242"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d16",
+   "cau_hoi": "trồng cần sa trong vườn nhà",
+   "dieu": [
+    "247"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d17",
+   "cau_hoi": "nấu ma túy đá tại nhà",
+   "dieu": [
+    "248"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d18",
+   "cau_hoi": "cướp ma túy của người khác",
+   "dieu": [
+    "252"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d19",
+   "cau_hoi": "ép buộc người khác phải hút chích ma túy",
+   "dieu": [
+    "257"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d20",
+   "cau_hoi": "rủ rê bạn bè dùng thử ma túy",
+   "dieu": [
+    "258"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d21",
+   "cau_hoi": "đặt vật cản ngang đường quốc lộ gây tai nạn",
+   "dieu": [
+    "261"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d22",
+   "cau_hoi": "giao xe ô tô cho người chưa có bằng lái chạy",
+   "dieu": [
+    "264"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d23",
+   "cau_hoi": "lái tàu thuyền chở khách vi phạm quy định gây chìm tàu",
+   "dieu": [
+    "272"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d24",
+   "cau_hoi": "mua bán thông tin tài khoản thẻ ngân hàng của người khác",
+   "dieu": [
+    "291"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d25",
+   "cau_hoi": "tấn công làm sập website của công ty đối thủ",
+   "dieu": [
+    "287"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d26",
+   "cau_hoi": "bắt công nhân làm việc không cho nghỉ, đe dọa không cho bỏ đi",
+   "dieu": [
+    "297"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d27",
+   "cau_hoi": "thuê trẻ em dưới 16 tuổi làm việc nặng nhọc",
+   "dieu": [
+    "296"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d28",
+   "cau_hoi": "đặt bom giết nhiều người để gây hoảng loạn",
+   "dieu": [
+    "299"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d29",
+   "cau_hoi": "chuyển tiền giúp nhóm khủng bố hoạt động",
+   "dieu": [
+    "300"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d30",
+   "cau_hoi": "bắt giữ con tin để đòi chính quyền thả người",
+   "dieu": [
+    "301"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d31",
+   "cau_hoi": "tàng trữ thuốc nổ trái phép",
+   "dieu": [
+    "305"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d32",
+   "cau_hoi": "làm mất súng của đơn vị do không giữ gìn cẩn thận",
+   "dieu": [
+    "308"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d33",
+   "cau_hoi": "mở quán không đủ điều kiện phòng cháy chữa cháy gây cháy chết người",
+   "dieu": [
+    "313"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d34",
+   "cau_hoi": "phá thai trái phép ở phòng khám không có giấy phép",
+   "dieu": [
+    "316"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d35",
+   "cau_hoi": "đào mộ lấy hài cốt người khác",
+   "dieu": [
+    "319"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d36",
+   "cau_hoi": "xem bói, lên đồng để lừa tiền người nhẹ dạ",
+   "dieu": [
+    "320"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d37",
+   "cau_hoi": "dụ dỗ trẻ em chưa đủ 18 tuổi đi trộm cắp",
+   "dieu": [
+    "325"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d38",
+   "cau_hoi": "lan truyền phim và ảnh sex trên mạng",
+   "dieu": [
+    "326"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d39",
+   "cau_hoi": "môi giới cho khách mua dâm",
+   "dieu": [
+    "328"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d40",
+   "cau_hoi": "mua dâm trẻ vị thành niên",
+   "dieu": [
+    "329"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d41",
+   "cau_hoi": "ngăn cản thanh niên đi nghĩa vụ quân sự",
+   "dieu": [
+    "335"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d42",
+   "cau_hoi": "mạo danh cán bộ có chức vụ để lừa người khác",
+   "dieu": [
+    "339"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d43",
+   "cau_hoi": "sửa chữa giấy chứng nhận do cơ quan nhà nước cấp rồi đem dùng",
+   "dieu": [
+    "340"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d44",
+   "cau_hoi": "ở lại Việt Nam quá hạn thị thực",
+   "dieu": [
+    "347"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d45",
+   "cau_hoi": "môi giới đưa người trốn sang nước ngoài trái phép",
+   "dieu": [
+    "349"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d46",
+   "cau_hoi": "đốt cờ tổ quốc để xúc phạm",
+   "dieu": [
+    "351"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d47",
+   "cau_hoi": "quan chức lợi dụng chức quyền để chiếm đoạt tài sản",
+   "dieu": [
+    "355"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d48",
+   "cau_hoi": "cán bộ làm giả giấy tờ trong công tác để trục lợi",
+   "dieu": [
+    "359"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d49",
+   "cau_hoi": "đưa tiền cho công an để khỏi bị phạt",
+   "dieu": [
+    "364"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d50",
+   "cau_hoi": "làm trung gian chuyển tiền hối lộ cho quan chức",
+   "dieu": [
+    "365"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d51",
+   "cau_hoi": "thẩm phán cố tình ra bản án sai trái pháp luật",
+   "dieu": [
+    "370"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d52",
+   "cau_hoi": "điều tra viên đánh đập nghi phạm để ép khai nhận",
+   "dieu": [
+    "373",
+    "374"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d53",
+   "cau_hoi": "người bị kết án cố tình không chấp hành bản án",
+   "dieu": [
+    "380"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d54",
+   "cau_hoi": "làm chứng gian dối trước tòa",
+   "dieu": [
+    "382"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d55",
+   "cau_hoi": "phạm nhân trốn khỏi trại giam",
+   "dieu": [
+    "386"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d56",
+   "cau_hoi": "giấu người phạm tội để họ không bị bắt",
+   "dieu": [
+    "389"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d57",
+   "cau_hoi": "biết có người giết người mà không báo công an",
+   "dieu": [
+    "390"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d58",
+   "cau_hoi": "chửi thẩm phán và gây rối trong phiên tòa",
+   "dieu": [
+    "391"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d59",
+   "cau_hoi": "lính cãi lại mệnh lệnh của cấp trên",
+   "dieu": [
+    "394"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d60",
+   "cau_hoi": "quân nhân đánh đồng đội",
+   "dieu": [
+    "398"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d61",
+   "cau_hoi": "dùng chức vụ ép cấp dưới quan hệ tình dục",
+   "dieu": [
+    "143"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d62",
+   "cau_hoi": "quan hệ tình dục với bạn gái chưa đủ 16 tuổi dù hai bên đồng ý",
+   "dieu": [
+    "145"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d63",
+   "cau_hoi": "đánh người bị thương nặng vì bị chính họ khiêu khích chọc tức",
+   "dieu": [
+    "135"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d64",
+   "cau_hoi": "đánh chết người đột nhập vào nhà mình vượt quá mức cần thiết để tự vệ",
+   "dieu": [
+    "126"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d65",
+   "cau_hoi": "đối xử tàn tệ khiến người khác tự tử",
+   "dieu": [
+    "130"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d66",
+   "cau_hoi": "xúi giục bạn mình tự tử",
+   "dieu": [
+    "131"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d67",
+   "cau_hoi": "bắt cóc người để đòi tiền chuộc",
+   "dieu": [
+    "169"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d68",
+   "cau_hoi": "đe dọa tung ảnh nóng để buộc người ta đưa tiền",
+   "dieu": [
+    "170"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d69",
+   "cau_hoi": "lợi dụng chủ sơ hở lấy tài sản ngay trước mặt rồi bỏ đi",
+   "dieu": [
+    "172"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d70",
+   "cau_hoi": "vô ý làm cháy nhà hàng xóm thiệt hại lớn",
+   "dieu": [
+    "180"
+   ],
+   "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e01",
+   "cau_hoi": "Một công dân Việt Nam bắt tay với phía nước ngoài để làm hại độc lập, chủ quyền và chế độ của đất nước thì bị xử phạt như thế nào?",
+   "dieu": [
+    "108"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e02",
+   "cau_hoi": "Người Việt nhận tiền của cơ quan tình báo nước ngoài để thu thập tin tức mật rồi chuyển ra ngoài thì chịu hình phạt gì?",
+   "dieu": [
+    "110"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e03",
+   "cau_hoi": "Một nhóm người tấn công, giết cán bộ xã và đốt phá trụ sở với mục đích chống lại chính quyền nhân dân thì bị phạt nặng mức nào?",
+   "dieu": [
+    "113"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e04",
+   "cau_hoi": "Cố tình cản phá việc áp dụng các chính sách của Nhà nước về phát triển kinh tế và đời sống người dân, nhằm chống lại chính quyền, thì ngồi tù bao lâu?",
+   "dieu": [
+    "115"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e05",
+   "cau_hoi": "Một nhóm người tổ chức cho tù nhân vượt ngục và đập phá trại giam để chống lại chính quyền thì bị xử lý thế nào?",
+   "dieu": [
+    "119"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e06",
+   "cau_hoi": "Bị chồng đánh đập dã man nhiều năm, một lần quá uất ức mất kiểm soát nên tôi đâm chết anh ta, vậy án phạt có nhẹ hơn giết người bình thường không?",
+   "dieu": [
+    "125"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e07",
+   "cau_hoi": "Bác sĩ làm sai quy trình chuyên môn khiến bệnh nhân tử vong ngoài ý muốn thì có bị đi tù không?",
+   "dieu": [
+    "129"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e08",
+   "cau_hoi": "Lúc chơi đùa tôi sơ ý làm bạn ngã gãy tay, tỷ lệ thương tật 40%, thì có bị xử lý hình sự không hay chỉ phải đền bù?",
+   "dieu": [
+    "138"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e09",
+   "cau_hoi": "Chủ nhà đối xử tàn nhẫn, chửi bới làm nhục người ăn nhờ ở đậu phụ thuộc vào mình thì bị xử lý ra sao?",
+   "dieu": [
+    "140"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e10",
+   "cau_hoi": "Người lớn dụ dỗ, ép một em 14 tuổi trình diễn khiêu dâm trước mặt mình thì bị xử như thế nào?",
+   "dieu": [
+    "147"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e11",
+   "cau_hoi": "Nhân viên nhà hộ sinh cố tình tráo đổi em bé mới sinh với em bé khác thì bị phạt tù bao lâu?",
+   "dieu": [
+    "152"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e12",
+   "cau_hoi": "Có đường dây mua bán thận của người nghèo để bán lại cho bệnh nhân cần ghép thì bị xử tù mấy năm?",
+   "dieu": [
+    "154"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e13",
+   "cau_hoi": "Người phụ trách kiểm phiếu cố ý gian lận, sửa phiếu để người khác trúng cử thì bị xử lý thế nào?",
+   "dieu": [
+    "161"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e14",
+   "cau_hoi": "Có người dùng vũ lực ngăn cản dân thành lập hội hoặc họp mặt hợp pháp, trước đó từng bị phạt hành chính, thì bị xử lý ra sao?",
+   "dieu": [
+    "163"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e15",
+   "cau_hoi": "Lãnh đạo cơ quan giữ đơn, trả thù người dân đã gửi đơn tố cáo mình thì bị xử lý như thế nào?",
+   "dieu": [
+    "166"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e16",
+   "cau_hoi": "Hai anh em ruột cùng cha cùng mẹ quan hệ tình dục với nhau thì có bị đi tù không?",
+   "dieu": [
+    "184"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e17",
+   "cau_hoi": "Mở xưởng làm và bán loại hàng hóa mà Nhà nước cấm kinh doanh thì bị phạt tiền hay phạt tù?",
+   "dieu": [
+    "190"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e18",
+   "cau_hoi": "Lợi dụng dịch bệnh, tôi gom mua vét hàng thuộc diện bình ổn giá để chờ khan hiếm bán lại giá cao thì bị xử lý thế nào?",
+   "dieu": [
+    "196"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e19",
+   "cau_hoi": "Nhân viên điện lực cố ý cắt điện, từ chối cấp điện trái quy định gây thiệt hại cho dân thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "199"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e20",
+   "cau_hoi": "Giám đốc sở lợi dụng chức vụ tự lập quỹ riêng ngoài quy định rồi tiêu, gây thiệt hại cho tài sản Nhà nước, thì bị xử lý ra sao?",
+   "dieu": [
+    "205"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e21",
+   "cau_hoi": "Lãnh đạo công ty niêm yết cố tình báo cáo sai sự thật về lợi nhuận, giấu thông tin quan trọng khi chào bán cổ phiếu ra công chúng thì bị xử lý thế nào?",
+   "dieu": [
+    "209"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e22",
+   "cau_hoi": "Tôi làm giả hồ sơ tai nạn để đòi công ty bảo hiểm trả 50 triệu đồng tiền bồi thường thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "213"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e23",
+   "cau_hoi": "Cán bộ được giao quản lý xe công và tài sản của cơ quan nhưng làm sai chế độ để hư hỏng, mất mát 150 triệu thì có bị truy cứu không?",
+   "dieu": [
+    "219"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e24",
+   "cau_hoi": "Kế toán trưởng lợi dụng chức vụ làm sai quy định về sổ sách kế toán khiến Nhà nước thiệt hại 200 triệu thì bị xử lý ra sao?",
+   "dieu": [
+    "221"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e25",
+   "cau_hoi": "Chủ đầu tư lợi dụng quyền hạn duyệt dự án, chọn nhà thầu sai quy định khiến Nhà nước mất 200 triệu thì có bị xử lý hình sự không?",
+   "dieu": [
+    "224"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e26",
+   "cau_hoi": "Tôi nhiều lần lấn chiếm đất công, đã bị phạt hành chính mà vẫn tái phạm thì có bị đi tù không?",
+   "dieu": [
+    "228"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e27",
+   "cau_hoi": "Cán bộ lợi dụng chức vụ làm sai khi tính tiền đền bù, bố trí chỗ ở mới cho dân bị thu hồi đất, gây thiệt hại, thì bị xử lý thế nào?",
+   "dieu": [
+    "230"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e28",
+   "cau_hoi": "Xí nghiệp để xảy ra sự cố tràn hóa chất nhưng không lập phương án phòng ngừa, không tổ chức xử lý hậu quả, thì chủ xí nghiệp có phải đi tù không?",
+   "dieu": [
+    "237"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e29",
+   "cau_hoi": "Công ty nhập lén container rác thải từ nước ngoài vào Việt Nam trái phép thì bị phạt thế nào?",
+   "dieu": [
+    "239"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e30",
+   "cau_hoi": "Tôi mang cá nước ngoài về thả ra sông hồ khiến chúng sinh sôi gây hại cho hệ sinh thái bản địa thì có vi phạm hình sự không?",
+   "dieu": [
+    "246"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e31",
+   "cau_hoi": "Tôi dùng ma túy để tự sử dụng, trước đó đã bị phạt hành chính mà vẫn tái phạm thì có bị đi tù không?",
+   "dieu": [
+    "256a"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e32",
+   "cau_hoi": "Quản lý đội xe cho phép chiếc xe tải phanh hỏng chạy ra đường dù biết không đạt chuẩn an toàn, gây tai nạn làm người khác bị thương thì bị xử lý ra sao?",
+   "dieu": [
+    "262"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e33",
+   "cau_hoi": "Có người đặt khúc gỗ chắn ngang đường ray và tháo ốc ray gây nguy hiểm cho tàu hỏa thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "268"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e34",
+   "cau_hoi": "Lãnh đạo bố trí lái tàu hỏa chưa có giấy phép lái tàu, hoặc đã uống rượu bia, lên điều khiển tàu thì bị xử lý ra sao?",
+   "dieu": [
+    "270"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e35",
+   "cau_hoi": "Chủ bến đò cho phép chiếc đò đã mục nát, không đạt chuẩn kỹ thuật chở khách qua sông, gây chết người thì bị xử lý thế nào?",
+   "dieu": [
+    "274"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e36",
+   "cau_hoi": "Phi công lái máy bay vi phạm quy định về an toàn bay, có khả năng gây thiệt hại nghiêm trọng, thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "277"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e37",
+   "cau_hoi": "Giám đốc kỹ thuật hãng bay biết rõ máy bay chưa đạt chuẩn an toàn kỹ thuật nhưng vẫn cho đưa vào khai thác thì bị xử lý ra sao?",
+   "dieu": [
+    "279"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e38",
+   "cau_hoi": "Nhóm người dùng dao khống chế phi hành đoàn để cướp máy bay hoặc cướp tàu biển thì bị phạt thế nào?",
+   "dieu": [
+    "282"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e39",
+   "cau_hoi": "Thuyền trưởng lái tàu biển đi qua lãnh hải Việt Nam nhưng cố tình làm trái các quy định hàng hải thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "284"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e40",
+   "cau_hoi": "Công ty tôi dùng bộ đàm phát trên băng tần dành riêng cho lực lượng cấp cứu và quốc phòng để phục vụ kinh doanh, gây thiệt hại vài trăm triệu, thì bị xử lý sao?",
+   "dieu": [
+    "293"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e41",
+   "cau_hoi": "Nhà thầu thi công dùng vật liệu kém chất lượng làm sập công trình khiến người bị thương thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "298"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e42",
+   "cau_hoi": "Người cố ý đánh sập trạm điện, cầu và công trình thủy lợi quan trọng của quốc gia thì bị phạt tù bao lâu?",
+   "dieu": [
+    "303"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e43",
+   "cau_hoi": "Một người lén lút bán nguồn phóng xạ lấy từ bệnh viện, hoặc cất giữ uranium trái phép, thì bị xử lý thế nào?",
+   "dieu": [
+    "309"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e44",
+   "cau_hoi": "Cất giữ trong nhà và đem bán lén xăng, hóa chất độc hại thì có bị phạt tù không?",
+   "dieu": [
+    "311"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e45",
+   "cau_hoi": "Người mở phòng khám, tự pha chế và bán thuốc không đúng quy định chuyên môn, làm bệnh nhân bị ngộ độc nặng thì bị xử lý ra sao?",
+   "dieu": [
+    "315"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e46",
+   "cau_hoi": "Cán bộ ban chỉ huy quân sự xã lợi dụng chức quyền, làm sai việc đăng ký và gọi thanh niên đi lính, thì bị xử lý thế nào?",
+   "dieu": [
+    "334"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e47",
+   "cau_hoi": "Nhân viên cố tình tiết lộ thông tin thuộc danh mục mật của quốc gia ra ngoài, hoặc lấy cắp rồi bán hồ sơ mật đó thì bị xử lý thế nào?",
+   "dieu": [
+    "337"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e48",
+   "cau_hoi": "Tôi chiếm dụng căn hộ không phải của mình để ở và xây nhà trái phép, trước đó đã bị phạt hành chính, thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "343"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e49",
+   "cau_hoi": "Đơn vị thi công trùng tu làm hư hại một ngôi đình cổ đã xếp hạng, thiệt hại trên 100 triệu đồng, thì chịu trách nhiệm hình sự thế nào?",
+   "dieu": [
+    "345"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e50",
+   "cau_hoi": "Ép buộc người khác phải vượt biên sang nước ngoài hoặc cố ở lậu lại nước ngoài thì bị phạt tù mấy năm?",
+   "dieu": [
+    "350"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e51",
+   "cau_hoi": "Một cán bộ dùng uy thế chức vụ của mình tác động để cấp dưới làm một việc có lợi cho người đưa tiền, rồi nhận lợi ích, thì bị truy cứu hình sự không?",
+   "dieu": [
+    "358"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e52",
+   "cau_hoi": "Cán bộ cố ý để lộ thông tin nội bộ của cơ quan thuộc diện mật nhưng chưa tới mức bí mật nhà nước, hoặc đem bán tài liệu đó, thì bị xử lý ra sao?",
+   "dieu": [
+    "361"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e53",
+   "cau_hoi": "Tôi chỉ là người quen của giám đốc sở, nhận tiền của người ta để nhờ ông ấy giải quyết hồ sơ giúp, không phải cán bộ thì có phạm tội không?",
+   "dieu": [
+    "366"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e54",
+   "cau_hoi": "Thủ trưởng cơ quan điều tra biết rõ một người đã phạm tội nhưng cố tình không khởi tố, bỏ qua cho họ thì bị xử lý ra sao?",
+   "dieu": [
+    "369"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e55",
+   "cau_hoi": "Thư ký tòa án tự ý sửa, rút bớt tài liệu trong hồ sơ vụ án để người ta được xử nhẹ thì bị truy cứu thế nào?",
+   "dieu": [
+    "375"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e56",
+   "cau_hoi": "Cán bộ trại tạm giam tự ý thả người đang bị giam khi chưa có quyết định của người có thẩm quyền thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "378"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e57",
+   "cau_hoi": "Chấp hành viên cố ý trì hoãn khiến hết thời hiệu thi hành án, hoặc để người phải thi hành án bỏ trốn, thì bị xử lý sao?",
+   "dieu": [
+    "381"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e58",
+   "cau_hoi": "Người được giao giữ tài sản bị kê biên mà cố ý đem tiêu xài, bán hoặc cất giấu tài sản đó thì bị xử lý thế nào?",
+   "dieu": [
+    "385"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e59",
+   "cau_hoi": "Tôi lén đưa điện thoại vào trại giam cho người thân đang bị giam, trước đó đã bị xử phạt hành chính vì việc này, thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "388"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e60",
+   "cau_hoi": "Một quân nhân cản trở bạn cùng đơn vị làm nhiệm vụ khiến người đó không hoàn thành việc được giao thì bị xử lý ra sao?",
+   "dieu": [
+    "396"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e61",
+   "cau_hoi": "Chiến sĩ bị địch bắt giữ, sau đó khai ra bí mật quân sự hoặc đồng ý phục vụ cho phía địch thì bị xử lý thế nào?",
+   "dieu": [
+    "400"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e62",
+   "cau_hoi": "Chiến sĩ tự ý bỏ đơn vị để trốn nhiệm vụ trong thời chiến, hoặc từng bị kỷ luật vì việc này mà còn bỏ ngũ, thì bị xử sao?",
+   "dieu": [
+    "402"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e63",
+   "cau_hoi": "Sĩ quan lấy cắp rồi bán tài liệu mật của đơn vị quân đội, hoặc đốt hủy tài liệu đó, thì bị xử lý thế nào?",
+   "dieu": [
+    "405"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e64",
+   "cau_hoi": "Chiến sĩ sơ ý làm thất lạc tài liệu mật của đơn vị quân đội thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "407"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e65",
+   "cau_hoi": "Người được giao tuần tra, canh gác, hộ tống thủ trưởng mà làm trái quy định khiến người được hộ tống bị thương thì bị xử lý thế nào?",
+   "dieu": [
+    "410"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e66",
+   "cau_hoi": "Quân nhân cố tình đập phá, làm hỏng súng đạn và xe tăng của đơn vị thì bị phạt tù bao lâu?",
+   "dieu": [
+    "413"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e67",
+   "cau_hoi": "Bộ đội đóng quân thường xuyên nhũng nhiễu, làm phiền người dân quanh doanh trại, đã bị kỷ luật mà còn tái phạm, thì có bị xử lý hình sự không?",
+   "dieu": [
+    "415"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e68",
+   "cau_hoi": "Chiến sĩ lấy đồ dùng cá nhân của đồng đội đã hy sinh trên chiến trường làm của riêng thì bị xử lý thế nào?",
+   "dieu": [
+    "418"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e69",
+   "cau_hoi": "Quân nhân đánh đập, đối xử tàn tệ với tù binh và những người đã ra đầu hàng thì chịu trách nhiệm hình sự gì?",
+   "dieu": [
+    "420"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e70",
+   "cau_hoi": "Chỉ huy trong chiến tranh ra lệnh giết thường dân, cướp phá và tàn phá làng mạc thì bị xử ra sao? Nếu do cấp trên ép buộc thì sao?",
+   "dieu": [
+    "423"
+   ],
+   "loai": "don",
+   "tap": "xac_nhan",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "q01",
+   "cau_hoi": "lén lấy xe máy của hàng xóm bị phạt sao",
+   "dieu": [
+    "173"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q02",
+   "cau_hoi": "giật điện thoại của người đi đường rồi chạy xe bỏ chạy",
+   "dieu": [
+    "171"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q03",
+   "cau_hoi": "cầm dao dọa đâm để lấy tiền người ta",
+   "dieu": [
+    "168"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q04",
+   "cau_hoi": "gạt người khác đưa tiền đầu tư rồi biến mất luôn",
+   "dieu": [
+    "174"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q05",
+   "cau_hoi": "mượn tiền rồi bỏ trốn không chịu trả",
+   "dieu": [
+    "174",
+    "175"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q06",
+   "cau_hoi": "nhặt được điện thoại người khác đánh rơi nhưng không trả lại",
+   "dieu": [
+    "176"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q07",
+   "cau_hoi": "đánh người ta nhập viện, tỷ lệ thương tật cao",
+   "dieu": [
+    "134"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q08",
+   "cau_hoi": "cãi nhau rồi cầm dao đâm chết người",
+   "dieu": [
+    "123"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q09",
+   "cau_hoi": "uống rượu lái xe gây tai nạn làm chết người",
+   "dieu": [
+    "260"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q10",
+   "cau_hoi": "chạy xe máy đua với nhau trên đường phố",
+   "dieu": [
+    "266"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q11",
+   "cau_hoi": "tổ chức cho nhiều người đua xe để cá cược",
+   "dieu": [
+    "265"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q12",
+   "cau_hoi": "cất ma túy trong người để tự dùng",
+   "dieu": [
+    "249"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q13",
+   "cau_hoi": "bán ma túy cho người khác",
+   "dieu": [
+    "251"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q14",
+   "cau_hoi": "chở thuê ma túy từ tỉnh này sang tỉnh khác",
+   "dieu": [
+    "250"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q15",
+   "cau_hoi": "đánh bạc ăn tiền bằng bài hoặc cá độ",
+   "dieu": [
+    "321"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q16",
+   "cau_hoi": "mở sòng bạc, chủ chứa cho người khác tới đánh bạc",
+   "dieu": [
+    "322"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q17",
+   "cau_hoi": "cán bộ nhận tiền của dân để giải quyết hồ sơ",
+   "dieu": [
+    "354"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q18",
+   "cau_hoi": "cán bộ lấy tiền công quỹ bỏ vào túi riêng",
+   "dieu": [
+    "353"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q19",
+   "cau_hoi": "đăng bài chửi bới bôi nhọ danh dự người khác trên mạng",
+   "dieu": [
+    "155",
+    "156"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q20",
+   "cau_hoi": "bịa chuyện nói xấu người khác để hại họ",
+   "dieu": [
+    "156"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q21",
+   "cau_hoi": "hack vào máy tính người khác để lấy dữ liệu",
+   "dieu": [
+    "289"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q22",
+   "cau_hoi": "tạo và phát tán virus, mã độc cho máy tính",
+   "dieu": [
+    "286"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q23",
+   "cau_hoi": "dùng mạng internet lừa đảo lấy tiền",
+   "dieu": [
+    "290"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q24",
+   "cau_hoi": "làm giả con dấu và giấy tờ của cơ quan nhà nước",
+   "dieu": [
+    "341"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q25",
+   "cau_hoi": "sản xuất và bán hàng giả",
+   "dieu": [
+    "192"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q26",
+   "cau_hoi": "bán thực phẩm bẩn không đảm bảo vệ sinh an toàn",
+   "dieu": [
+    "317"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q27",
+   "cau_hoi": "xả nước thải ra sông gây ô nhiễm",
+   "dieu": [
+    "235"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q28",
+   "cau_hoi": "chặt phá rừng trái phép lấy gỗ",
+   "dieu": [
+    "232",
+    "243"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q29",
+   "cau_hoi": "buôn bán động vật hoang dã quý hiếm",
+   "dieu": [
+    "234",
+    "244"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q30",
+   "cau_hoi": "công ty cố ý khai thiếu để không đóng thuế",
+   "dieu": [
+    "200"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q31",
+   "cau_hoi": "cho vay nặng lãi lấy lãi cao",
+   "dieu": [
+    "201"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q32",
+   "cau_hoi": "hợp thức hóa tiền do phạm tội mà có thông qua ngân hàng",
+   "dieu": [
+    "324"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q33",
+   "cau_hoi": "mua lại đồ ăn trộm dù biết là của gian",
+   "dieu": [
+    "323"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q34",
+   "cau_hoi": "ly hôn rồi không chịu đóng tiền nuôi con",
+   "dieu": [
+    "186"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q35",
+   "cau_hoi": "đang có vợ mà đi lấy vợ khác",
+   "dieu": [
+    "182"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q36",
+   "cau_hoi": "cưỡng ép quan hệ tình dục trái ý muốn",
+   "dieu": [
+    "141"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q37",
+   "cau_hoi": "sờ soạng, dâm ô với trẻ em",
+   "dieu": [
+    "146"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q38",
+   "cau_hoi": "bán phụ nữ và trẻ em ra nước ngoài",
+   "dieu": [
+    "150",
+    "151"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q39",
+   "cau_hoi": "nhắn tin dọa giết người khác",
+   "dieu": [
+    "133"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q40",
+   "cau_hoi": "bắt giữ người trái pháp luật nhốt trong nhà",
+   "dieu": [
+    "157"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q41",
+   "cau_hoi": "tự ý xông vào nhà người khác khi chủ nhà không đồng ý",
+   "dieu": [
+    "158"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q42",
+   "cau_hoi": "đập phá, đốt xe của người khác cho hư hỏng",
+   "dieu": [
+    "178"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q43",
+   "cau_hoi": "đánh nhau gây náo loạn nơi công cộng",
+   "dieu": [
+    "318"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q44",
+   "cau_hoi": "chửi bới, đánh công an đang làm nhiệm vụ",
+   "dieu": [
+    "330"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q45",
+   "cau_hoi": "trốn không đi nghĩa vụ quân sự",
+   "dieu": [
+    "332"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q46",
+   "cau_hoi": "cất giữ súng quân dụng trái phép",
+   "dieu": [
+    "304"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q47",
+   "cau_hoi": "buôn lậu hàng hóa qua biên giới",
+   "dieu": [
+    "188"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q48",
+   "cau_hoi": "làm giả hồ sơ để trục lợi bảo hiểm y tế",
+   "dieu": [
+    "215"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q49",
+   "cau_hoi": "in tiền giả đem tiêu",
+   "dieu": [
+    "207"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q50",
+   "cau_hoi": "thấy người gặp nạn mà không cứu giúp",
+   "dieu": [
+    "132"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q51",
+   "cau_hoi": "sơ ý làm người khác chết",
+   "dieu": [
+    "128"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q52",
+   "cau_hoi": "sinh con ra rồi vứt bỏ làm cháu chết",
+   "dieu": [
+    "124"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q53",
+   "cau_hoi": "cố tình làm lây lan dịch bệnh nguy hiểm ra cộng đồng",
+   "dieu": [
+    "240"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q54",
+   "cau_hoi": "mở nhà chứa gái mại dâm",
+   "dieu": [
+    "327"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q55",
+   "cau_hoi": "kinh doanh đa cấp bất hợp pháp lôi kéo người tham gia",
+   "dieu": [
+    "217a"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q56",
+   "cau_hoi": "đăng tin sai sự thật chống phá nhà nước",
+   "dieu": [
+    "117"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q57",
+   "cau_hoi": "cho nhiều người đến nhà mình sử dụng ma túy",
+   "dieu": [
+    "255",
+    "256"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q58",
+   "cau_hoi": "cán bộ thiếu trách nhiệm làm thất thoát tài sản nhà nước",
+   "dieu": [
+    "179"
+   ],
+   "loai": "don",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "p001",
+   "cau_hoi": "Một nhóm người lập tổ chức bí mật, rủ thêm người tham gia để tìm cách lật đổ chính quyền hiện hành thì kẻ cầm đầu bị phạt thế nào?",
+   "dieu": [
+    "109"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p002",
+   "cau_hoi": "Có người cố tình làm sai lệch đường biên giới quốc gia, dời mốc và chiếm giữ phần đất của Việt Nam thì kẻ chủ mưu bị xử mức nào?",
+   "dieu": [
+    "111"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p003",
+   "cau_hoi": "Một đám đông cầm vũ khí xông vào chiếm trụ sở ủy ban, bắt giữ cán bộ nhằm lật chính quyền thì người cầm đầu bị xử ra sao?",
+   "dieu": [
+    "112"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p004",
+   "cau_hoi": "Nhóm người cố ý đánh sập một nhà máy điện lớn và phá hỏng các kho hàng của Nhà nước để gây rối loạn kinh tế, chống lại chính quyền thì bị phạt thế nào?",
+   "dieu": [
+    "114"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p005",
+   "cau_hoi": "Có người tung tin xuyên tạc kích động hằn thù giữa dân tộc này với dân tộc khác, chia rẽ người có đạo với người không có đạo nhằm chống chính quyền thì bị xử lý ra sao?",
+   "dieu": [
+    "116"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p006",
+   "cau_hoi": "Một nhóm người rủ rê, tụ tập đông người ném đá vào lực lượng đang làm nhiệm vụ để gây rối an ninh, chống chính quyền nhưng không có vũ khí cướp chính quyền thì bị xử tội gì?",
+   "dieu": [
+    "118"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p007",
+   "cau_hoi": "Người đứng ra tổ chức, ép buộc và xúi giục người khác bỏ trốn sang nước ngoài để chống phá chính quyền thì bị phạt tù bao lâu?",
+   "dieu": [
+    "120"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p008",
+   "cau_hoi": "Một người tự mình bỏ trốn ra nước ngoài rồi ở lại đó để hoạt động chống lại chính quyền thì bị phạt bao nhiêu năm tù?",
+   "dieu": [
+    "121"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p009",
+   "cau_hoi": "Công an dùng vũ lực vượt quá mức pháp luật cho phép khi bắt người khiến người bị bắt tử vong thì bị xử như thế nào?",
+   "dieu": [
+    "127"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p010",
+   "cau_hoi": "Bị người lạ xông vào đánh, tôi chống trả quá tay làm họ bị thương nặng, tỷ lệ tổn thương khoảng 45%, thì có phải chịu trách nhiệm hình sự không?",
+   "dieu": [
+    "136"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p011",
+   "cau_hoi": "Cán bộ đi làm nhiệm vụ nhưng dùng vũ lực sai quy định đánh người bị kiểm tra gãy xương, tỷ lệ thương tật 35%, thì bị xử ra sao?",
+   "dieu": [
+    "137"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p012",
+   "cau_hoi": "Bác sĩ làm sai quy trình chuyên môn khiến bệnh nhân bị liệt nửa người, tỷ lệ thương tật 50%, thì có bị xử lý hình sự không?",
+   "dieu": [
+    "139"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p013",
+   "cau_hoi": "Người lớn quan hệ tình dục với một bé gái 12 tuổi, dù bé không phản kháng, thì bị xử tội gì và mức phạt ra sao?",
+   "dieu": [
+    "142"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p014",
+   "cau_hoi": "Chú ruột lợi dụng cháu 14 tuổi đang sống nhờ nhà mình, đe dọa cắt tiền ăn học để bắt cháu miễn cưỡng quan hệ tình dục thì bị xử thế nào?",
+   "dieu": [
+    "144"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p015",
+   "cau_hoi": "Người biết mình nhiễm HIV nhưng vẫn cố tình quan hệ không biện pháp bảo vệ với bạn gái mà không nói, khiến cô ấy bị lây thì bị xử ra sao?",
+   "dieu": [
+    "148"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p016",
+   "cau_hoi": "Một người cố tình dùng kim tiêm dính máu nhiễm HIV đâm vào người khác để hại họ thì bị phạt tù bao lâu?",
+   "dieu": [
+    "149"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p017",
+   "cau_hoi": "Người phụ nữ bế một bé 3 tuổi của hàng xóm về giữ lại nuôi như con mình, không bán cho ai, thì bị xử thế nào?",
+   "dieu": [
+    "153"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p018",
+   "cau_hoi": "Chồng nhiều lần lén mở đọc tin nhắn và thư của vợ, trước đó đã bị phạt hành chính vì việc này mà vẫn tái phạm thì bị xử ra sao?",
+   "dieu": [
+    "159"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p019",
+   "cau_hoi": "Có người mua phiếu, lừa gạt và dọa nạt cử tri để họ không đi bầu hoặc bầu theo ý mình trong kỳ bầu cử đại biểu thì bị xử lý thế nào?",
+   "dieu": [
+    "160"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p020",
+   "cau_hoi": "Giám đốc vì tư thù cá nhân đe dọa ép một nhân viên phải nghỉ việc rồi sa thải trái luật, khiến cả gia đình người đó lâm vào khó khăn nghiêm trọng thì bị xử ra sao?",
+   "dieu": [
+    "162"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p021",
+   "cau_hoi": "Có người dùng vũ lực ngăn cản hàng xóm đi lễ nhà thờ, đã bị phạt hành chính vì việc này mà vẫn tái phạm thì bị xử lý thế nào?",
+   "dieu": [
+    "164"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p022",
+   "cau_hoi": "Cơ quan nhất quyết không bổ nhiệm, không cho một cán bộ nữ đi học nâng cao chỉ vì cô là phụ nữ, đã bị kỷ luật mà còn tái phạm thì có bị xử lý hình sự không?",
+   "dieu": [
+    "165"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p023",
+   "cau_hoi": "Cán bộ dùng vũ lực ngăn cản phóng viên đưa tin và chặn người dân tham gia biểu tình hợp pháp, từng bị phạt hành chính mà còn tái phạm thì bị xử thế nào?",
+   "dieu": [
+    "167"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p024",
+   "cau_hoi": "Lái xe lén dùng xe tải của công ty trị giá 300 triệu chở hàng thuê kiếm tiền riêng rồi trả xe lại, đã bị kỷ luật mà còn tái phạm thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "177"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p025",
+   "cau_hoi": "Tôi chỉ nhận thuê khiêng và chở hộ lô hàng cùng ngoại tệ trị giá khoảng 200 triệu vượt biên giới trái phép, không buôn bán gì, thì bị xử ra sao?",
+   "dieu": [
+    "189"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p026",
+   "cau_hoi": "Một người chở thuê 25 ký pháo nổ trên xe tải bị công an bắt, không phải để bán, thì bị phạt thế nào?",
+   "dieu": [
+    "191"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p027",
+   "cau_hoi": "Cơ sở pha chế nước mắm giả bằng hóa chất rồi dán nhãn hiệu nổi tiếng bán ra thị trường, làm có tổ chức, thì bị xử thế nào?",
+   "dieu": [
+    "193"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p028",
+   "cau_hoi": "Chủ tiệm vàng cân gian, hàng tạp hóa đong thiếu để lừa khách, đã bị phạt hành chính mà còn tiếp tục thì bị xử ra sao?",
+   "dieu": [
+    "198"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p029",
+   "cau_hoi": "Người in hàng nghìn vé tham quan giả rồi đem bán, tổng mệnh giá hơn 60 triệu đồng, thì bị xử thế nào?",
+   "dieu": [
+    "202"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p030",
+   "cau_hoi": "Thủ quỹ cơ quan thuế cất giữ cẩu thả làm thất lạc cả quyển biên lai thu tiền nộp ngân sách, khiến Nhà nước thiệt hại khoảng 200 triệu thì bị xử ra sao?",
+   "dieu": [
+    "204"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p031",
+   "cau_hoi": "Giám đốc chi nhánh ngân hàng cho một công ty vay mà không có tài sản bảo đảm trái quy định, công ty không trả nợ khiến người khác thiệt hại khoảng 200 triệu thì bị xử thế nào?",
+   "dieu": [
+    "206"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p032",
+   "cau_hoi": "Có người làm giả séc, hối phiếu rồi đem đi giao dịch, bị bắt thì chịu hình phạt gì?",
+   "dieu": [
+    "208"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p033",
+   "cau_hoi": "Công ty làm giả báo cáo tài chính trong hồ sơ phát hành cổ phiếu ra công chúng để thu lợi bất chính hơn một tỷ đồng thì bị xử thế nào?",
+   "dieu": [
+    "212"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p034",
+   "cau_hoi": "Mấy doanh nghiệp bắt tay thỏa thuận hạ giá để dồn một đối thủ ra khỏi thị trường, gây thiệt hại khoảng 2 tỷ đồng cho đối thủ thì bị xử ra sao?",
+   "dieu": [
+    "217"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p035",
+   "cau_hoi": "Người điều hành phiên đấu giá lập danh sách khống người đăng ký mua, dựng hồ sơ giả để bán tài sản cho người quen, thu lợi bất chính khoảng 100 triệu thì bị xử thế nào?",
+   "dieu": [
+    "218"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p036",
+   "cau_hoi": "Giám đốc ban quản lý dự án lợi dụng chức vụ bố trí vốn đầu tư công cho công trình trái quy định, gây thiệt hại khoảng 200 triệu thì bị xử ra sao?",
+   "dieu": [
+    "220"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p037",
+   "cau_hoi": "Mấy nhà thầu thông đồng quyết định trước ai trúng thầu, gian lận hồ sơ dự thầu làm chủ đầu tư thiệt hại khoảng 200 triệu thì bị xử thế nào?",
+   "dieu": [
+    "222"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p038",
+   "cau_hoi": "Cán bộ thuế lợi dụng chức vụ cố tình giảm thuế, xóa nợ thuế cho một công ty quen biết trái quy định, làm thất thu khoảng 200 triệu tiền thuế thì bị xử ra sao?",
+   "dieu": [
+    "223"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p039",
+   "cau_hoi": "Xưởng may hàng loạt áo gắn nhãn hiệu thời trang nổi tiếng đang được bảo hộ mà không được phép, bán quy mô lớn thu lợi hơn 200 triệu thì bị xử thế nào?",
+   "dieu": [
+    "226"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p040",
+   "cau_hoi": "Công ty tự ý khoan thăm dò dầu khí ở vùng thềm lục địa của Việt Nam mà không có giấy phép, thu lợi bất chính hàng trăm triệu thì bị xử ra sao?",
+   "dieu": [
+    "227"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p041",
+   "cau_hoi": "Chủ tịch xã lợi dụng chức vụ giao và cho chuyển mục đích sử dụng 10.000 mét vuông đất trồng lúa trái quy định cho người quen thì bị xử thế nào?",
+   "dieu": [
+    "229"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p042",
+   "cau_hoi": "Cán bộ xã chia tiền, gạo cứu trợ bão lụt cho người nhà quen trước thay vì dân bị nạn, làm thất thoát khoảng 150 triệu thì bị xử ra sao?",
+   "dieu": [
+    "231"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p043",
+   "cau_hoi": "Kiểm lâm lợi dụng chức vụ cho phép lâm tặc khai thác và chở gỗ ra khỏi rừng trái phép để nhận tiền thì bị xử thế nào?",
+   "dieu": [
+    "233"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p044",
+   "cau_hoi": "Hộ dân đào cát sát chân đê và xây nhà lấn vào hành lang đê trái phép, đê bị sạt lở gây thiệt hại tài sản khoảng 200 triệu thì bị xử ra sao?",
+   "dieu": [
+    "238"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p045",
+   "cau_hoi": "Chủ trại đưa đàn lợn bệnh ra khỏi vùng đang có dịch tả lợn châu Phi đem đi bán, làm dịch lây sang nhiều xã gây thiệt hại hơn 200 triệu thì bị xử thế nào?",
+   "dieu": [
+    "241"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p046",
+   "cau_hoi": "Nhóm người san ủi hơn 300 mét vuông trong phân khu bảo vệ nghiêm ngặt của vườn quốc gia để làm khu nghỉ dưỡng, phá hỏng cảnh quan thì bị xử ra sao?",
+   "dieu": [
+    "245"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p047",
+   "cau_hoi": "Tôi cất giữ 100 gam hóa chất dạng rắn dùng để điều chế ma túy, bị công an bắt, thì bị xử thế nào?",
+   "dieu": [
+    "253"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p048",
+   "cau_hoi": "Một người tàng trữ 10 bộ dụng cụ để hút, hít, chích ma túy rồi bán lại cho con nghiện thì bị xử ra sao?",
+   "dieu": [
+    "254"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p049",
+   "cau_hoi": "Dược sĩ phụ trách kho thuốc gây nghiện làm sai quy định bảo quản và cấp phát để thất thoát thuốc, trước đó đã bị kỷ luật rồi, thì bị xử thế nào?",
+   "dieu": [
+    "259"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p050",
+   "cau_hoi": "Trưởng phòng vận tải công ty biết rõ tài xế chưa có bằng lái vẫn phân công đi chạy xe, xe gây tai nạn chết người, vậy người phân công bị xử ra sao?",
+   "dieu": [
+    "263"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p051",
+   "cau_hoi": "Lái tàu hỏa vi phạm quy định an toàn chạy tàu khiến tàu đâm chết người đi bộ qua đường ngang thì bị xử như thế nào?",
+   "dieu": [
+    "267"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p052",
+   "cau_hoi": "Người phụ trách kỹ thuật cho đầu máy đã rõ ràng hỏng phanh, chưa đăng kiểm chạy ra đường ray, gây tai nạn làm chết người thì bị xử ra sao?",
+   "dieu": [
+    "269"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p053",
+   "cau_hoi": "Giám đốc đơn vị đường sắt giao con tàu cho nhân viên chưa có giấy phép lái tàu, nhân viên lái gây tai nạn chết người thì người giao bị xử tội gì?",
+   "dieu": [
+    "271"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p054",
+   "cau_hoi": "Người đào bới làm hư hại cầu cảng và để xà lan chìm giữa sông không đặt phao báo hiệu, tàu va vào làm chết người thì bị xử thế nào?",
+   "dieu": [
+    "273"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p055",
+   "cau_hoi": "Người có quyền phân công của đội tàu sông biết thuyền viên chưa có bằng điều khiển vẫn cử đi lái tàu, tàu đâm chìm ghe làm chết người thì người cử đi bị xử ra sao?",
+   "dieu": [
+    "275"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p056",
+   "cau_hoi": "Chủ ghe giao ghe máy cho người chưa có bằng lái đang say rượu chở khách, ghe lật làm chết người thì chủ ghe bị xử thế nào?",
+   "dieu": [
+    "276"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p057",
+   "cau_hoi": "Có người đặt vật cản trên đường băng và làm hỏng thiết bị dẫn đường của sân bay khiến máy bay gặp nguy hiểm thì bị xử ra sao?",
+   "dieu": [
+    "278"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p058",
+   "cau_hoi": "Quản lý hãng bay biết phi công chưa đủ điều kiện vẫn phân công lái chuyến bay, gây tai nạn làm chết người thì bị xử thế nào?",
+   "dieu": [
+    "280"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p059",
+   "cau_hoi": "Đơn vị được giao duy tu cầu đường để mặt cầu xuống cấp không sửa chữa đúng quy định, cầu sập làm chết người thì người phụ trách bị xử ra sao?",
+   "dieu": [
+    "281"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p060",
+   "cau_hoi": "Phi công lái máy bay vào hoặc ra khỏi Việt Nam mà làm trái luật lệ bay của ngành hàng không, gây hậu quả nghiêm trọng, thì bị xử thế nào?",
+   "dieu": [
+    "283"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p061",
+   "cau_hoi": "Một người viết và bán phần mềm chuyên dùng để tấn công, đánh sập hệ thống mạng của công ty khác thì bị xử ra sao?",
+   "dieu": [
+    "285"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p062",
+   "cau_hoi": "Một người công khai trên mạng thông tin riêng tư hợp pháp của người khác để bêu xấu, gây thiệt hại khoảng 200 triệu thì bị xử thế nào?",
+   "dieu": [
+    "288"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p063",
+   "cau_hoi": "Có người dùng thiết bị phát sóng cố tình gây nhiễu làm gián đoạn liên lạc vô tuyến của đài cứu nạn, gây thiệt hại lớn thì bị xử ra sao?",
+   "dieu": [
+    "294"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p064",
+   "cau_hoi": "Chủ xưởng không trang bị bảo hộ, không tuân thủ quy định an toàn lao động khiến máy ép cán công nhân tử vong thì bị xử thế nào?",
+   "dieu": [
+    "295"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p065",
+   "cau_hoi": "Nhóm người dùng tàu cao tốc áp sát tàu hàng ngoài khơi, dùng vũ khí uy hiếp thuyền viên và cướp hàng thì bị xử mức nào?",
+   "dieu": [
+    "302"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p066",
+   "cau_hoi": "Người dân cất giữ khẩu súng săn và mấy thanh kiếm ở nhà, đã bị phạt hành chính vì việc này mà vẫn cất giữ thì bị xử ra sao?",
+   "dieu": [
+    "306"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p067",
+   "cau_hoi": "Chủ kho thuốc nổ khai thác đá bảo quản sai quy định, kho phát nổ gây thiệt hại tài sản lớn thì bị xử thế nào?",
+   "dieu": [
+    "307"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p068",
+   "cau_hoi": "Bệnh viện để thất lạc nguồn phóng xạ dùng xạ trị ung thư do bảo quản sai quy định, nhiều người dân bị nhiễm xạ thì người chịu trách nhiệm bị xử ra sao?",
+   "dieu": [
+    "310"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p069",
+   "cau_hoi": "Công ty để rò rỉ hóa chất độc do bảo quản sai quy định, làm một người dân tử vong thì người chịu trách nhiệm bị xử thế nào?",
+   "dieu": [
+    "312"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p070",
+   "cau_hoi": "Hộ dân xây nhà cao tầng sát đường dây điện cao thế trong hành lang an toàn, phóng điện làm chết người thì bị xử ra sao?",
+   "dieu": [
+    "314"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p071",
+   "cau_hoi": "Một người lợi dụng quyền tự do ngôn luận, tự do lập hội để tung tin làm tổn hại đến Nhà nước và quyền lợi của người dân thì bị xử thế nào?",
+   "dieu": [
+    "331"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p072",
+   "cau_hoi": "Quân nhân dự bị nhận lệnh gọi nhập ngũ lúc có lệnh động viên nhưng cố tình không đến, còn tự làm mình bị thương, thì bị xử ra sao?",
+   "dieu": [
+    "333"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p073",
+   "cau_hoi": "Cán bộ hộ tịch phường cố ý đăng ký khai sinh, kết hôn cho người không đủ điều kiện trái quy định, đã bị kỷ luật mà còn tái phạm thì bị xử thế nào?",
+   "dieu": [
+    "336"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p074",
+   "cau_hoi": "Nhân viên cơ quan vô ý để quên tài liệu mật của nhà nước ở quán cà phê rồi bị mất, bí mật bị lộ ra ngoài thì bị xử ra sao?",
+   "dieu": [
+    "338"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p075",
+   "cau_hoi": "Nhân viên lén lấy con dấu và hồ sơ của một cơ quan đem bán, tiêu hủy tài liệu của đơn vị đó, những tài liệu không thuộc loại bí mật, thì bị xử thế nào?",
+   "dieu": [
+    "342"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p076",
+   "cau_hoi": "Chủ nhà in in 3.000 bản sách mà không có giấy phép xuất bản rồi đem phát hành thì bị xử ra sao?",
+   "dieu": [
+    "344"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p077",
+   "cau_hoi": "Người dân ra vào, làm ăn trong khu vực biên giới cấm khi chưa có giấy phép, đã bị phạt hành chính vẫn tái phạm thì có bị xử hình sự không?",
+   "dieu": [
+    "346"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p078",
+   "cau_hoi": "Người dẫn đường đưa nhóm người nước ngoài vào Việt Nam trái phép để lấy tiền công thì bị xử như thế nào?",
+   "dieu": [
+    "348"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p079",
+   "cau_hoi": "Cán bộ địa chính sử dụng chức vụ của mình làm trái quy định để nhận lợi ích riêng, gây thiệt hại cho Nhà nước khoảng 100 triệu thì bị xử ra sao?",
+   "dieu": [
+    "356"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p080",
+   "cau_hoi": "Trưởng công an xã tự ý quyết định việc vượt quá quyền hạn của mình, gây thiệt hại khoảng 100 triệu thì phạm tội gì?",
+   "dieu": [
+    "357"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p081",
+   "cau_hoi": "Cán bộ phụ trách vì thiếu trách nhiệm, không kiểm tra công việc của cấp dưới, để cơ quan thiệt hại hơn 100 triệu thì có phải đi tù không?",
+   "dieu": [
+    "360"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p082",
+   "cau_hoi": "Nhân viên vô ý để rơi tài liệu nội bộ về công tác của cơ quan ra ngoài, tài liệu không phải bí mật nhà nước nhưng gây hậu quả nghiêm trọng, thì bị xử ra sao?",
+   "dieu": [
+    "362"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p083",
+   "cau_hoi": "Cán bộ có trách nhiệm tự ý bỏ nơi công tác để trốn tránh nhiệm vụ được giao, gây thiệt hại nghiêm trọng, thì bị xử thế nào?",
+   "dieu": [
+    "363"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p084",
+   "cau_hoi": "Điều tra viên biết rõ một người vô tội nhưng cố tình khởi tố và đưa người đó ra xét xử thì bị xử ra sao?",
+   "dieu": [
+    "368"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p085",
+   "cau_hoi": "Chấp hành viên cố ý ra quyết định kê biên nhà một người dù biết rõ quyết định đó sai luật, làm người này thiệt hại khoảng 100 triệu thì bị xử thế nào?",
+   "dieu": [
+    "371"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p086",
+   "cau_hoi": "Lãnh đạo tỉnh lợi dụng quyền hạn ép một thẩm phán xử vụ án theo ý mình bất chấp pháp luật, gây thiệt hại tài sản khoảng 100 triệu thì bị xử ra sao?",
+   "dieu": [
+    "372"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p087",
+   "cau_hoi": "Quản giáo được giao canh giữ phạm nhân nhưng lơ là, không làm đúng quy định canh gác, để phạm nhân bỏ trốn thì bị xử thế nào?",
+   "dieu": [
+    "376"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p088",
+   "cau_hoi": "Cán bộ trại tạm giam biết đã hết hạn nhưng vẫn không thả người bị giam, còn bắt thêm người không có lệnh, thì bị xử ra sao?",
+   "dieu": [
+    "377"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p089",
+   "cau_hoi": "Chấp hành viên cố tình để hồ sơ không thi hành bản án của Tòa, để quá thời hạn không còn thi hành được nữa thì bị xử thế nào?",
+   "dieu": [
+    "379"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p090",
+   "cau_hoi": "Chuyên gia giám định được tòa mời nhưng cố tình trốn tránh, không đưa ra kết luận và từ chối nộp tài liệu mà không có lý do chính đáng thì bị xử ra sao?",
+   "dieu": [
+    "383"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p091",
+   "cau_hoi": "Một người đưa tiền cho nhân chứng và dọa nạt người bị hại để họ khai sai sự thật trong vụ án thì bị xử như thế nào?",
+   "dieu": [
+    "384"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p092",
+   "cau_hoi": "Một nhóm người chặn xe công an đang áp giải nghi phạm, dùng vũ lực giải thoát người đó rồi đưa đi trốn thì bị xử tội gì?",
+   "dieu": [
+    "387"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p093",
+   "cau_hoi": "Chỉ huy đại đội lợi dụng chức vụ ra lệnh trái pháp luật cho binh sĩ trong lúc đang chiến đấu, gây hậu quả nghiêm trọng thì bị xử ra sao?",
+   "dieu": [
+    "393"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p094",
+   "cau_hoi": "Lính nhận lệnh của cấp trên nhưng thực hiện lơ là, chậm trễ, làm theo ý mình trong lúc chiến đấu, gây thiệt hại nặng thì bị xử thế nào?",
+   "dieu": [
+    "395"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p095",
+   "cau_hoi": "Một quân nhân thường xuyên xúc phạm nặng nề đồng đội cùng đơn vị trong quan hệ công tác thì bị xử lý ra sao?",
+   "dieu": [
+    "397"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p096",
+   "cau_hoi": "Một sĩ quan chỉ huy trong trận đánh giơ cờ hàng, giao nộp súng đạn cho quân địch thì bị xử mức nào?",
+   "dieu": [
+    "399"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p097",
+   "cau_hoi": "Chiến sĩ đang giao tranh với địch nhưng tự ý bỏ chạy khỏi trận địa, bỏ lại cả vũ khí thì bị xử ra sao?",
+   "dieu": [
+    "401"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p098",
+   "cau_hoi": "Một quân nhân cố ý tự làm mình bị thương để không phải đi làm nhiệm vụ được giao thì bị xử lý thế nào?",
+   "dieu": [
+    "403"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p099",
+   "cau_hoi": "Sĩ quan cố ý tiết lộ cho người ngoài kế hoạch hành quân bí mật của đơn vị trong khu vực đang có chiến sự thì bị xử ra sao?",
+   "dieu": [
+    "404"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p100",
+   "cau_hoi": "Quân nhân vô ý làm rơi sổ ghi kế hoạch bí mật của đơn vị khiến bí mật quân sự bị lộ ra ngoài thì bị xử thế nào?",
+   "dieu": [
+    "406"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p101",
+   "cau_hoi": "Chỉ huy tiểu đoàn cố tình báo cáo sai tình hình địch lên cấp trên khiến việc điều quân sai lầm, gây hậu quả nghiêm trọng, thì bị xử ra sao?",
+   "dieu": [
+    "408"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p102",
+   "cau_hoi": "Sĩ quan trực chiến bỏ vị trí đi ngủ trong ca trực, để đơn vị bị đột kích gây thiệt hại nặng thì bị xử thế nào?",
+   "dieu": [
+    "409"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p103",
+   "cau_hoi": "Cán bộ chỉ huy buổi tập bắn đạn thật không thực hiện đúng các quy định an toàn, làm một chiến sĩ tử vong thì bị xử ra sao?",
+   "dieu": [
+    "411"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p104",
+   "cau_hoi": "Người lính vận hành khẩu pháo của đơn vị trái quy định sử dụng, làm đạn rơi trúng khu dân cư gây hậu quả nghiêm trọng thì bị xử thế nào?",
+   "dieu": [
+    "412"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p105",
+   "cau_hoi": "Chiến sĩ được trang bị khẩu súng quân dụng nhưng để thất lạc mất, gây hậu quả nghiêm trọng, thì bị xử ra sao?",
+   "dieu": [
+    "414"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p106",
+   "cau_hoi": "Đơn vị bộ đội đang làm nhiệm vụ lấy lý do cần cho quân sự nên phá vườn cây, chiếm dùng đồ đạc của dân vượt quá mức cần thiết, gây thiệt hại khoảng 200 triệu, thì bị xử thế nào?",
+   "dieu": [
+    "416"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p107",
+   "cau_hoi": "Y tá quân y bỏ mặc hai đồng đội bị thương lại nơi trận địa, không băng bó chữa trị, khiến họ chết thì bị xử ra sao?",
+   "dieu": [
+    "417"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p108",
+   "cau_hoi": "Khi thu dọn chiến trường, một chiến sĩ lén giữ riêng số vũ khí và đồ dùng thu được của địch rồi đem đi hủy bỏ thì bị xử thế nào?",
+   "dieu": [
+    "419"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p109",
+   "cau_hoi": "Một người tuyên truyền kêu gọi và chuẩn bị đưa quân đánh chiếm lãnh thổ của một nước độc lập khác thì bị xử mức nào?",
+   "dieu": [
+    "421"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p110",
+   "cau_hoi": "Kẻ ra lệnh tàn sát hàng loạt cư dân của một khu vực, phá hủy nguồn sống và đời sống văn hóa của họ nhằm xóa sổ cả xã hội đó thì bị xử mức nào?",
+   "dieu": [
+    "422"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p111",
+   "cau_hoi": "Một người đứng ra chiêu mộ, huấn luyện những kẻ chiến đấu vì tiền để đem đi tấn công một quốc gia độc lập khác thì bị xử ra sao?",
+   "dieu": [
+    "424"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "p112",
+   "cau_hoi": "Một người nhận tiền tham gia đội quân thuê để đánh nhau chống lại một nước độc lập khác thì bị phạt tù mấy năm?",
+   "dieu": [
+    "425"
+   ],
+   "loai": "don",
+   "tap": "phu",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  }
+ ]
+}
