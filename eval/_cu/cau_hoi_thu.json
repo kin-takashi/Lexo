@@ -1,0 +1,475 @@
+{
+ "ghi_chu": "Soạn nháp bởi Claude, người dùng (Kintakashi) đã xem eval/xem_duyet.md và xác nhận ổn (2026-10-07). Tập KIỂM TRA: không được dùng để sinh dữ liệu hay chỉnh tham số theo từng câu.",
+ "cau_hoi": [
+  {
+   "id": "q01",
+   "cau_hoi": "lén lấy xe máy của hàng xóm bị phạt sao",
+   "dieu": [
+    "173"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q02",
+   "cau_hoi": "giật điện thoại của người đi đường rồi chạy xe bỏ chạy",
+   "dieu": [
+    "171"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q03",
+   "cau_hoi": "cầm dao dọa đâm để lấy tiền người ta",
+   "dieu": [
+    "168"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q04",
+   "cau_hoi": "gạt người khác đưa tiền đầu tư rồi biến mất luôn",
+   "dieu": [
+    "174"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q05",
+   "cau_hoi": "mượn tiền rồi bỏ trốn không chịu trả",
+   "dieu": [
+    "174",
+    "175"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q06",
+   "cau_hoi": "nhặt được điện thoại người khác đánh rơi nhưng không trả lại",
+   "dieu": [
+    "176"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q07",
+   "cau_hoi": "đánh người ta nhập viện, tỷ lệ thương tật cao",
+   "dieu": [
+    "134"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q08",
+   "cau_hoi": "cãi nhau rồi cầm dao đâm chết người",
+   "dieu": [
+    "123"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q09",
+   "cau_hoi": "uống rượu lái xe gây tai nạn làm chết người",
+   "dieu": [
+    "260"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q10",
+   "cau_hoi": "chạy xe máy đua với nhau trên đường phố",
+   "dieu": [
+    "266"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q11",
+   "cau_hoi": "tổ chức cho nhiều người đua xe để cá cược",
+   "dieu": [
+    "265"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q12",
+   "cau_hoi": "cất ma túy trong người để tự dùng",
+   "dieu": [
+    "249"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q13",
+   "cau_hoi": "bán ma túy cho người khác",
+   "dieu": [
+    "251"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q14",
+   "cau_hoi": "chở thuê ma túy từ tỉnh này sang tỉnh khác",
+   "dieu": [
+    "250"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q15",
+   "cau_hoi": "đánh bạc ăn tiền bằng bài hoặc cá độ",
+   "dieu": [
+    "321"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q16",
+   "cau_hoi": "mở sòng bạc, chủ chứa cho người khác tới đánh bạc",
+   "dieu": [
+    "322"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q17",
+   "cau_hoi": "cán bộ nhận tiền của dân để giải quyết hồ sơ",
+   "dieu": [
+    "354"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q18",
+   "cau_hoi": "cán bộ lấy tiền công quỹ bỏ vào túi riêng",
+   "dieu": [
+    "353"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q19",
+   "cau_hoi": "đăng bài chửi bới bôi nhọ danh dự người khác trên mạng",
+   "dieu": [
+    "155",
+    "156"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q20",
+   "cau_hoi": "bịa chuyện nói xấu người khác để hại họ",
+   "dieu": [
+    "156"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q21",
+   "cau_hoi": "hack vào máy tính người khác để lấy dữ liệu",
+   "dieu": [
+    "289"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q22",
+   "cau_hoi": "tạo và phát tán virus, mã độc cho máy tính",
+   "dieu": [
+    "286"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q23",
+   "cau_hoi": "dùng mạng internet lừa đảo lấy tiền",
+   "dieu": [
+    "290"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q24",
+   "cau_hoi": "làm giả con dấu và giấy tờ của cơ quan nhà nước",
+   "dieu": [
+    "341"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q25",
+   "cau_hoi": "sản xuất và bán hàng giả",
+   "dieu": [
+    "192"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q26",
+   "cau_hoi": "bán thực phẩm bẩn không đảm bảo vệ sinh an toàn",
+   "dieu": [
+    "317"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q27",
+   "cau_hoi": "xả nước thải ra sông gây ô nhiễm",
+   "dieu": [
+    "235"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q28",
+   "cau_hoi": "chặt phá rừng trái phép lấy gỗ",
+   "dieu": [
+    "232",
+    "243"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q29",
+   "cau_hoi": "buôn bán động vật hoang dã quý hiếm",
+   "dieu": [
+    "234",
+    "244"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q30",
+   "cau_hoi": "công ty cố ý khai thiếu để không đóng thuế",
+   "dieu": [
+    "200"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q31",
+   "cau_hoi": "cho vay nặng lãi lấy lãi cao",
+   "dieu": [
+    "201"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q32",
+   "cau_hoi": "hợp thức hóa tiền do phạm tội mà có thông qua ngân hàng",
+   "dieu": [
+    "324"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q33",
+   "cau_hoi": "mua lại đồ ăn trộm dù biết là của gian",
+   "dieu": [
+    "323"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q34",
+   "cau_hoi": "ly hôn rồi không chịu đóng tiền nuôi con",
+   "dieu": [
+    "186"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q35",
+   "cau_hoi": "đang có vợ mà đi lấy vợ khác",
+   "dieu": [
+    "182"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q36",
+   "cau_hoi": "cưỡng ép quan hệ tình dục trái ý muốn",
+   "dieu": [
+    "141"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q37",
+   "cau_hoi": "sờ soạng, dâm ô với trẻ em",
+   "dieu": [
+    "146"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q38",
+   "cau_hoi": "bán phụ nữ và trẻ em ra nước ngoài",
+   "dieu": [
+    "150",
+    "151"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q39",
+   "cau_hoi": "nhắn tin dọa giết người khác",
+   "dieu": [
+    "133"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q40",
+   "cau_hoi": "bắt giữ người trái pháp luật nhốt trong nhà",
+   "dieu": [
+    "157"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q41",
+   "cau_hoi": "tự ý xông vào nhà người khác khi chủ nhà không đồng ý",
+   "dieu": [
+    "158"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q42",
+   "cau_hoi": "đập phá, đốt xe của người khác cho hư hỏng",
+   "dieu": [
+    "178"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q43",
+   "cau_hoi": "đánh nhau gây náo loạn nơi công cộng",
+   "dieu": [
+    "318"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q44",
+   "cau_hoi": "chửi bới, đánh công an đang làm nhiệm vụ",
+   "dieu": [
+    "330"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q45",
+   "cau_hoi": "trốn không đi nghĩa vụ quân sự",
+   "dieu": [
+    "332"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q46",
+   "cau_hoi": "cất giữ súng quân dụng trái phép",
+   "dieu": [
+    "304"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q47",
+   "cau_hoi": "buôn lậu hàng hóa qua biên giới",
+   "dieu": [
+    "188"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q48",
+   "cau_hoi": "làm giả hồ sơ để trục lợi bảo hiểm y tế",
+   "dieu": [
+    "215"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q49",
+   "cau_hoi": "in tiền giả đem tiêu",
+   "dieu": [
+    "207"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q50",
+   "cau_hoi": "thấy người gặp nạn mà không cứu giúp",
+   "dieu": [
+    "132"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q51",
+   "cau_hoi": "sơ ý làm người khác chết",
+   "dieu": [
+    "128"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q52",
+   "cau_hoi": "sinh con ra rồi vứt bỏ làm cháu chết",
+   "dieu": [
+    "124"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q53",
+   "cau_hoi": "cố tình làm lây lan dịch bệnh nguy hiểm ra cộng đồng",
+   "dieu": [
+    "240"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q54",
+   "cau_hoi": "mở nhà chứa gái mại dâm",
+   "dieu": [
+    "327"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q55",
+   "cau_hoi": "kinh doanh đa cấp bất hợp pháp lôi kéo người tham gia",
+   "dieu": [
+    "217a"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q56",
+   "cau_hoi": "đăng tin sai sự thật chống phá nhà nước",
+   "dieu": [
+    "117"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q57",
+   "cau_hoi": "cho nhiều người đến nhà mình sử dụng ma túy",
+   "dieu": [
+    "255",
+    "256"
+   ],
+   "trang_thai": "da_duyet"
+  },
+  {
+   "id": "q58",
+   "cau_hoi": "cán bộ thiếu trách nhiệm làm thất thoát tài sản nhà nước",
+   "dieu": [
+    "179"
+   ],
+   "trang_thai": "da_duyet"
+  }
+ ]
+}

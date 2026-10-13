@@ -1,0 +1,565 @@
+{
+ "ghi_chu": "Bộ dev2 (độc lập): 70 câu, mỗi câu một Điều, các Điều KHÔNG nằm trong đáp án của bộ dev lẫn bộ kiểm tra. Dùng để xác nhận độc lập cấu hình chọn trên bộ dev (xếp lại top 5 bằng Qwen3-8B, w = 0.25). Chưa duyệt nhãn (Claude soạn nháp). Không dùng để chỉnh tham số; không đưa nội dung câu vào lời nhắc của bất kỳ bộ sinh nào.",
+ "cau_hoi": [
+  {
+   "id": "e01",
+   "cau_hoi": "Một công dân Việt Nam bắt tay với phía nước ngoài để làm hại độc lập, chủ quyền và chế độ của đất nước thì bị xử phạt như thế nào?",
+   "dieu": [
+    "108"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e02",
+   "cau_hoi": "Người Việt nhận tiền của cơ quan tình báo nước ngoài để thu thập tin tức mật rồi chuyển ra ngoài thì chịu hình phạt gì?",
+   "dieu": [
+    "110"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e03",
+   "cau_hoi": "Một nhóm người tấn công, giết cán bộ xã và đốt phá trụ sở với mục đích chống lại chính quyền nhân dân thì bị phạt nặng mức nào?",
+   "dieu": [
+    "113"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e04",
+   "cau_hoi": "Cố tình cản phá việc áp dụng các chính sách của Nhà nước về phát triển kinh tế và đời sống người dân, nhằm chống lại chính quyền, thì ngồi tù bao lâu?",
+   "dieu": [
+    "115"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e05",
+   "cau_hoi": "Một nhóm người tổ chức cho tù nhân vượt ngục và đập phá trại giam để chống lại chính quyền thì bị xử lý thế nào?",
+   "dieu": [
+    "119"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e06",
+   "cau_hoi": "Bị chồng đánh đập dã man nhiều năm, một lần quá uất ức mất kiểm soát nên tôi đâm chết anh ta, vậy án phạt có nhẹ hơn giết người bình thường không?",
+   "dieu": [
+    "125"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e07",
+   "cau_hoi": "Bác sĩ làm sai quy trình chuyên môn khiến bệnh nhân tử vong ngoài ý muốn thì có bị đi tù không?",
+   "dieu": [
+    "129"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e08",
+   "cau_hoi": "Lúc chơi đùa tôi sơ ý làm bạn ngã gãy tay, tỷ lệ thương tật 40%, thì có bị xử lý hình sự không hay chỉ phải đền bù?",
+   "dieu": [
+    "138"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e09",
+   "cau_hoi": "Chủ nhà đối xử tàn nhẫn, chửi bới làm nhục người ăn nhờ ở đậu phụ thuộc vào mình thì bị xử lý ra sao?",
+   "dieu": [
+    "140"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e10",
+   "cau_hoi": "Người lớn dụ dỗ, ép một em 14 tuổi trình diễn khiêu dâm trước mặt mình thì bị xử như thế nào?",
+   "dieu": [
+    "147"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e11",
+   "cau_hoi": "Nhân viên nhà hộ sinh cố tình tráo đổi em bé mới sinh với em bé khác thì bị phạt tù bao lâu?",
+   "dieu": [
+    "152"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e12",
+   "cau_hoi": "Có đường dây mua bán thận của người nghèo để bán lại cho bệnh nhân cần ghép thì bị xử tù mấy năm?",
+   "dieu": [
+    "154"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e13",
+   "cau_hoi": "Người phụ trách kiểm phiếu cố ý gian lận, sửa phiếu để người khác trúng cử thì bị xử lý thế nào?",
+   "dieu": [
+    "161"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e14",
+   "cau_hoi": "Có người dùng vũ lực ngăn cản dân thành lập hội hoặc họp mặt hợp pháp, trước đó từng bị phạt hành chính, thì bị xử lý ra sao?",
+   "dieu": [
+    "163"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e15",
+   "cau_hoi": "Lãnh đạo cơ quan giữ đơn, trả thù người dân đã gửi đơn tố cáo mình thì bị xử lý như thế nào?",
+   "dieu": [
+    "166"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e16",
+   "cau_hoi": "Hai anh em ruột cùng cha cùng mẹ quan hệ tình dục với nhau thì có bị đi tù không?",
+   "dieu": [
+    "184"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e17",
+   "cau_hoi": "Mở xưởng làm và bán loại hàng hóa mà Nhà nước cấm kinh doanh thì bị phạt tiền hay phạt tù?",
+   "dieu": [
+    "190"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e18",
+   "cau_hoi": "Lợi dụng dịch bệnh, tôi gom mua vét hàng thuộc diện bình ổn giá để chờ khan hiếm bán lại giá cao thì bị xử lý thế nào?",
+   "dieu": [
+    "196"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e19",
+   "cau_hoi": "Nhân viên điện lực cố ý cắt điện, từ chối cấp điện trái quy định gây thiệt hại cho dân thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "199"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e20",
+   "cau_hoi": "Giám đốc sở lợi dụng chức vụ tự lập quỹ riêng ngoài quy định rồi tiêu, gây thiệt hại cho tài sản Nhà nước, thì bị xử lý ra sao?",
+   "dieu": [
+    "205"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e21",
+   "cau_hoi": "Lãnh đạo công ty niêm yết cố tình báo cáo sai sự thật về lợi nhuận, giấu thông tin quan trọng khi chào bán cổ phiếu ra công chúng thì bị xử lý thế nào?",
+   "dieu": [
+    "209"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e22",
+   "cau_hoi": "Tôi làm giả hồ sơ tai nạn để đòi công ty bảo hiểm trả 50 triệu đồng tiền bồi thường thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "213"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e23",
+   "cau_hoi": "Cán bộ được giao quản lý xe công và tài sản của cơ quan nhưng làm sai chế độ để hư hỏng, mất mát 150 triệu thì có bị truy cứu không?",
+   "dieu": [
+    "219"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e24",
+   "cau_hoi": "Kế toán trưởng lợi dụng chức vụ làm sai quy định về sổ sách kế toán khiến Nhà nước thiệt hại 200 triệu thì bị xử lý ra sao?",
+   "dieu": [
+    "221"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e25",
+   "cau_hoi": "Chủ đầu tư lợi dụng quyền hạn duyệt dự án, chọn nhà thầu sai quy định khiến Nhà nước mất 200 triệu thì có bị xử lý hình sự không?",
+   "dieu": [
+    "224"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e26",
+   "cau_hoi": "Tôi nhiều lần lấn chiếm đất công, đã bị phạt hành chính mà vẫn tái phạm thì có bị đi tù không?",
+   "dieu": [
+    "228"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e27",
+   "cau_hoi": "Cán bộ lợi dụng chức vụ làm sai khi tính tiền đền bù, bố trí chỗ ở mới cho dân bị thu hồi đất, gây thiệt hại, thì bị xử lý thế nào?",
+   "dieu": [
+    "230"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e28",
+   "cau_hoi": "Xí nghiệp để xảy ra sự cố tràn hóa chất nhưng không lập phương án phòng ngừa, không tổ chức xử lý hậu quả, thì chủ xí nghiệp có phải đi tù không?",
+   "dieu": [
+    "237"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e29",
+   "cau_hoi": "Công ty nhập lén container rác thải từ nước ngoài vào Việt Nam trái phép thì bị phạt thế nào?",
+   "dieu": [
+    "239"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e30",
+   "cau_hoi": "Tôi mang cá nước ngoài về thả ra sông hồ khiến chúng sinh sôi gây hại cho hệ sinh thái bản địa thì có vi phạm hình sự không?",
+   "dieu": [
+    "246"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e31",
+   "cau_hoi": "Tôi dùng ma túy để tự sử dụng, trước đó đã bị phạt hành chính mà vẫn tái phạm thì có bị đi tù không?",
+   "dieu": [
+    "256a"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e32",
+   "cau_hoi": "Quản lý đội xe cho phép chiếc xe tải phanh hỏng chạy ra đường dù biết không đạt chuẩn an toàn, gây tai nạn làm người khác bị thương thì bị xử lý ra sao?",
+   "dieu": [
+    "262"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e33",
+   "cau_hoi": "Có người đặt khúc gỗ chắn ngang đường ray và tháo ốc ray gây nguy hiểm cho tàu hỏa thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "268"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e34",
+   "cau_hoi": "Lãnh đạo bố trí lái tàu hỏa chưa có giấy phép lái tàu, hoặc đã uống rượu bia, lên điều khiển tàu thì bị xử lý ra sao?",
+   "dieu": [
+    "270"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e35",
+   "cau_hoi": "Chủ bến đò cho phép chiếc đò đã mục nát, không đạt chuẩn kỹ thuật chở khách qua sông, gây chết người thì bị xử lý thế nào?",
+   "dieu": [
+    "274"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e36",
+   "cau_hoi": "Phi công lái máy bay vi phạm quy định về an toàn bay, có khả năng gây thiệt hại nghiêm trọng, thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "277"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e37",
+   "cau_hoi": "Giám đốc kỹ thuật hãng bay biết rõ máy bay chưa đạt chuẩn an toàn kỹ thuật nhưng vẫn cho đưa vào khai thác thì bị xử lý ra sao?",
+   "dieu": [
+    "279"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e38",
+   "cau_hoi": "Nhóm người dùng dao khống chế phi hành đoàn để cướp máy bay hoặc cướp tàu biển thì bị phạt thế nào?",
+   "dieu": [
+    "282"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e39",
+   "cau_hoi": "Thuyền trưởng lái tàu biển đi qua lãnh hải Việt Nam nhưng cố tình làm trái các quy định hàng hải thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "284"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e40",
+   "cau_hoi": "Công ty tôi dùng bộ đàm phát trên băng tần dành riêng cho lực lượng cấp cứu và quốc phòng để phục vụ kinh doanh, gây thiệt hại vài trăm triệu, thì bị xử lý sao?",
+   "dieu": [
+    "293"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e41",
+   "cau_hoi": "Nhà thầu thi công dùng vật liệu kém chất lượng làm sập công trình khiến người bị thương thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "298"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e42",
+   "cau_hoi": "Người cố ý đánh sập trạm điện, cầu và công trình thủy lợi quan trọng của quốc gia thì bị phạt tù bao lâu?",
+   "dieu": [
+    "303"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e43",
+   "cau_hoi": "Một người lén lút bán nguồn phóng xạ lấy từ bệnh viện, hoặc cất giữ uranium trái phép, thì bị xử lý thế nào?",
+   "dieu": [
+    "309"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e44",
+   "cau_hoi": "Cất giữ trong nhà và đem bán lén xăng, hóa chất độc hại thì có bị phạt tù không?",
+   "dieu": [
+    "311"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e45",
+   "cau_hoi": "Người mở phòng khám, tự pha chế và bán thuốc không đúng quy định chuyên môn, làm bệnh nhân bị ngộ độc nặng thì bị xử lý ra sao?",
+   "dieu": [
+    "315"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e46",
+   "cau_hoi": "Cán bộ ban chỉ huy quân sự xã lợi dụng chức quyền, làm sai việc đăng ký và gọi thanh niên đi lính, thì bị xử lý thế nào?",
+   "dieu": [
+    "334"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e47",
+   "cau_hoi": "Nhân viên cố tình tiết lộ thông tin thuộc danh mục mật của quốc gia ra ngoài, hoặc lấy cắp rồi bán hồ sơ mật đó thì bị xử lý thế nào?",
+   "dieu": [
+    "337"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e48",
+   "cau_hoi": "Tôi chiếm dụng căn hộ không phải của mình để ở và xây nhà trái phép, trước đó đã bị phạt hành chính, thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "343"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e49",
+   "cau_hoi": "Đơn vị thi công trùng tu làm hư hại một ngôi đình cổ đã xếp hạng, thiệt hại trên 100 triệu đồng, thì chịu trách nhiệm hình sự thế nào?",
+   "dieu": [
+    "345"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e50",
+   "cau_hoi": "Ép buộc người khác phải vượt biên sang nước ngoài hoặc cố ở lậu lại nước ngoài thì bị phạt tù mấy năm?",
+   "dieu": [
+    "350"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e51",
+   "cau_hoi": "Một cán bộ dùng uy thế chức vụ của mình tác động để cấp dưới làm một việc có lợi cho người đưa tiền, rồi nhận lợi ích, thì bị truy cứu hình sự không?",
+   "dieu": [
+    "358"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e52",
+   "cau_hoi": "Cán bộ cố ý để lộ thông tin nội bộ của cơ quan thuộc diện mật nhưng chưa tới mức bí mật nhà nước, hoặc đem bán tài liệu đó, thì bị xử lý ra sao?",
+   "dieu": [
+    "361"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e53",
+   "cau_hoi": "Tôi chỉ là người quen của giám đốc sở, nhận tiền của người ta để nhờ ông ấy giải quyết hồ sơ giúp, không phải cán bộ thì có phạm tội không?",
+   "dieu": [
+    "366"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e54",
+   "cau_hoi": "Thủ trưởng cơ quan điều tra biết rõ một người đã phạm tội nhưng cố tình không khởi tố, bỏ qua cho họ thì bị xử lý ra sao?",
+   "dieu": [
+    "369"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e55",
+   "cau_hoi": "Thư ký tòa án tự ý sửa, rút bớt tài liệu trong hồ sơ vụ án để người ta được xử nhẹ thì bị truy cứu thế nào?",
+   "dieu": [
+    "375"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e56",
+   "cau_hoi": "Cán bộ trại tạm giam tự ý thả người đang bị giam khi chưa có quyết định của người có thẩm quyền thì bị xử lý hình sự thế nào?",
+   "dieu": [
+    "378"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e57",
+   "cau_hoi": "Chấp hành viên cố ý trì hoãn khiến hết thời hiệu thi hành án, hoặc để người phải thi hành án bỏ trốn, thì bị xử lý sao?",
+   "dieu": [
+    "381"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e58",
+   "cau_hoi": "Người được giao giữ tài sản bị kê biên mà cố ý đem tiêu xài, bán hoặc cất giấu tài sản đó thì bị xử lý thế nào?",
+   "dieu": [
+    "385"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e59",
+   "cau_hoi": "Tôi lén đưa điện thoại vào trại giam cho người thân đang bị giam, trước đó đã bị xử phạt hành chính vì việc này, thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "388"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e60",
+   "cau_hoi": "Một quân nhân cản trở bạn cùng đơn vị làm nhiệm vụ khiến người đó không hoàn thành việc được giao thì bị xử lý ra sao?",
+   "dieu": [
+    "396"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e61",
+   "cau_hoi": "Chiến sĩ bị địch bắt giữ, sau đó khai ra bí mật quân sự hoặc đồng ý phục vụ cho phía địch thì bị xử lý thế nào?",
+   "dieu": [
+    "400"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e62",
+   "cau_hoi": "Chiến sĩ tự ý bỏ đơn vị để trốn nhiệm vụ trong thời chiến, hoặc từng bị kỷ luật vì việc này mà còn bỏ ngũ, thì bị xử sao?",
+   "dieu": [
+    "402"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e63",
+   "cau_hoi": "Sĩ quan lấy cắp rồi bán tài liệu mật của đơn vị quân đội, hoặc đốt hủy tài liệu đó, thì bị xử lý thế nào?",
+   "dieu": [
+    "405"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e64",
+   "cau_hoi": "Chiến sĩ sơ ý làm thất lạc tài liệu mật của đơn vị quân đội thì có bị truy cứu hình sự không?",
+   "dieu": [
+    "407"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e65",
+   "cau_hoi": "Người được giao tuần tra, canh gác, hộ tống thủ trưởng mà làm trái quy định khiến người được hộ tống bị thương thì bị xử lý thế nào?",
+   "dieu": [
+    "410"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e66",
+   "cau_hoi": "Quân nhân cố tình đập phá, làm hỏng súng đạn và xe tăng của đơn vị thì bị phạt tù bao lâu?",
+   "dieu": [
+    "413"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e67",
+   "cau_hoi": "Bộ đội đóng quân thường xuyên nhũng nhiễu, làm phiền người dân quanh doanh trại, đã bị kỷ luật mà còn tái phạm, thì có bị xử lý hình sự không?",
+   "dieu": [
+    "415"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e68",
+   "cau_hoi": "Chiến sĩ lấy đồ dùng cá nhân của đồng đội đã hy sinh trên chiến trường làm của riêng thì bị xử lý thế nào?",
+   "dieu": [
+    "418"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e69",
+   "cau_hoi": "Quân nhân đánh đập, đối xử tàn tệ với tù binh và những người đã ra đầu hàng thì chịu trách nhiệm hình sự gì?",
+   "dieu": [
+    "420"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "e70",
+   "cau_hoi": "Chỉ huy trong chiến tranh ra lệnh giết thường dân, cướp phá và tàn phá làng mạc thì bị xử ra sao? Nếu do cấp trên ép buộc thì sao?",
+   "dieu": [
+    "423"
+   ],
+   "trang_thai": "nhap"
+  }
+ ]
+}

@@ -1,0 +1,566 @@
+{
+ "ghi_chu": "Tập DEV (chỉnh tham số / chẩn đoán), soạn nháp bởi Claude 2026-10-07, CHƯA được người dùng duyệt (trang_thai = nhap). Tách khỏi tập kiểm tra eval/cau_hoi_thu.json: không dùng để sinh câu hỏi cho LLM; đáp án nằm ở các Điều khác tập kiểm tra. Lưu ý: cùng một người soạn với tập kiểm tra và nhiều câu bám sát tên tội nên dễ hơn thực tế; nhờ người khác viết thêm sẽ tốt hơn.",
+ "cau_hoi": [
+  {
+   "id": "d01",
+   "cau_hoi": "ép vợ hoặc chồng phải ly hôn, hoặc cấm không cho hai người yêu nhau cưới nhau",
+   "dieu": [
+    "181"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d02",
+   "cau_hoi": "cha mẹ đánh đập, hành hạ con cái thường xuyên",
+   "dieu": [
+    "185"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d03",
+   "cau_hoi": "tổ chức cho hai đứa trẻ còn nhỏ tuổi cưới nhau",
+   "dieu": [
+    "183"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d04",
+   "cau_hoi": "thuê người đẻ thuê để kiếm tiền",
+   "dieu": [
+    "187"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d05",
+   "cau_hoi": "quảng cáo sai sự thật về sản phẩm để lừa khách mua",
+   "dieu": [
+    "197"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d06",
+   "cau_hoi": "bán thuốc giả cho bệnh nhân",
+   "dieu": [
+    "194"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d07",
+   "cau_hoi": "bán cám, thức ăn chăn nuôi giả cho nông dân",
+   "dieu": [
+    "195"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d08",
+   "cau_hoi": "mua bán hóa đơn khống để hợp thức chi phí",
+   "dieu": [
+    "203"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d09",
+   "cau_hoi": "dùng thông tin nội bộ của công ty để mua bán cổ phiếu kiếm lời",
+   "dieu": [
+    "210"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d10",
+   "cau_hoi": "tung tin và đẩy giá cổ phiếu lên xuống để thao túng thị trường",
+   "dieu": [
+    "211"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d11",
+   "cau_hoi": "khai man để hưởng trợ cấp thất nghiệp",
+   "dieu": [
+    "214"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d12",
+   "cau_hoi": "công ty cố tình không đóng bảo hiểm xã hội cho nhân viên",
+   "dieu": [
+    "216"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d13",
+   "cau_hoi": "sao chép bán sách và phần mềm lậu",
+   "dieu": [
+    "225"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d14",
+   "cau_hoi": "vứt chất thải độc hại ra môi trường bừa bãi",
+   "dieu": [
+    "236"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d15",
+   "cau_hoi": "dùng điện, thuốc nổ đánh bắt cá ở sông hồ",
+   "dieu": [
+    "242"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d16",
+   "cau_hoi": "trồng cần sa trong vườn nhà",
+   "dieu": [
+    "247"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d17",
+   "cau_hoi": "nấu ma túy đá tại nhà",
+   "dieu": [
+    "248"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d18",
+   "cau_hoi": "cướp ma túy của người khác",
+   "dieu": [
+    "252"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d19",
+   "cau_hoi": "ép buộc người khác phải hút chích ma túy",
+   "dieu": [
+    "257"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d20",
+   "cau_hoi": "rủ rê bạn bè dùng thử ma túy",
+   "dieu": [
+    "258"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d21",
+   "cau_hoi": "đặt vật cản ngang đường quốc lộ gây tai nạn",
+   "dieu": [
+    "261"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d22",
+   "cau_hoi": "giao xe ô tô cho người chưa có bằng lái chạy",
+   "dieu": [
+    "264"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d23",
+   "cau_hoi": "lái tàu thuyền chở khách vi phạm quy định gây chìm tàu",
+   "dieu": [
+    "272"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d24",
+   "cau_hoi": "mua bán thông tin tài khoản thẻ ngân hàng của người khác",
+   "dieu": [
+    "291"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d25",
+   "cau_hoi": "tấn công làm sập website của công ty đối thủ",
+   "dieu": [
+    "287"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d26",
+   "cau_hoi": "bắt công nhân làm việc không cho nghỉ, đe dọa không cho bỏ đi",
+   "dieu": [
+    "297"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d27",
+   "cau_hoi": "thuê trẻ em dưới 16 tuổi làm việc nặng nhọc",
+   "dieu": [
+    "296"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d28",
+   "cau_hoi": "đặt bom giết nhiều người để gây hoảng loạn",
+   "dieu": [
+    "299"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d29",
+   "cau_hoi": "chuyển tiền giúp nhóm khủng bố hoạt động",
+   "dieu": [
+    "300"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d30",
+   "cau_hoi": "bắt giữ con tin để đòi chính quyền thả người",
+   "dieu": [
+    "301"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d31",
+   "cau_hoi": "tàng trữ thuốc nổ trái phép",
+   "dieu": [
+    "305"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d32",
+   "cau_hoi": "làm mất súng của đơn vị do không giữ gìn cẩn thận",
+   "dieu": [
+    "308"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d33",
+   "cau_hoi": "mở quán không đủ điều kiện phòng cháy chữa cháy gây cháy chết người",
+   "dieu": [
+    "313"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d34",
+   "cau_hoi": "phá thai trái phép ở phòng khám không có giấy phép",
+   "dieu": [
+    "316"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d35",
+   "cau_hoi": "đào mộ lấy hài cốt người khác",
+   "dieu": [
+    "319"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d36",
+   "cau_hoi": "xem bói, lên đồng để lừa tiền người nhẹ dạ",
+   "dieu": [
+    "320"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d37",
+   "cau_hoi": "dụ dỗ trẻ em chưa đủ 18 tuổi đi trộm cắp",
+   "dieu": [
+    "325"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d38",
+   "cau_hoi": "lan truyền phim và ảnh sex trên mạng",
+   "dieu": [
+    "326"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d39",
+   "cau_hoi": "môi giới cho khách mua dâm",
+   "dieu": [
+    "328"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d40",
+   "cau_hoi": "mua dâm trẻ vị thành niên",
+   "dieu": [
+    "329"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d41",
+   "cau_hoi": "ngăn cản thanh niên đi nghĩa vụ quân sự",
+   "dieu": [
+    "335"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d42",
+   "cau_hoi": "mạo danh cán bộ có chức vụ để lừa người khác",
+   "dieu": [
+    "339"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d43",
+   "cau_hoi": "sửa chữa giấy chứng nhận do cơ quan nhà nước cấp rồi đem dùng",
+   "dieu": [
+    "340"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d44",
+   "cau_hoi": "ở lại Việt Nam quá hạn thị thực",
+   "dieu": [
+    "347"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d45",
+   "cau_hoi": "môi giới đưa người trốn sang nước ngoài trái phép",
+   "dieu": [
+    "349"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d46",
+   "cau_hoi": "đốt cờ tổ quốc để xúc phạm",
+   "dieu": [
+    "351"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d47",
+   "cau_hoi": "quan chức lợi dụng chức quyền để chiếm đoạt tài sản",
+   "dieu": [
+    "355"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d48",
+   "cau_hoi": "cán bộ làm giả giấy tờ trong công tác để trục lợi",
+   "dieu": [
+    "359"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d49",
+   "cau_hoi": "đưa tiền cho công an để khỏi bị phạt",
+   "dieu": [
+    "364"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d50",
+   "cau_hoi": "làm trung gian chuyển tiền hối lộ cho quan chức",
+   "dieu": [
+    "365"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d51",
+   "cau_hoi": "thẩm phán cố tình ra bản án sai trái pháp luật",
+   "dieu": [
+    "370"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d52",
+   "cau_hoi": "điều tra viên đánh đập nghi phạm để ép khai nhận",
+   "dieu": [
+    "373",
+    "374"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d53",
+   "cau_hoi": "người bị kết án cố tình không chấp hành bản án",
+   "dieu": [
+    "380"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d54",
+   "cau_hoi": "làm chứng gian dối trước tòa",
+   "dieu": [
+    "382"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d55",
+   "cau_hoi": "phạm nhân trốn khỏi trại giam",
+   "dieu": [
+    "386"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d56",
+   "cau_hoi": "giấu người phạm tội để họ không bị bắt",
+   "dieu": [
+    "389"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d57",
+   "cau_hoi": "biết có người giết người mà không báo công an",
+   "dieu": [
+    "390"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d58",
+   "cau_hoi": "chửi thẩm phán và gây rối trong phiên tòa",
+   "dieu": [
+    "391"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d59",
+   "cau_hoi": "lính cãi lại mệnh lệnh của cấp trên",
+   "dieu": [
+    "394"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d60",
+   "cau_hoi": "quân nhân đánh đồng đội",
+   "dieu": [
+    "398"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d61",
+   "cau_hoi": "dùng chức vụ ép cấp dưới quan hệ tình dục",
+   "dieu": [
+    "143"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d62",
+   "cau_hoi": "quan hệ tình dục với bạn gái chưa đủ 16 tuổi dù hai bên đồng ý",
+   "dieu": [
+    "145"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d63",
+   "cau_hoi": "đánh người bị thương nặng vì bị chính họ khiêu khích chọc tức",
+   "dieu": [
+    "135"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d64",
+   "cau_hoi": "đánh chết người đột nhập vào nhà mình vượt quá mức cần thiết để tự vệ",
+   "dieu": [
+    "126"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d65",
+   "cau_hoi": "đối xử tàn tệ khiến người khác tự tử",
+   "dieu": [
+    "130"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d66",
+   "cau_hoi": "xúi giục bạn mình tự tử",
+   "dieu": [
+    "131"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d67",
+   "cau_hoi": "bắt cóc người để đòi tiền chuộc",
+   "dieu": [
+    "169"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d68",
+   "cau_hoi": "đe dọa tung ảnh nóng để buộc người ta đưa tiền",
+   "dieu": [
+    "170"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d69",
+   "cau_hoi": "lợi dụng chủ sơ hở lấy tài sản ngay trước mặt rồi bỏ đi",
+   "dieu": [
+    "172"
+   ],
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "d70",
+   "cau_hoi": "vô ý làm cháy nhà hàng xóm thiệt hại lớn",
+   "dieu": [
+    "180"
+   ],
+   "trang_thai": "nhap"
+  }
+ ]
+}
