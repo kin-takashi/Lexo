@@ -349,3 +349,24 @@ def test_real_warnings_are_the_four_split_points(real):
     st, _, _ = real
     warns = [f.message for f in st.flags if f.level == CANH_BAO]
     assert len(warns) == 4 and all("tách điểm" in w for w in warns)
+
+
+def test_ingest_ngay_hieu_luc_ngoai_van_ban(tmp_path, conn):
+    """Bộ luật cũ không có Điều «hiệu lực thi hành»: ngày do người nhập, phải có căn cứ, bị cảnh báo, và căn cứ được ghi vào nhật ký nạp."""
+    lines = [l for l in LINES if not l.startswith(("Điều 3. Hiệu lực", "Bộ luật này có hiệu lực"))]
+    src = build_docx(tmp_path / "BLTN.docx", lines)
+    st = stage_base_law(src, tmp_path / "raw", ten_viet_tat="BLTN", ngay_hieu_luc="2099-07-01", can_cu_hieu_luc="Nghị quyết thi hành bộ luật")
+    assert [f.code for f in st.flags if f.level == LOI] == []
+    assert "hieu_luc_ngoai_van_ban" in [f.code for f in st.flags if f.level == CANH_BAO]
+    with pytest.raises(IngestError, match="Chưa thể nạp"):                      # chưa xem cảnh báo thì chưa nạp
+        review = new_review(st.parsed_sha256)
+        save_review(approve(review, "Tester"), st.directory / "review.json")
+        ingest_base_law(conn, st.directory)
+    approved_review(st, nguoi="Tester")
+    ingest_base_law(conn, st.directory, raw_root=st.directory.parent)
+    vb = conn.execute("SELECT * FROM van_ban").fetchone()
+    assert (vb["ngay_hieu_luc"], vb["ngay_hieu_luc_theo_van_ban"]) == ("2099-07-01", "2099-07-01")
+    assert "do người nhập" in conn.execute("SELECT ghi_chu FROM log_nap").fetchone()[0]
+    assert all(r["hieu_luc_tu"] == "2099-07-01" for r in conn.execute("SELECT hieu_luc_tu FROM phien_ban_noi_dung"))
+    with pytest.raises(IngestError, match="căn cứ"):
+        stage_base_law(src, tmp_path / "raw2", ten_viet_tat="BLTN", ngay_hieu_luc="2099-07-01")

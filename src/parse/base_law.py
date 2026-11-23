@@ -12,18 +12,19 @@ from __future__ import annotations
 import re
 
 from .model import RANK, VN_LETTERS, LawMeta, Node, ParsedLaw
-from .text import DATE_RE, date_from_match, parse_vn_date
+from .text import DATE_RE, date_from_match, parse_iso_date, parse_vn_date
 
 _ROMAN = r"[IVXLCDM]+"
 _END = r"(?=\s|[.:–-]|$)\s*[.:–-]?\s*(.*)$"
 
 RE_PHAN = re.compile(rf"^(?:Phần|PHẦN)\s+(thứ\s+[^\s.:–-]+|{_ROMAN}){_END}")
+RE_PHAN_TEN = re.compile(r"^(?:Phần|PHẦN)\s+(CHUNG|CÁC TỘI PHẠM)\s*$", re.IGNORECASE)   # BLHS 1999: «PHẦN CHUNG», «PHẦN CÁC TỘI PHẠM»
 RE_CHUONG = re.compile(rf"^(?:Chương|CHƯƠNG)\s+({_ROMAN}){_END}")
 RE_TIEU_MUC = re.compile(rf"^(?:Tiểu mục|TIỂU MỤC)\s+(\d+|{_ROMAN}){_END}")
 RE_MUC = re.compile(rf"^(?:Mục|MỤC)\s+(\d+|{_ROMAN}){_END}")
 RE_DIEU = re.compile(r"^Điều\s+(\d+[a-zđ]?)\s*\.\s*(.*)$")
 RE_KHOAN = re.compile(r"^(\d+[a-zđ]?)\.(?:\s+(.*))?$")   # "2.000.000" không khớp: sau dấu chấm phải là khoảng trắng hoặc hết dòng
-RE_DIEM = re.compile(r"^([a-zđ])\)\s*(.*)$")
+RE_DIEM = re.compile(r"^([a-zđ])\s?\)\s*(.*)$")        # chấp nhận "e ) ..." (một số bản Word gõ dấu cách trước ")")
 RE_CLOSING = re.compile(r"^(?:Bộ luật|Luật|Pháp lệnh|Nghị quyết)\s+này\s+đã được\b.*\bthông qua\b", re.IGNORECASE)
 RE_RULE = re.compile(r"^[_\-–—=*\s]{5,}$")
 RE_SO_HIEU = re.compile(r"Số\s*:?\s*(\d+(?:/[0-9A-Za-zĐđ\-]+)+)")
@@ -44,6 +45,9 @@ MAX_WORDS_VIET_TAT = 6
 
 
 def _match_structural(s: str) -> tuple[str, str, str | None] | None:
+    m = RE_PHAN_TEN.match(s)
+    if m:                                                   # Phần đặt tên thay vì đánh số: ký hiệu = tên viết thường, tiêu đề = tên viết hoa
+        return "phan", m.group(1).lower(), m.group(1).upper()
     for loai, rx in _STRUCTURAL:
         m = rx.match(s)
         if m:
@@ -175,7 +179,11 @@ def parse_base_law(
     ten_viet_tat: str | None = None,
     so_hieu: str | None = None,
     source: dict | None = None,
+    ngay_hieu_luc: str | None = None,
+    can_cu_hieu_luc: str | None = None,
 ) -> ParsedLaw:
+    """`ngay_hieu_luc` (+ `can_cu_hieu_luc`): dùng khi chính văn bản KHÔNG ghi ngày có hiệu lực (vd BLHS 1999: ngày 01/07/2000 nằm ở
+    Nghị quyết 32/1999/QH10 thi hành bộ luật). Ngày này thay ngày đọc từ văn bản, được ghi vào `source` và validator ép người duyệt xem lại."""
     end, has_footer = _split_footer(lines)
     body, footer = lines[:end], lines[end:]
     roots, preamble, warnings = parse_body(body)
@@ -190,6 +198,11 @@ def parse_base_law(
         source=dict(source or {}),
     )
     law.meta = _extract_meta(law, header_text, ten_viet_tat=ten_viet_tat, so_hieu=so_hieu)
+    if ngay_hieu_luc:
+        if not (can_cu_hieu_luc or "").strip():
+            raise ValueError("Phải ghi căn cứ (can_cu_hieu_luc) khi đặt ngày hiệu lực ngoài văn bản")
+        law.meta.ngay_hieu_luc = parse_iso_date(ngay_hieu_luc)
+        law.source["hieu_luc_ngoai_van_ban"] = {"ngay": law.meta.ngay_hieu_luc, "can_cu": can_cu_hieu_luc.strip()}
     return law
 
 
@@ -206,6 +219,11 @@ def _extract_meta(law: ParsedLaw, header_text: str, *, ten_viet_tat: str | None,
     # loại và tên: hai dòng đầu, vd "BỘ LUẬT" + "HÌNH SỰ"
     kind_line = law.preamble[0] if law.preamble else ""
     name_line = law.preamble[1] if len(law.preamble) > 1 and _is_title_line(law.preamble[1]) else ""
+    if _is_title_line(kind_line):                         # tên nằm cùng dòng loại: "BỘ LUẬT HÌNH SỰ" (thay vì hai dòng "BỘ LUẬT" / "HÌNH SỰ")
+        for label, _code in _LOAI_VAN_BAN:
+            if kind_line != label and kind_line.startswith(label + " "):
+                name_line, kind_line = kind_line[len(label) + 1:].strip(), label
+                break
     for label, code in _LOAI_VAN_BAN:
         if kind_line == label:
             meta.loai = code

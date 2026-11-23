@@ -7,6 +7,7 @@ paths:
   inbox: inbox
   db: db/luat.sqlite
   index: db/chi_muc.sqlite       # chỉ mục tìm kiếm (FTS5 + vector), dẫn xuất, dựng lại được
+  du_lieu: db/du_lieu.sqlite     # dữ liệu huấn luyện + đánh giá kèm nguồn gốc / lịch sử duyệt nhãn (src/dulieu)
 
 # Văn bản mà dự án ÁP DỤNG sửa đổi (Bước 2). Lệnh nhắm văn bản khác chỉ được ghi nhận, không áp.
 pham_vi_sua_doi:
@@ -25,7 +26,7 @@ llm_extract:
 # LLM local qua Ollama — agent (Bước 6) và phương án thay thế cho trích xuất
 llm_local:
   endpoint: http://localhost:11434
-  agent_model: ""                 # cỡ nhỏ 1.7B–4B; kiểm tra tên chính xác trên Ollama trước khi điền
+  agent_model: ""                 # KHÔNG dùng: agent định tuyến câu hỏi bằng luật, không cần LLM (xem mục agent bên dưới và README Bước 6)
   extract_model: qwen3:8b         # Qwen3-8B (đã chọn); cũng là model viết câu hỏi sinh sẵn (scripts/sinh_cau_hoi.py)
   think: false                    # tắt thinking khi trích xuất JSON, nếu không parse JSON sẽ hỏng
 
@@ -41,3 +42,17 @@ embedding:
 vector_store:
   backend: numpy                  # Bước 4: quét chính xác bằng numpy (~6 nghìn vector, đủ nhanh). Vector lưu dạng BLOB float32
                                   # tương thích sqlite-vec, nên chuyển sang sqlite-vec sau này không phải tính lại.
+
+# Agent + giao diện tra cứu (Bước 6). Mọi khoá đều tuỳ chọn; thiếu thì dùng mặc định trong src/agent/cong_cu.py (MAC_DINH_AGENT).
+agent:
+  tach_model:                     # mô hình tách tình huống thành hành vi: lấy cái ĐẦU TIÊN mà Ollama đang có
+    - qwen3-8b-lexo-sach-n368     # bản tinh chỉnh LoRA (nếu đã nạp vào Ollama)
+    - lexo-tach
+  so_dieu_moi_hanh_vi: 3          # mỗi hành vi gợi ý 3 Điều (khớp scripts/danh_gia_nhieu.py)
+  so_dieu_khi_khong_tach: 5       # không tách được: hiện 5 Điều cho cả tình huống
+  xep_lai: false                  # xếp lại top 5 bằng bge-reranker-v2-m3 (cần onnxruntime + tải ~2,3 GB: scripts/tai_xep_lai.py)
+  xep_lai_w: 0.25
+  xep_lai_top: 5
+  mo_hinh_xep_lai: models/bge-reranker-v2-m3
+  thoi_gian_cho_ollama: 2.0       # giây chờ khi kiểm tra Ollama còn sống
+  thoi_gian_tach: 180             # giây tối đa cho một lần tách

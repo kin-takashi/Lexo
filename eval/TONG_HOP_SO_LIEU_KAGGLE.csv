@@ -1,0 +1,121 @@
+﻿bang,mo_hinh,tap,chi_so,gia_tri,nguon
+huan_luyen_val_loss,LoRA cũ,val,buoc_0,1.8868,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_25,0.6838,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_50,0.6077,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_75,0.5899,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_100,0.5692,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_125,0.6085,thong_tin.json
+huan_luyen_val_loss,LoRA cũ,val,buoc_150,0.6143,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_0,1.8783,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_3,1.1284,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_6,0.8472,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_7,0.8218,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_9,0.7848,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_12,0.7486,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_14,0.743,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_15,0.7421,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_18,0.7417,thong_tin.json
+huan_luyen_val_loss,LoRA n50,val,buoc_21,0.7418,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_0,1.8783,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_23,0.6729,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_46,0.5982,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_69,0.5822,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_92,0.5625,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_115,0.5914,thong_tin.json
+huan_luyen_val_loss,LoRA n368,val,buoc_138,0.5953,thong_tin.json
+huan_luyen,LoRA cũ,-,val_loss_ban_dau,1.8868,thong_tin.json
+huan_luyen,LoRA n50,-,val_loss_ban_dau,1.8783,thong_tin.json
+huan_luyen,LoRA n50,-,so_giay_hoc,317.9,thong_tin.json
+huan_luyen,LoRA n368,-,val_loss_ban_dau,1.8783,thong_tin.json
+huan_luyen,LoRA n368,-,so_giay_hoc,1101.3,thong_tin.json
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,tim_du,14,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,tim_du_pct,41%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,bao_phu,66%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,chinh_xac,21%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,hanh_vi_co_dap_an,62%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,dung_so_hanh_vi,12,inbox/ket_qua_1/tach_dev_qwen3-8b_thuan_0vd.log.jsonl
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,dieu_hien_thi_tb,7.4,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,qwen3:8b (chỉ lời nhắc),tất cả 34,khong_tach_cung_so_dieu_tim_du_pct,35%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,tim_du,21,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,tim_du_pct,62%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,bao_phu,76%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,chinh_xac,28%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,hanh_vi_co_dap_an,78%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,dung_so_hanh_vi,29,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-tach_thuan_0vd.log.jsonl
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,dieu_hien_thi_tb,6.1,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",tất cả 34,khong_tach_cung_so_dieu_tim_du_pct,35%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-tach_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,tim_du,11,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,tim_du_pct,32%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,bao_phu,61%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,chinh_xac,26%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,hanh_vi_co_dap_an,67%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,dung_so_hanh_vi,23,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-sach-n50_thuan_0vd.log.jsonl
+dev34_chinh,LoRA n50 (sạch),tất cả 34,dieu_hien_thi_tb,5.7,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n50 (sạch),tất cả 34,khong_tach_cung_so_dieu_tim_du_pct,32%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n50_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,tim_du,17,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,tim_du_pct,50%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,bao_phu,71%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,chinh_xac,27%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,hanh_vi_co_dap_an,76%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,dung_so_hanh_vi,24,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-sach-n368_thuan_0vd.log.jsonl
+dev34_chinh,LoRA n368 (sạch),tất cả 34,dieu_hien_thi_tb,5.9,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,LoRA n368 (sạch),tất cả 34,khong_tach_cung_so_dieu_tim_du_pct,35%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b-lexo-sach-n368_tat_ca.md
+dev34_chinh,Tách lý tưởng,tất cả 34,tim_du,15,inbox/ket_qua_1/kq_nhieu_dev_tran_tat_ca.md
+dev34_khong_tach,khong_tach,"không tách, hiển thị 3 Điều",tim_du_pct,26%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_khong_tach,khong_tach,"không tách, hiển thị 6 Điều",tim_du_pct,35%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_khong_tach,khong_tach,"không tách, hiển thị 9 Điều",tim_du_pct,44%,inbox/ket_qua_1/kq_nhieu_dev_qwen3-8b_tat_ca.md
+dev34_nhom,qwen3:8b (chỉ lời nhắc),dn01–14,tim_du,5,kq_nhieu_dev_*_dn*.md
+dev34_nhom,qwen3:8b (chỉ lời nhắc),dn01–14,dung_so_hanh_vi,5,tach_dev_*.log.jsonl
+dev34_nhom,qwen3:8b (chỉ lời nhắc),dn15–34,tim_du,9,kq_nhieu_dev_*_dn*.md
+dev34_nhom,qwen3:8b (chỉ lời nhắc),dn15–34,dung_so_hanh_vi,7,tach_dev_*.log.jsonl
+dev34_nhom,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",dn01–14,tim_du,8,kq_nhieu_dev_*_dn*.md
+dev34_nhom,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",dn01–14,dung_so_hanh_vi,13,tach_dev_*.log.jsonl
+dev34_nhom,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",dn15–34,tim_du,13,kq_nhieu_dev_*_dn*.md
+dev34_nhom,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",dn15–34,dung_so_hanh_vi,16,tach_dev_*.log.jsonl
+dev34_nhom,LoRA n50 (sạch),dn01–14,tim_du,4,kq_nhieu_dev_*_dn*.md
+dev34_nhom,LoRA n50 (sạch),dn01–14,dung_so_hanh_vi,10,tach_dev_*.log.jsonl
+dev34_nhom,LoRA n50 (sạch),dn15–34,tim_du,7,kq_nhieu_dev_*_dn*.md
+dev34_nhom,LoRA n50 (sạch),dn15–34,dung_so_hanh_vi,13,tach_dev_*.log.jsonl
+dev34_nhom,LoRA n368 (sạch),dn01–14,tim_du,7,kq_nhieu_dev_*_dn*.md
+dev34_nhom,LoRA n368 (sạch),dn01–14,dung_so_hanh_vi,10,tach_dev_*.log.jsonl
+dev34_nhom,LoRA n368 (sạch),dn15–34,tim_du,10,kq_nhieu_dev_*_dn*.md
+dev34_nhom,LoRA n368 (sạch),dn15–34,dung_so_hanh_vi,14,tach_dev_*.log.jsonl
+kiem_cap,① n368 so với qwen3:8b (đăng ký trước),34,dung_so_p,0.0018,tính từ log + md
+kiem_cap,① n368 so với qwen3:8b (đăng ký trước),34,tim_du_p,0.375,tính từ log + md
+kiem_cap,② n368 so với n50 (đăng ký trước),34,dung_so_p,1.0,tính từ log + md
+kiem_cap,② n368 so với n50 (đăng ký trước),34,tim_du_p,0.0312,tính từ log + md
+kiem_cap,"③ n368 so với LoRA cũ (đăng ký trước, chỉ dn15–34)",20 (dn15–34),dung_so_p,0.625,tính từ log + md
+kiem_cap,"③ n368 so với LoRA cũ (đăng ký trước, chỉ dn15–34)",20 (dn15–34),tim_du_p,0.25,tính từ log + md
+kiem_cap,n368 so với LoRA cũ (phụ),34,dung_so_p,0.125,tính từ log + md
+kiem_cap,n368 so với LoRA cũ (phụ),34,tim_du_p,0.2188,tính từ log + md
+kiem_cap,n50 so với qwen3:8b (phụ),34,dung_so_p,0.0192,tính từ log + md
+kiem_cap,n50 so với qwen3:8b (phụ),34,tim_du_p,0.25,tính từ log + md
+dev14_dot1,qwen3:4b (chỉ lời nhắc),dn01–14,tim_du,5,inbox/ket_qua/kq_nhieu_dev_qwen3-4b_thuan_0vd.md
+dev14_dot1,qwen3:4b (chỉ lời nhắc),dn01–14,dung_so,6,inbox/ket_qua/tach_dev_qwen3-4b_thuan_0vd.log.jsonl
+dev14_dot1,qwen3:8b (chỉ lời nhắc),dn01–14,tim_du,5,inbox/ket_qua/kq_nhieu_dev_qwen3-8b_thuan_0vd.md
+dev14_dot1,qwen3:8b (chỉ lời nhắc),dn01–14,dung_so,5,inbox/ket_qua/tach_dev_qwen3-8b_thuan_0vd.log.jsonl
+dev14_dot1,LoRA cũ,dn01–14,tim_du,8,inbox/ket_qua/kq_nhieu_dev_qwen3-8b-lexo-tach_thuan_0vd.md
+dev14_dot1,LoRA cũ,dn01–14,dung_so,13,inbox/ket_qua/tach_dev_qwen3-8b-lexo-tach_thuan_0vd.log.jsonl
+thoi_gian,qwen3:8b (chỉ lời nhắc),34,giay_tb,5.96,inbox/ket_qua_1/tach_dev_qwen3-8b_thuan_0vd.log.jsonl
+thoi_gian,qwen3:8b (chỉ lời nhắc),34,giay_max,98.99,log.jsonl
+thoi_gian,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",34,giay_tb,2.45,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-tach_thuan_0vd.log.jsonl
+thoi_gian,"LoRA cũ (397 mẫu, có 31 mẫu trùng tổ hợp)",34,giay_max,4.12,log.jsonl
+thoi_gian,LoRA n50 (sạch),34,giay_tb,2.83,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-sach-n50_thuan_0vd.log.jsonl
+thoi_gian,LoRA n50 (sạch),34,giay_max,6.85,log.jsonl
+thoi_gian,LoRA n368 (sạch),34,giay_tb,2.42,inbox/ket_qua_1/tach_dev_qwen3-8b-lexo-sach-n368_thuan_0vd.log.jsonl
+thoi_gian,LoRA n368 (sạch),34,giay_max,4.68,log.jsonl
+truy_hoi_58,hybrid,kiem_tra58,hit1,57%,eval/ket_qua.md
+truy_hoi_58,hybrid,kiem_tra58,hit3,84%,eval/ket_qua.md
+truy_hoi_58,hybrid,kiem_tra58,hit5,88%,eval/ket_qua.md
+truy_hoi_58,hybrid,kiem_tra58,hit10,93%,eval/ket_qua.md
+truy_hoi_58,hybrid,kiem_tra58,mrr,0.706,eval/ket_qua.md
+truy_hoi_58,vector,kiem_tra58,hit1,64%,eval/ket_qua.md
+truy_hoi_58,vector,kiem_tra58,hit3,84%,eval/ket_qua.md
+truy_hoi_58,vector,kiem_tra58,hit5,88%,eval/ket_qua.md
+truy_hoi_58,vector,kiem_tra58,hit10,95%,eval/ket_qua.md
+truy_hoi_58,vector,kiem_tra58,mrr,0.753,eval/ket_qua.md
+truy_hoi_58,fts,kiem_tra58,hit1,52%,eval/ket_qua.md
+truy_hoi_58,fts,kiem_tra58,hit3,67%,eval/ket_qua.md
+truy_hoi_58,fts,kiem_tra58,hit5,76%,eval/ket_qua.md
+truy_hoi_58,fts,kiem_tra58,hit10,78%,eval/ket_qua.md
+truy_hoi_58,fts,kiem_tra58,mrr,0.619,eval/ket_qua.md

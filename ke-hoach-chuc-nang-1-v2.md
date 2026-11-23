@@ -282,10 +282,11 @@ Nguồn ưu tiên: **vbpl.vn**. Với nguồn thương mại (thuvienphapluat.vn
 Hiệu lực không chỉ nằm ở cấp văn bản. Cần phủ được:
 
 1. **Hoãn hiệu lực toàn văn bản**: một luật ban hành với ngày hiệu lực dự kiến, sau đó bị lùi bằng nghị quyết riêng trước khi luật kịp có hiệu lực. Xử lý bằng `quan_he_van_ban.loai_quan_he = hoan_hieu_luc`, cập nhật `van_ban.ngay_hieu_luc` và `trang_thai = chua_co_hieu_luc` cho đến mốc mới.
-   - *Ví dụ cần tự kiểm chứng*: BLHS 2015 (bộ luật dùng ở bước 1) được cho là từng bị lùi hiệu lực bằng một nghị quyết riêng của Quốc hội trước khi luật kịp thi hành. **Ngày tháng và số hiệu nghị quyết chính xác cần tra lại trên vbpl.vn**, không dùng số liệu nhớ lại chưa kiểm chứng.
+   - *Ví dụ đã ghi trong kho*: BLHS 2015 (100/2015/QH13) ban hành 27/11/2015, chính văn ghi hiệu lực 01/07/2016; Nghị quyết 144/2016/QH13 lùi sang 01/01/2018, rồi Nghị quyết 41/2017/QH14 (ban hành 20/06/2017, hiệu lực 05/07/2017) Điều 1 khoản 1 điểm a quy định BLHS 2015 đã sửa đổi theo Luật 12/2017/QH14 có hiệu lực từ 01/01/2018 và Điều 4 khoản 2 cho Nghị quyết 144/2016/QH13 hết hiệu lực. Kho ghi lệnh `hoan_hieu_luc` theo Nghị quyết 41/2017/QH14 (`scripts/hoan_hieu_luc.py`); nên đối chiếu lần cuối trên vbpl.vn / Công báo trước khi đưa vào báo cáo.
 2. **Hiệu lực từng phần trong cùng một văn bản**: một số điều có hiệu lực sớm hơn/muộn hơn phần còn lại. Xử lý ở cấp `phien_ban_noi_dung.hieu_luc_tu` của từng đơn vị, không dùng chung một ngày hiệu lực cấp văn bản cho mọi điều.
 3. **Hết hiệu lực một phần**: văn bản còn hiệu lực nhưng một số điều đã bị bãi bỏ. Phản ánh qua `trang_thai = het_hieu_luc_mot_phan` ở cấp văn bản, và từng đơn vị bị bãi bỏ có `hieu_luc_den` riêng.
 4. **Đình chỉ hiệu lực tạm thời** (`dinh_chi`) và **văn bản hướng dẫn thi hành** (`huong_dan`, không làm đổi nội dung nhưng liên quan chặt) — lưu như quan hệ riêng, không lẫn với `sua_doi`.
+5. **Bộ luật thay thế bộ luật** (nhiều văn bản gốc cùng tên viết tắt, vd BLHS 1999 → BLHS 2015): mỗi bộ có khoảng hiệu lực nửa mở `[ngay_hieu_luc, ngay_het_hieu_luc)`; phiên bản của bộ cũ bị cắt đúng ngày hết hiệu lực, và truy vấn «xem luật tại ngày D» chọn bộ luật có khoảng chứa D (D ngoài mọi khoảng đã nạp thì báo rõ, không đoán). Quan hệ `thay_the` nối hai bộ. Bộ luật cũ chỉ tra được khi đã nạp văn bản gốc của nó. *Ví dụ đã ghi trong kho*: BLHS 1999 (15/1999/QH10; hiệu lực từ 01/07/2000 theo mục 1 Nghị quyết 32/1999/QH10, hết hiệu lực 01/01/2018) cùng Luật 15/2008/QH12 (01/01/2009, chỉ Điều 270 khoản 1) và Luật 37/2009/QH12 (01/01/2010): tra ngày 05/05/2010 ra BLHS 1999 đã sửa đổi 2009; BLHS 1985 (trước 01/07/2000) chưa nạp. Việc duyệt các văn bản này do Claude làm tạm, chờ người xác nhận (xem README, «Nạp một bộ luật cũ»).
 
 ---
 
@@ -350,7 +351,7 @@ Ghi rõ trong luận văn: ai là người thực hiện bước duyệt (chính
 | 3 | Đối chiếu bản dựng lại với văn bản hợp nhất chính thức của BLHS 2015 | Số liệu tỉ lệ khớp |
 | 4 | Thêm FTS5, embedding, sqlite-vec (hoặc numpy brute-force dự phòng); hybrid search | Tìm theo mô tả bằng lời chạy được |
 | 5 | Xây bộ câu hỏi đánh giá; đo Recall@k, MRR; so sánh mô hình embedding | Bảng kết quả thực nghiệm |
-| 6 | Agent: LLM local nhỏ cho phân loại ý định/trích tham số; bước 4 trả nguyên văn (tra chính xác) hoặc diễn giải local (mô tả tự do) | Bản demo end-to-end, không cần mạng lúc dùng |
+| 6 | Agent + giao diện: phân loại ý định bằng luật (không LLM), công cụ tra cứu/tìm/tách hành vi, trả nguyên văn từ kho (không diễn giải bằng LLM); giao diện Streamlit cho người dùng thường + dòng lệnh. **[ĐÃ XONG 2026-10-18 — xem README Bước 6 và ghi chú cuối §14]** | Bản demo end-to-end, không cần mạng lúc dùng |
 | 7 | Mở rộng sang các bộ luật khác, nghị quyết hướng dẫn | Kho lớn dần |
 | 8 | (Tùy chọn) so sánh mức lượng tử hóa, distillation, công bố dataset | Đóng góp mở rộng |
 
@@ -376,6 +377,11 @@ Câu người dùng
 - Luôn kèm cảnh báo: thông tin tham khảo, không phải tư vấn pháp lý
 - Hiển thị ngày cập nhật kho lần cuối trên giao diện
 
+**Thực tế triển khai (2026-10-18) — khác sơ đồ trên ở hai chỗ, có chủ ý:**
+- Bước (1)–(2) làm bằng **luật** (bỏ dấu + regex, `src/agent/y_dinh.py`), không dùng LLM nhỏ: số Điều/khoản/điểm/ngày là tham số cần chính xác tuyệt đối nên phải kiểm thử được từng ca; chạy được khi chưa bật Ollama. LLM local chỉ còn ở khâu **tách tình huống dài thành hành vi** (mô hình đã tinh chỉnh, Bước 4–5) và embedding.
+- Không có bước (4b): không có LLM diễn giải; mọi chữ luật hiển thị lấy nguyên văn từ kho. Câu xin kết luận chỉ được trả Điều liên quan kèm lời nhắc không kết luận pháp lý (đúng phạm vi chức năng 1; kết luận sơ bộ thuộc chức năng 2).
+- Mã: `src/agent/{y_dinh,cong_cu,agent,trinh_bay}.py`, giao diện `src/ui/app_tra_cuu.py`, dòng lệnh `scripts/hoi.py`.
+
 ---
 
 ## 15. Rủi ro và giới hạn cần ghi rõ
@@ -398,7 +404,7 @@ Câu người dùng
 3. Tiêu chí nghiệm thu cụ thể cho từng bước ở mục 13 (ví dụ: bước 1 coi là xong khi tra được bao nhiêu % điều đúng)
 4. Mốc thời gian trình thầy cho từng bước
 5. Mô hình embedding chọn sau thực nghiệm
-6. Xác nhận số hiệu và ngày tháng chính xác của nghị quyết hoãn hiệu lực BLHS 2015 (mục 10) trên vbpl.vn trước khi đưa vào báo cáo
+6. ~~Xác nhận số hiệu và ngày tháng chính xác của nghị quyết hoãn hiệu lực BLHS 2015~~ — đã chốt theo Nghị quyết 41/2017/QH14 (mục 10) và ghi vào kho; còn đối chiếu lần cuối trên vbpl.vn trước khi đưa vào báo cáo
 7. Nhắm mục tiêu công bố (luận văn / hội nghị / tạp chí) để quyết định mức đầu tư cho dataset và đánh giá
 
 ---

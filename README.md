@@ -60,9 +60,63 @@ python scripts/lookup.py "Điều 173 BLHS" --chuyen-tiep                # kèm 
 
 Giới hạn đã biết (hệ thống không tự suy ra, chỉ hiển thị):
 - Điều khoản chuyển tiếp / hồi tố có lợi chỉ được lưu và hiển thị nguyên văn; hệ thống không tự quyết "điều luật nào áp dụng cho hành vi nào".
-- Ngày bắt đầu hiệu lực của BLHS 2015 đang lấy theo chính văn bản (01/07/2016). Thực tế đã được nghị quyết của Quốc hội hoãn; cần nạp nghị quyết đó (lệnh `hoan_hieu_luc`) để tra ở các ngày trước mốc thực tế cho đúng. Lookup có in cảnh báo khi chưa có.
+- Ngày bắt đầu hiệu lực của BLHS 2015: chính văn bản ghi 01/07/2016 nhưng Nghị quyết 41/2017/QH14 (Điều 1 khoản 1 điểm a) đã lùi sang **01/01/2018**. Kho đã ghi điều này bằng một lệnh `hoan_hieu_luc` đã duyệt, kèm văn bản nguồn (xem «Hiệu lực của cả bộ luật» ngay dưới). Lookup chỉ còn in cảnh báo khi kho CHƯA ghi nghị quyết lùi hiệu lực.
 - Lệnh "đánh số lại" chưa hỗ trợ (báo là chưa hiểu). Các heuristic sửa từ ngữ (khoảng trắng, chữ hoa đầu câu) chỉ kiểm chứng đầy đủ khi đối chiếu với văn bản hợp nhất (Bước 3).
 - Mục bộ trích lệnh không hiểu chỉ nằm trong `raw/<slug>/commands.json` và `log_nap.ghi_chu`, chưa có giao diện duyệt riêng.
+
+### Hiệu lực của cả bộ luật và nhiều bộ luật nối tiếp (BLHS 1999 → BLHS 2015)
+
+Mỗi bộ luật chính (có tên viết tắt, vd `BLHS`) có một khoảng hiệu lực nửa mở `[ngày bắt đầu, ngày hết hiệu lực)`. Khi tra theo một ngày, hệ thống chọn bộ luật có khoảng chứa ngày đó:
+
+| Thời kỳ | Bộ luật | Trong kho |
+|---|---|---|
+| từ 01/01/2018 | Bộ luật hình sự 2015 (100/2015/QH13) | đã nạp |
+| 01/07/2000 – 31/12/2017 | Bộ luật hình sự 1999 (15/1999/QH10), sửa đổi bởi 15/2008/QH12 (từ 01/01/2009, chỉ Điều 270 khoản 1) và 37/2009/QH12 (từ 01/01/2010) | đã nạp (xem «Nạp một bộ luật cũ» ngay dưới) |
+| 01/01/1986 – 30/06/2000 | Bộ luật hình sự 1985 | chưa nạp (chỉ biết tên và mốc) |
+
+Ngày thuộc thời kỳ chưa nạp thì giao diện/agent nói rõ «ngày đó thuộc bộ luật nào, kho chưa có» chứ không trả nhầm Điều của BLHS 2015. Danh sách thời kỳ đã biết nhưng chưa nạp nằm ở `agent.luat_chua_nap` trong `config.yaml` (không bắt buộc; có giá trị mặc định); bộ luật nào đã nạp (cùng số hiệu) thì tự bị loại khỏi danh sách này.
+
+```powershell
+python scripts/hoan_hieu_luc.py xem                                  # các bộ luật chính trong kho và khoảng hiệu lực của từng bộ
+python scripts/hoan_hieu_luc.py hoan --dich 100/2015/QH13 --ngay-moi 2018-01-01 --nguon 41/2017/QH14 `
+    --ten-nguon "Nghị quyết số 41/2017/QH14 ..." --ngay-ban-hanh 2017-06-20 --hieu-luc-tu 2017-07-05 `
+    --vi-tri "Điều 1 khoản 1 điểm a" --can-cu "..." --nguoi "Tên bạn"      # CHẠY THỬ trên bản sao; thêm --ap-dung để ghi thật
+python scripts/hoan_hieu_luc.py het --so-hieu 15/1999/QH10 --ngay-het 2018-01-01 --thay-boi 100/2015/QH13   # BLHS 1999 hết hiệu lực khi BLHS 2015 có hiệu lực
+python scripts/build_index.py --tat-ca                               # dựng chỉ mục cho MỌI bộ luật chính đã nạp (hoặc --van-ban SỐ_HIỆU để thêm từng bộ)
+```
+
+- `hoan` ghi một lệnh `hoan_hieu_luc` ĐÃ DUYỆT (kèm văn bản nguồn + nhật ký nạp, ghi rõ ai nhập và căn cứ) rồi dựng lại phiên bản; chạy lại lệnh y hệt thì không làm gì. `--ap-dung` tự sao lưu `db/luat.sqlite.bak-THỜI-GIAN` trước khi ghi.
+- `het` đặt `van_ban.ngay_het_hieu_luc` (ngày ĐẦU TIÊN không còn hiệu lực) rồi dựng lại để mọi phiên bản của bộ luật cũ bị cắt đúng ngày đó; cảnh báo nếu bộ luật thay thế bắt đầu hiệu lực khác ngày này (hở hoặc chồng nhau).
+- Sau khi đổi khoảng hiệu lực phải chạy lại `build_index.py` (đoạn nào đổi ngày hoặc ngữ cảnh thì nhúng lại; phần còn lại dùng cache).
+- Bản văn «như khi Quốc hội thông qua» (`bản gốc`) luôn lấy nguyên văn lúc ban hành, không phụ thuộc ngày bắt đầu hiệu lực.
+- BLHS 1999 đã nạp cùng 2 luật sửa đổi (xem mục ngay dưới). Luật sửa đổi của bộ luật cũ nạp bằng `parse_amending_law.py --pham-vi 15/1999/QH10` và `extract_commands.py --dich 15/1999/QH10`: không đụng vào `pham_vi_sua_doi` trong `config.yaml` (mặc định vẫn là BLHS 2015).
+
+### Nạp một bộ luật cũ và các luật sửa đổi của nó (ví dụ BLHS 1999 → bản ngày 05/05/2010)
+
+Đã làm cho BLHS 1999; làm lại y hệt cho bộ luật cũ khác khi có tệp văn bản. Mỗi bước đều dừng chờ người xem rồi mới đi tiếp.
+
+```powershell
+# 1. Bộ luật gốc. Văn bản BLHS 1999 KHÔNG tự ghi ngày có hiệu lực nên phải nêu ngày và căn cứ (căn cứ hiện ra thành cảnh báo bắt buộc người duyệt đọc)
+python scripts/parse_base_law.py "inbox/15_1999_QH10_46056.docx" --ten-viet-tat BLHS --ngay-hieu-luc 2000-07-01 `
+    --can-cu-hieu-luc "mục 1 Nghị quyết 32/1999/QH10 ngày 21/12/1999: Bộ luật hình sự có hiệu lực từ 01/7/2000"
+#    -> xem raw/15-1999-QH10/parsed.json, điền review.json (lỗi phải miễn kèm ghi chú, cảnh báo phải liệt kê vào da_xem_canh_bao), rồi:
+python scripts/ingest_base_law.py 15-1999-QH10
+python scripts/hoan_hieu_luc.py het --so-hieu 15/1999/QH10 --ngay-het 2018-01-01 --thay-boi 100/2015/QH13 --ap-dung
+# 2. Luật sửa đổi của nó: --pham-vi nói «Bộ luật hình sự» trong luật này là văn bản nào
+python scripts/parse_amending_law.py "inbox/37_2009_QH12_90648.docx" --pham-vi 15/1999/QH10
+python scripts/parse_amending_law.py "inbox/15_2008_QH12_66950.docx" --pham-vi 15/1999/QH10
+python scripts/extract_commands.py 37-2009-QH12 --dich 15/1999/QH10 --nap
+python scripts/apply_commands.py bao-cao 15/1999/QH10 37/2009/QH12 --xuat bao_cao_37_2009.md   # ĐỌC rồi mới duyệt
+python scripts/apply_commands.py duyet 15/1999/QH10 37/2009/QH12 --nguoi "Tên bạn"
+python scripts/apply_commands.py ap-dung 15/1999/QH10
+python scripts/build_index.py --tat-ca                                                          # cần Ollama đang chạy
+```
+
+Điều cần biết về lần nạp BLHS 1999 hiện có trong kho:
+- **Ngày 01/07/2000** lấy từ mục 1 Nghị quyết 32/1999/QH10 (đã đối chiếu trên trang văn bản; chính BLHS 1999 không ghi ngày). Lệnh `hoan_hieu_luc` ghi nguồn này mang tên «Kintakashi (Claude nhập theo yêu cầu)», còn văn bản Nghị quyết chỉ là dòng ghi tay (số hiệu, ngày thông qua, căn cứ; ngày hiệu lực của chính nghị quyết lấy bằng ngày thông qua và chưa đối chiếu).
+- **Luật 15/2008/QH12** có một câu lệnh («Bỏ cụm từ “trưng mua” tại đoạn 2 khoản 1 Điều 270 … và sửa đổi đoạn này như sau») mà bộ trích không hiểu; lệnh được ghi tay thành một lệnh thay cụm từ cho ra đúng câu mới của khối trích dẫn (`log_nap.phuong_phap = 'thu_cong'`, `raw/15-2008-QH12/commands.json`). Sáu mục còn lại của luật này sửa luật khác nên chỉ được ghi nhận, không áp.
+- **Duyệt tạm.** Việc duyệt bộ luật gốc (`raw/15-1999-QH10/review.json`) và 42 lệnh sửa đổi do Claude làm theo yêu cầu của người dùng, ghi rõ «chờ người xác nhận»: đã đối chiếu số Điều (344 → 353 từ 01/01/2010), Điều 84, 138, 230a, 270, 313 và các Điều bị bãi bỏ (131, 183, 184, 199), nhưng chưa ai đọc lại toàn bộ. Người dùng nên mở `streamlit run src/review/app_base_law.py` (bộ luật gốc) và `apply_commands.py bao-cao` (lệnh sửa đổi) để đọc lại, rồi duyệt lại dưới tên mình.
+- **Lỗi gõ có sẵn trong tệp Word nguồn được giữ nguyên** (hệ thống không tự sửa văn bản luật). Đã biết: «trẻ e m» ở 9 nút (Điều 228, 252, 254, 255, 256, 313, 314), «ôô tô» ở Điều 206 và 207 khoản 1, «dâm ôô» ở Điều 313 khoản 1; «a) Có tổ chức» thiếu dấu «;» trong khối trích dẫn của Luật 37/2009 (Điều 120 khoản 2 điểm a); và ở Điều 313 khoản 1 câu «Điều 230 (…quân sự) Điều 230a (tội khủng bố);» thiếu dấu «;» vì Luật 37/2009 chỉ nói «bổ sung cụm từ … vào sau cụm từ …». Danh sách này chưa phải là tất cả (chưa có văn bản hợp nhất của BLHS 1999 để đối chiếu như đã làm với BLHS 2015). Muốn sửa, dùng cơ chế hiệu đính có bằng chứng (`src/apply/hieu_dinh.py`), do người duyệt từng chỗ.
 
 ## Bước 3 — đối chiếu với văn bản hợp nhất chính thức, hiệu đính, xuất bộ luật hiện hành
 
@@ -102,7 +156,7 @@ python scripts/xuat_bo_luat.py --ngay 2018-01-01 --dinh-dang md    # một mốc
 python scripts/xuat_bo_luat.py --xem-truoc                         # BẢN XEM TRƯỚC: gồm cả lệnh/hiệu đính CHƯA duyệt, ghi rõ ở đầu file và từng chỗ
 ```
 
-Lưu ý: bản xuất là dữ liệu dẫn xuất để tra cứu, không phải văn bản chính thức. Lệnh sửa đổi và đề xuất hiệu đính chưa duyệt không nằm trong bản xuất (đầu file có ghi số lượng còn chờ). Nghị quyết hoãn hiệu lực BLHS 2015 chưa nạp (xem "Giới hạn đã biết" ở Bước 2); đó là việc của bước sau.
+Lưu ý: bản xuất là dữ liệu dẫn xuất để tra cứu, không phải văn bản chính thức. Lệnh sửa đổi và đề xuất hiệu đính chưa duyệt không nằm trong bản xuất (đầu file có ghi số lượng còn chờ). Hiệu lực của BLHS 2015 tính từ 01/01/2018 (Nghị quyết 41/2017/QH14, xem Bước 2): xuất ở ngày trước đó báo «không có nội dung nào có hiệu lực» vì kho chưa nạp BLHS 1999.
 
 ## Bước 4 — lập chỉ mục tìm kiếm (FTS5 + vector bge-m3, chạy offline)
 
@@ -161,16 +215,53 @@ Hai điều chỉnh sau lần chạy qwen3:8b trên 70 Điều đáp án của b
 
 | `tap` | số câu | dùng để |
 |---|---|---|
-| `dev` | 70 | chẩn đoán và chọn tham số (được xem kết quả, được chỉnh) |
+| `dev` | 70 + 14 | chẩn đoán và chọn tham số (được xem kết quả, được chỉnh); 14 câu `nhieu_dieu` (`dn01`–`dn14`) để chỉnh lời nhắc tách hành vi |
 | `xac_nhan` | 70 | xác nhận độc lập cấu hình đã chọn trên dev; chạy với tham số ĐÃ CHỐT, không quét |
-| `kiem_tra` | 58 | đóng băng, xác nhận cuối, không quét, không chỉnh theo kết quả |
-| `phu` | 112 | phủ nốt: mỗi Điều về tội phạm chưa có câu ở ba tập trên có một câu; đo độ phủ toàn bộ luật, chạy với tham số ĐÃ CHỐT, không quét |
+| `kiem_tra` | 58 + 26 | đóng băng, xác nhận cuối, không quét, không chỉnh theo kết quả; 26 câu `nhieu_dieu` (`qn01`–`qn26`) |
+| `phu` | 112 | phủ nốt: mỗi Điều về tội phạm chưa có câu ở ba tập trên có một câu; đo độ phủ toàn bộ luật, chạy với tham số ĐÃ CHỐT, không quét. Nhãn đã được người dùng duyệt 2026-10-14 (`da_duyet`) |
 
-- `loai = don`: `dieu` là các Điều chấp nhận (trúng một trong số đó là đúng). `loai = nhieu_dieu`: tình huống gồm nhiều hành vi, `dieu` là các Điều cần tìm đủ; các script chấm Hit@k hiện bỏ qua loại này để khỏi chấm sai.
-- `nguon` (`claude` | `nguoi_dung` | `ban_an`): ai soạn câu. Hiện cả 310 câu do Claude soạn nên điểm có thể cao hơn thực tế; câu bạn tự viết hoặc lấy từ bản án thật nên ghi nguồn riêng để báo cáo riêng.
+- `loai = don`: `dieu` là các Điều chấp nhận (trúng một trong số đó là đúng). `loai = nhieu_dieu`: tình huống gồm nhiều hành vi, `dieu` là các Điều cần tìm đủ; các script chấm Hit@k bỏ qua loại này để khỏi chấm sai (trúng một Điều rồi bỏ sót Điều kia là kết quả SAI ở đây); chúng được chấm riêng bằng `scripts/danh_gia_nhieu.py` (xem dưới). 40 câu hiện có: 2–3 Điều mỗi câu, mỗi Điều ứng với một hành vi bị xử riêng, mọi ngưỡng (số tiền, tỷ lệ thương tích, số hóa đơn…) đã được đối chiếu với văn bản Điều trong chỉ mục; chưa có người duyệt (`nhap`).
+- `nguon` (`claude` | `nguoi_dung` | `ban_an`): ai soạn câu. Hiện cả 350 câu do Claude soạn nên điểm có thể cao hơn thực tế (với 40 câu nhiều Điều thì càng như vậy: cùng một người viết câu và viết nhãn); câu bạn tự viết hoặc lấy từ bản án thật nên ghi nguồn riêng để báo cáo riêng.
 - Chọn tập: `--tap dev|xac_nhan|kiem_tra|phu` (`danh_gia.py` còn có `tat_ca`). `thu_xep_lai.py` bắt buộc `--chi-w` với `xac_nhan` / `kiem_tra` / `phu`; `danh_gia.py --quet` / `--quet-cau-hoi` chỉ chạy trên `dev`; `sinh_cau_hoi.py --theo-bo` chỉ đọc số Điều của tập `dev`. Không tập nào được đưa chữ câu hỏi cho LLM sinh câu (test chặn cụm 4 từ trùng với lời nhắc).
 - Sửa nhãn / thêm câu: chỉ sửa `eval/bo_cau_hoi.json`, rồi `python scripts/kiem_tra_bo_cau_hoi.py` (định dạng, id / câu trùng, Điều trùng giữa các tập, số Điều có thật trong chỉ mục) và `python scripts/xuat_xem_duyet.py` (bảng câu hỏi – Điều – tiêu đề Điều ra `eval/xem_duyet.md` để duyệt nhãn).
 - Đổi chữ một câu làm mất cache điểm đã chấm của câu đó (khóa cache gồm chữ câu hỏi); sửa nhãn `dieu` thì không.
+
+#### Đo «tìm đủ» cho tình huống nhiều Điều
+
+```
+python scripts/danh_gia_nhieu.py                         # mốc «không tách» (cả tình huống là MỘT truy vấn), tập dev
+python scripts/danh_gia_nhieu.py --du-doan tach_dev.json # so với bản đã tách hành vi: {"dn01": ["hành vi 1", "hành vi 2"], ...}
+python scripts/danh_gia_nhieu.py --tap kiem_tra          # tập đóng băng: chỉ chạy với lời nhắc đã chốt, đúng một lần cho số báo cáo cuối
+```
+
+Số đo chính là **tìm đủ** (mọi Điều đáp án đều nằm trong tập Điều được hiển thị; mỗi hành vi hiển thị `--m` Điều đầu, mặc định 3), kèm bao phủ (recall mức Điều), chính xác (precision mức Điều), tỷ lệ hành vi có Điều đáp án (đo tách thừa) và tỷ lệ tách đúng số hành vi (`src/index/tim_du.py`). Bản tách luôn được so với mốc «không tách» ở **cùng số Điều hiển thị** để không thắng chỉ vì hiển thị nhiều hơn.
+
+Số tham chiếu trên 14 câu dev (bge-m3 ONNX trên máy đám mây, chưa phải Ollama của bạn, nên chỉ để lấy cỡ; 1 câu = 7 điểm %): không tách, hiển thị 3 / 6 / 9 Điều → tìm đủ 7% / 29% / 43%. Tách **lý tưởng** (hành vi do người soạn câu tự viết lại bằng lời đời thường, không nêu tên tội, lưu ở `eval/tach_ly_tuong_dev.json` để chạy lại bằng `--du-doan`; đây là **trần**, không phải kết quả của mô hình nào) → tìm đủ 29% / 50% / 57% / 64% khi mỗi hành vi hiển thị 2 / 3 / 4 / 5 Điều, bao phủ 52% / 63% / 67% / 70%. Tách đúng giúp nhiều (cùng ~6 Điều hiển thị: 21% → 50%) nhưng chưa đủ: mô tả hành vi đời thường không có tên tội vẫn tìm sai Điều ở nhiều hành vi (làm giả con dấu, tham ô, lừa đảo chiếm đoạt, giam người…). Đó là lý do bước 5 cần mô tả hành vi mang từ gọi tên tội; số này sẽ đo lại với mô hình tách thật trên máy bàn.
+
+##### Thử tách hành vi bằng qwen3:4b, chỉ bằng lời nhắc (chạy trên máy bàn)
+
+`scripts/tach_hanh_vi.py` cho qwen3:4b (Ollama) tách từng tình huống nhiều Điều của một tập thành các hành vi, rồi `scripts/danh_gia_nhieu.py --du-doan` chấm kết quả. Lời nhắc hệ thống là đúng `HE_THONG` của tập train (để sau này so công bằng với bản tinh chỉnh); ví dụ mẫu lấy từ phần train của `train/tinh_huong.json`, loại mọi mẫu có Điều trùng đáp án của bộ đo.
+
+```powershell
+python scripts/tach_hanh_vi.py --tap dev --kieu ten_toi --vi-du 3      # ghi eval/tach_dev_qwen3-4b_ten_toi_3vd.json (+ .log.jsonl)
+python scripts/tach_hanh_vi.py --tap dev --kieu thuan   --vi-du 0      # không tiền tố tên tội, không ví dụ mẫu
+python scripts/tach_hanh_vi.py --tap dev --xem-loi-nhac                # chỉ in lời nhắc, không gọi mô hình
+python scripts/danh_gia_nhieu.py --tap dev --du-doan eval/tach_dev_qwen3-4b_ten_toi_3vd.json
+```
+
+`--kieu ten_toi|thuan` đo tiền tố tên tội, `--vi-du N` số ví dụ mẫu, `--quy-tac` thêm đoạn quy tắc tách. Chọn bằng tập `dev`; tập `kiem_tra` chỉ chạy MỘT lần với lời nhắc đã chốt (cần `--da-chot`, không ghi đè kết quả cũ). Đầu ra được ép theo schema JSON; câu trả lời hỏng được thử lại hai lần (đổi seed), vẫn hỏng thì giữ nguyên cả tình huống làm một hành vi và ghi lỗi vào `.log.jsonl` thay vì bỏ qua.
+
+##### Đo «gần chuẩn Claude» của khâu tách hành vi
+
+Mọi đáp án hiện có do Claude soạn nên «tìm đủ» đo khoảng cách tới Claude, còn khâu TÁCH chưa có chuẩn riêng (hàng «tách lý tưởng» viết tay sau khi biết đáp án nên không khách quan). Cách đo: một phiên Claude MỚI, không thấy đáp án, tách các câu dev (lặp 3 phiên); so cách tách của mô hình với 3 bản đó, và lấy độ lệch giữa các bản Claude làm TRẦN.
+
+```powershell
+python scripts/xuat_chuan_mu.py                        # eval/chuan_mu/cau_hoi_mu_dev.json + LOI_NHAC_CHUAN_MU.md (không có đáp án Điều)
+# dán lời nhắc vào 3 phiên Claude mới, lưu eval/chuan_mu/claude_1.json, claude_2.json, claude_3.json
+python scripts/so_voi_chuan.py --chuan eval/chuan_mu/claude_*.json --du-doan eval/tach_dev_<mô hình>_thuan_0vd.json --sim bge --tim-du
+```
+
+Số đo chính: đồng số hành vi và `ghép` (ghép 1-1 tối ưu, không ngưỡng); F1 theo ngưỡng chỉ tham khảo (ngưỡng chưa hiệu chỉnh; `--sim chu` chạy offline nhưng thô). Có khoảng tin cậy bootstrap theo cặp cho hiệu «mô hình − trần». Chuẩn là Claude chứ không phải luật: số này đo độ giống Claude, không đo đúng-sai pháp lý. Mã: `src/index/so_voi_chuan.py`, test `tests/test_so_voi_chuan.py`.
 
 ### Bước 4c — xếp lại top-N Điều bằng mô hình đọc cả câu hỏi và chữ Điều (thí nghiệm)
 
@@ -187,3 +278,97 @@ python scripts/thu_xep_lai.py --tap kiem_tra --chi-w 0.25   # xác nhận cuối
 Kết quả đo (bge-reranker-v2-m3, xếp lại top 5, 70 câu dev nháp, chữ Điều đầy đủ cắt ở 512 token): Hit@1 72,9% → 78,6% (w = 0 và 0,25) và 80,0% (w = 0,5), MRR 0,813 → 0,858–0,865, Hit@3 88,6% → 92,9% (chạm trần top 5). Các giá trị w từ 1 trở lên giảm về 74–76%. Số câu cứu/phá ở w = 0: 8/4 (kiểm định dấu p = 0,39), ở w = 0,5: 6/1 (p = 0,12). Tức hướng tích cực và khá ổn định ở w ≤ 0,5 nhưng CHƯA có ý nghĩa thống kê trên 70 câu; chọn w trong dải 0-0,5, không chọn ô cao nhất. Xếp lại top 3 cho 77,1% (kém top 5). Dùng chữ ngắn (tiêu đề + khoản 1) không tốt hơn chữ đầy đủ (75,7-78,6%).
 
 Mô hình cứu được các câu khác hẳn từ vựng ("đưa tiền cho công an để khỏi bị phạt" → Điều 364, "mạo danh cán bộ" → 339) nhưng vẫn nhầm giữa các Điều sát nhau (364/365, 308/414) và có nhãn dev còn tranh cãi (ví dụ "làm mất súng của đơn vị" có thể hợp lý với cả 308 lẫn 414), nên cần người duyệt nhãn trước khi coi con số là bằng chứng. Cái giá: ~1,1 giây mỗi cặp trên CPU 2 nhân (5 Điều ≈ 5 giây mỗi câu hỏi). Cách dùng Qwen3-8B qua Ollama đã có mã và test với LLM giả nhưng CHƯA chạy với Ollama thật.
+
+## Bước 5 — tập train cho bước tách hành vi (một sự việc → nhiều hành vi → nhiều Điều)
+
+Một tình huống đời thường thường dẫn đến nhiều Điều (vừa trộm vừa đập phá, vừa nhận hối lộ vừa làm giả hồ sơ…). Đường ống dự kiến: **tách** tình huống thành từng hành vi bị xử riêng → **tìm** Điều cho từng hành vi (bước 4) → **gộp** thành gợi ý "hành vi → 2–3 Điều" để người dùng tự đối chiếu. Bước tách là việc của một mô hình nhỏ chạy cục bộ (qwen3:4b, có thể tinh chỉnh LoRA); thư mục `train/` là dữ liệu cho nó.
+
+**MỘT file nguồn: `train/tinh_huong.json`** (tách hẳn bộ đo `eval/bo_cau_hoi.json`, không câu nào của bộ đo đi vào đây). Mỗi mẫu: `id`, `tinh_huong` (đoạn văn đời thường), `hanh_vi` (danh sách `{mo_ta, dieu}`), `loai` (`don` = đúng 1 hành vi, `nhieu` = từ 2 hành vi), `nguon`, `trang_thai` (`nhap` | `da_duyet`). Quy ước đầy đủ nằm ở đầu `src/index/tap_train.py`.
+
+- `mo_ta`: một câu ngắn, tự đủ nghĩa, KHÔNG nêu số Điều; vừa là đích mà mô hình tách phải học viết ra, vừa là câu truy vấn đem đi tìm Điều.
+- `dieu`: các Điều chấp nhận cho hành vi đó. Mô hình tách KHÔNG nhìn thấy trường này khi huấn luyện; nó dùng để chấm cả đường ống và kiểm độ phủ. Quy ước nhãn: mỗi việc có thể bị xử riêng là một phần tử `hanh_vi`; tình tiết tăng nặng nằm trong cùng một Điều thì không tách thêm.
+- Hiện có 450 mẫu: 106 một hành vi + 344 nhiều hành vi (267 mẫu 2 hành vi, 55 mẫu 3, 21 mẫu 4, 1 mẫu 5; tổng 894 hành vi), phủ 315/315 Điều về tội phạm (mỗi Điều làm đáp án 1–32 lần, trung vị 2).
+
+```
+python scripts/kiem_tra_train.py                        # định dạng, id/tình huống trùng, rò rỉ sang bộ đo, thống kê; có chỉ mục thì kiểm thêm số Điều có thật và độ phủ
+python scripts/kiem_tra_train.py --bat-buoc-phu         # coi Điều tội phạm chưa có mẫu nào là lỗi
+python scripts/xuat_sft.py                              # train/sft_train.jsonl + train/sft_val.jsonl (val 10%, chia cố định theo băm id)
+python scripts/xuat_sft.py --chi-da-duyet               # chỉ mẫu đã được người duyệt
+```
+
+Dòng SFT theo định dạng `messages` (system / user / assistant); đích chỉ là `{"hanh_vi": ["mô tả 1", "mô tả 2"]}`. Tập `val` để theo dõi loss khi huấn luyện, KHÔNG phải bộ đo.
+
+**Chống rò rỉ.** Bộ kiểm từ chối mẫu có cụm ≥ 9 âm tiết liền nhau trùng một câu của bộ đo (`K_TRUNG` trong `tap_train.py`; ngắn hơn là cụm pháp lý chung, từng gây báo nhầm), nhắc số Điều / khoản, hoặc trùng văn bản. Khi soạn, mức giống nhau về nghĩa với bộ đo cũng được dò bằng bge-m3 (cos ≥ 0,90 bị coi là gần trùng; lần soạn hiện tại: lớn nhất 0,89).
+
+**Cổng truy hồi cho `mo_ta`.** Mô tả hành vi ngắn, thuần đời thường tìm Điều kém hơn câu hỏi đầy đủ; thêm từ gọi tên tội đời thường ("hiếp dâm", "vu khống", "lừa đảo chiếm đoạt", "đưa hối lộ"…) làm Hit@5 trên lô đầu tăng từ 84% lên 98%. Do đó mọi `mo_ta` đã được đo: tìm bằng vector (bge-m3, chỉ mục hiện hành) phải đưa Điều đáp án vào top 5 (894 hành vi: Hit@1 73,2%, Hit@3 94,9%, Hit@5 100%). Hệ quả cần biết: khoảng 47% `mo_ta` (420/894) có tiền tố dạng "Hiếp dâm: …" — mô hình tách sẽ học viết cả tên tội, có thể sai tên khi gặp tình huống lạ; nên so thêm bản bỏ tiền tố khi đo.
+
+**Hạn chế (đọc trước khi dùng).** Toàn bộ 450 mẫu do Claude soạn (`nguon = claude`); ngày 2026-10-14 người dùng đã duyệt nhãn nên cả 450 mẫu là `da_duyet`, nhưng chưa có luật sư xem; các cặp Điều gần nhau (263/264, 270/271, 275/276, 138/139, 404/406, 411/412, 114/115…) và một số nhãn về tội ít gặp cần luật sư xem. Bốn hành vi cho phép 2 Điều (`t003`: 123/134, `t269`: 140/185, `t244`: 174/290, `t305`: 140/185). Tình huống từ cùng một người soạn nên giọng văn đồng nhất hơn người dùng thật; chưa có mẫu "không có hành vi phạm tội". Không dùng tập này để chỉnh tham số truy hồi hay xếp lại: đó là việc của `eval/`.
+
+**Đợt vá nhãn đầu tiên (2026-10-14).** 53 mục từ `train/sua_nhan_train.md` (rà từ `xem_duyet_train.md`) đã áp vào `tinh_huong.json`; phần khác với bản vá và lý do nằm ở `train/nhat_ky_sua_nhan.md`. Các mục có điều kiện «đã bị xử phạt/xử lý kỷ luật mà còn vi phạm» được đối chiếu với văn bản Điều trong chỉ mục. Nhãn vẫn là nháp: bản vá do người/AI soạn, chưa luật sư duyệt. 
+
+**Đợt 2 (2026-10-14).** Người dùng duyệt các mục ✎ trong `xem_duyet_train.md` nên mọi mẫu chuyển `da_duyet`; làm rõ `t408` và `t279`. Quy tắc «giả nhãn hiệu» đã chốt: hàng bị làm giả rồi bán như hàng thật (kể cả gắn thương hiệu nổi tiếng) → Điều 192–195 theo loại hàng; chỉ nhái nhãn hiệu / bao bì và bán công khai như hàng nhái → Điều 226.
+
+## Bước 6 — agent và giao diện cho người dùng thường
+
+Một câu hỏi vào, một câu trả lời có cấu trúc ra: **chữ luật lấy nguyên văn từ kho**, kèm nguồn sửa đổi, khoảng hiệu lực và lời nhắc «chỉ tham khảo, không phải tư vấn pháp lý». Không bước nào gọi API; không bước nào để mô hình ngôn ngữ viết lại chữ luật. Đây là chức năng 1 (tra cứu) đã gói thành thứ người không biết lập trình dùng được. Kho hiện có Bộ luật hình sự 2015; agent đã sẵn cho nhiều bộ luật nối tiếp nhau (chọn bộ luật theo ngày, xem «Hiệu lực của cả bộ luật» ở Bước 2); chưa mở rộng sang luật khác lĩnh vực.
+
+```
+chay_tra_cuu.bat                                              # giao diện web cục bộ (Streamlit), mở http://localhost:8501
+python -m streamlit run src/ui/app_tra_cuu.py                 # cách chạy không qua .bat
+python scripts/hoi.py "Điều 173"                              # dòng lệnh: một câu
+python scripts/hoi.py                                         # dòng lệnh: hỏi nhiều câu liên tiếp (dòng trống để thoát)
+python scripts/hoi.py "khoản 2 Điều 173 tại ngày 01/01/2018"
+python scripts/hoi.py "so sánh Điều 173 bản gốc và hiện hành"
+python scripts/hoi.py "lén lấy xe máy của hàng xóm" --json    # in JSON đầy đủ (TraLoi.to_dict), tiện cho thực nghiệm
+```
+
+Tuỳ chọn của `hoi.py`: `--ngay YYYY-MM-DD` (xem luật tại ngày đó), `--khong-tach`, `--xep-lai`, `-m` (số Điều mỗi hành vi), `-k`, `--db`, `--index`. Biến môi trường `LEXO_DB`, `LEXO_INDEX` đổi đường dẫn kho/chỉ mục cho cả giao diện lẫn dòng lệnh; `LEXO_GIA=1` dùng vector giả và bộ tách giả (CHỈ để thử giao diện và test, kết quả không có nghĩa).
+
+**Các loại câu hỏi hiểu được** (mã: `src/agent/y_dinh.py`):
+
+| Kiểu | Ví dụ | Việc làm |
+|---|---|---|
+| Tra Điều | `Điều 173`, `khoản 2 Điều 173`, `điểm đ khoản 1 Điều 168`, `173`, `dieu 173` | nguyên văn tại ngày chọn (mặc định hôm nay), chỉ khoản/điểm nếu hỏi; nhiều Điều một lúc (tối đa 5) |
+| Xem theo ngày | `Điều 173 ngày 01/01/2018`, `tháng 7/2025`, `năm 2017` | bản có hiệu lực tại ngày đó; chỉ nêu năm thì lấy cuối năm và liệt kê sửa đổi rơi trong năm |
+| Lịch sử | `lịch sử sửa đổi Điều 173` | các lần sửa/bổ sung/bãi bỏ, luật nào, khoản nào, hiệu lực từ ngày nào |
+| So sánh | `so sánh Điều 173 năm 2017 và hiện nay`, `khác gì bản gốc` | hai bản cạnh nhau, chỗ khác tô màu từng từ |
+| Quan hệ / chuyển tiếp | `những luật nào đã sửa đổi BLHS`, `điều khoản chuyển tiếp` | từ bảng quan hệ văn bản và điều khoản chuyển tiếp đã nạp |
+| Tìm theo mô tả | `lén lấy xe máy của hàng xóm` | vài Điều gần nhất (bge-m3 + FTS), kèm khoản/điểm khớp nhất |
+| Tình huống dài | đoạn kể ≥ 12 từ không nêu số Điều | tách thành từng hành vi (mô hình tách local), mỗi hành vi gợi ý m = 3 Điều + «Đọc nguyên văn» |
+| Ngoài phạm vi | `Điều 5 BLDS`, `luật đất đai…` | nói rõ kho chỉ có luật nào; không đoán |
+
+**Chọn bộ luật theo ngày.** Ngày xem (hôm nay, ngày chọn ở thanh bên «Xem luật theo một ngày khác hôm nay», hoặc ngày nêu trong câu) quyết định bộ luật: từ 01/01/2018 là BLHS 2015, trước đó là bộ luật cũ (BLHS 1999 sửa đổi 2009 cho 2010–2017). Nêu năm trong câu («BLHS 2015», «BLHS 1999») thì lấy đúng bộ đó; nếu ngày xem nằm ngoài khoảng hiệu lực của nó, hệ thống nói rõ bộ luật nào đang áp dụng vào ngày đó. Chỉ gõ «Điều 173 BLHS» (không năm) thì vẫn theo ngày (dòng lệnh cũng vậy: `python scripts/lookup.py "Điều 138 BLHS" --ngay 2010-05-05` tự lấy BLHS 1999 và nói rõ đã chọn bộ nào). Ngày thuộc thời kỳ chưa nạp: báo rõ, không trả nhầm. «Bản gốc» là bản lúc Quốc hội thông qua. Lịch sử / quan hệ / chuyển tiếp không nêu năm thì dùng bộ luật đang áp dụng hôm nay. So sánh hai mốc thuộc hai bộ luật khác nhau thì hiện hai Điều riêng (số Điều đổi giữa các bộ luật nên không tô khác biệt từng từ).
+
+**Khác kế hoạch §14 (và vì sao).** (1) Phân loại ý định bằng **luật** (bỏ dấu + regex), không dùng LLM nhỏ: tra «Điều 173» mà sai số Điều vì mô hình «đoán» là lỗi không chấp nhận được; luật thì kiểm thử được từng ca, chạy được khi chưa bật Ollama. Cái giá: câu lạ rơi vào nhánh «tìm theo mô tả» (vô hại, vì chỉ trả Điều gần nghĩa). (2) **Không có bước 4b** (LLM diễn giải): mọi chữ luật trên màn hình lấy từ kho, đúng nguyên tắc chức năng 1 là tham khảo, không kết luận. Câu xin kết luận («có tội không», «bị phạt bao nhiêu năm») vẫn được trả Điều liên quan, kèm lời nhắc rằng hệ thống không đưa kết luận pháp lý. (3) Quy tắc năm: `BLHS 2015` / `năm 2015` là năm của văn bản, không phải ngày xem luật; chỉ nêu năm khác thì là mốc cuối năm.
+
+**Hạ cấp khi thiếu thành phần** (giao diện hiện 🟢/🟠 ở thanh bên và nút «Kiểm tra lại kết nối»; mọi chuyển đổi đều có thông báo bằng lời, không tự lặng lẽ):
+
+| Thiếu | Hệ quả |
+|---|---|
+| Ollama / bge-m3, hoặc chưa có chỉ mục vector | tìm theo mô tả chuyển sang FTS (từ khoá). Đo trên bộ dev: câu một Điều Hit@1 48,6%, Hit@3 71,4%, Hit@5 80,0% (có vector: 72,9 / 88,6 / 92,9); câu đời thường rất xa từ vựng luật có thể lệch hẳn |
+| Mô hình tách (`agent.tach_model`) | tình huống dài tìm như một câu duy nhất, hiện 5 Điều; «tìm đủ» tập Điều chỉ khoảng 15% (có tách bằng n368: 17/34 = 50%). Thiếu cả hai: hiện cảnh báo vàng «kết quả sẽ rất kém» |
+| Bộ xếp lại (onnxruntime / model) | bỏ qua, giữ thứ tự cũ (mặc định đã tắt) |
+
+Tra Điều, lịch sử, so sánh, quan hệ **không cần Ollama** — chỉ cần `db/luat.sqlite`.
+
+Chuẩn bị Ollama cho đủ chức năng: `ollama pull bge-m3`; tên mô hình tách phải có trong `ollama list` và nằm trong `agent.tach_model` ở `config.yaml` (mặc định thử `qwen3-8b-lexo-sach-n368`, rồi `lexo-tach`). Chưa có thì giao diện vẫn chạy ở chế độ hạ cấp.
+
+**Kiểm thử.** `tests/test_agent_y_dinh.py` (định tuyến + ngày/khoản/điểm), `tests/test_agent.py` (agent trên kho thử + vector giả + hạ cấp), `tests/test_agent_trinh_bay.py` (Markdown, diff), `tests/test_ui_tra_cuu.py` (giao diện bằng `streamlit.testing`, không mở trình duyệt): 80 test; `tests/test_agent_nhieu_luat.py` (chọn bộ luật theo ngày, thời kỳ chưa nạp, so sánh qua hai bộ luật, chỉ mục cũ: 21 test); `tests/test_hieu_luc_vb.py` (ghi hiệu lực cả bộ luật: 11 test); `tests/test_amending_luat_cu.py` (luật sửa đổi viết theo lối cũ: dấu ngoặc gõ sai, khối trích dẫn thiếu dấu đóng, câu lệnh bị động, tên Điều, đích suy từ tên luật: 13 test); `tests/test_cli_nhieu_luat.py` (lookup.py khi có nhiều bộ luật cùng tên: 4 test); toàn bộ dự án 504 test xanh. Đã chạy thử trên kho thật ở chế độ FTS (chưa chạy với Ollama thật).
+
+**Giới hạn đã biết (đọc trước khi dùng).**
+- BLHS 2015 trong kho có hiệu lực từ 01/01/2018 (Nghị quyết 41/2017/QH14, Điều 1 khoản 1 điểm a; lệnh do người dùng yêu cầu ghi và nên tự đối chiếu lại với văn bản gốc, xem `scripts/hoan_hieu_luc.py xem`). Ngày từ 01/07/2000 đến 31/12/2017 thuộc BLHS 1999 (đã nạp, kèm sửa đổi 2009); ngày trước 01/07/2000 thuộc BLHS 1985 mà kho CHƯA nạp: hệ thống nói rõ điều đó thay vì trả Điều của bộ luật khác.
+- 29 đề xuất hiệu đính kỹ thuật còn chờ duyệt (không đổi nội dung điều luật) được ghi ở chân thanh bên và ở từng Điều liên quan.
+- «Tình huống dài» phụ thuộc chất lượng mô hình tách; mỗi hành vi chỉ gợi ý Điều gần nghĩa nhất, **không** phải kết luận về tội danh.
+- Chỉ có Bộ luật Hình sự 2015 (3 luật sửa đổi) và Bộ luật Hình sự 1999 (2 luật sửa đổi), cùng văn bản nguồn ghi tay của hai nghị quyết 41/2017/QH14 và 32/1999/QH10 (chỉ có số hiệu, ngày và căn cứ chứ không có nội dung); hỏi luật khác sẽ được từ chối lịch sự.
+
+## Chức năng 2 — phân tích vụ án (nhập nội dung vụ án → bản tóm tắt kiểu cáo trạng)
+
+Bấm đúp `chay_phan_tich_vu_an.bat` (hoặc `streamlit run src/ui/app_vu_an.py`). Dán diễn biến vụ án; kết quả gồm: ai có dấu hiệu phạm tội gì (Điều/khoản), vì sao, đoạn trích nguyên văn từ sự việc làm căn cứ (✅ có trong sự việc, ⚠️ không tìm thấy nên cần kiểm tra) và nguyên văn Điều luật lấy từ kho. Bản văn kiểu cáo trạng tải về được (.txt, .json).
+
+Đường ống (`src/agent/vu_an.py`): tìm Điều ứng viên (bge-m3 + FTS5, cả sự việc và từng hành vi) → chọn Điều (mô hình LoRA của kế hoạch Kaggle V3, nếu đã nạp vào Ollama; chưa có thì dùng thứ hạng tìm kiếm) → Qwen3 soạn JSON theo từng người từ nguyên văn các Điều → kiểm: Điều phải nằm trong danh sách đã đưa, khoản phải có thật, trích dẫn phải có nguyên văn trong sự việc.
+
+- Cần Ollama với `qwen3:8b` để soạn. Thiếu thì giao diện **chỉ gợi ý Điều** và nói rõ (thanh bên có đèn trạng thái từng bước).
+- Sau khi học xong trên Kaggle: gộp GGUF, `ollama create <tên>`, rồi ghi tên đó vào `config.yaml` mục `vu_an.chon_model` (mặc định tìm `qwen3-8b-lexo-chon-dieu-cbba-v1`).
+- Chỉ để tham khảo: không phải cáo trạng, không phải kết luận pháp lý; chưa xét chứng cứ, tuổi, năng lực chịu trách nhiệm hình sự, tình tiết tăng nặng/giảm nhẹ, mức hình phạt.
+- Thử giao diện không cần Ollama: `LEXO_GIA=1` (vector và mô hình giả, kết quả KHÔNG có nghĩa). Test: `pytest tests/test_vu_an.py tests/test_ui_vu_an.py`.
+- Xem bảng Recall@K của gói đo mà không giải nén: `python scripts/xem_recall_zip.py lexo_do_ban_an_cbba.zip` (thoát với mã 2 nếu dưới sàn 80%).

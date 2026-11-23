@@ -20,7 +20,7 @@ from src.config import db_path  # noqa: E402
 from src.query.lookup import (  # noqa: E402
     dieu_khoan_lien_quan, dieu_status, find_van_ban, fmt_date, get_dieu, hieu_dinh_cho_duyet_dieu, lich_su_dieu, luu_y_hieu_luc,
     parse_reference, render, so_hieu_dinh_cho_duyet, so_lenh_cho_duyet,
-    so_sanh, tom_tat_nguon,
+    so_sanh, tom_tat_nguon, van_ban_hieu_luc_tai,
 )
 from src.store import connect  # noqa: E402
 
@@ -54,11 +54,18 @@ def main() -> int:
         if not docs:
             print(f"Không có văn bản '{viet_tat}'" + (f" năm {nam}" if nam else "") + " trong CSDL.", file=sys.stderr)
             return 1
-        if len(docs) > 1:
-            print("Nhiều văn bản trùng tên viết tắt, hãy thêm năm: " + ", ".join(d["so_hieu"] for d in docs), file=sys.stderr)
-            return 1
-        doc = docs[0]
         ngay = args.ngay or date.today().isoformat()
+        if len(docs) > 1:
+            # nhiều bộ luật nối tiếp cùng tên viết tắt (BLHS 1999, BLHS 2015) mà không nêu năm: lấy bộ đang có hiệu lực tại ngày xem
+            ngay_chon = args.so_sanh[1] if args.so_sanh else ngay
+            chon = van_ban_hieu_luc_tai(conn, ngay_chon, viet_tat) if nam is None else None
+            if chon is None:
+                print("Nhiều văn bản trùng tên viết tắt, hãy thêm năm: " + ", ".join(d["so_hieu"] for d in docs), file=sys.stderr)
+                return 1
+            print(f"(Có {len(docs)} bộ luật cùng tên «{viet_tat}»: " + ", ".join(d["so_hieu"] for d in docs) + f"; tại ngày {fmt_date(ngay_chon)} "
+                  f"áp dụng {chon['so_hieu']}. Muốn bộ khác, thêm năm vào tham chiếu, vd «Điều {ky_hieu} {viet_tat} 1999».)", file=sys.stderr)
+            docs = [chon]
+        doc = docs[0]
         print(f"[{doc['so_hieu']} — {doc['ten_day_du']}]")
         cho = so_lenh_cho_duyet(conn, doc["id"])
         if cho:

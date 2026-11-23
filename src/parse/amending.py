@@ -37,6 +37,9 @@ RE_TARGET_LAW = re.compile(
     r"của\s+((?:Bộ luật|Luật|Pháp lệnh|Nghị quyết|Nghị định)[^;:“”]{1,120}?)\s+số\s+(\d+/\d{4}/[0-9A-Za-zĐđ\-]+)"
 )
 RE_QUOTED_PHRASE = re.compile(r"“[^”]*”")
+RE_STRAY_OPEN = re.compile(r"(?<![^\s(\[])”(?=[^\s.,;:)\]”])")        # ” đứng ở vị trí MỞ ngoặc (sau khoảng trắng, trước chữ): lỗi gõ
+RE_LENH_SO = re.compile(r"^(\d+)\.\s+(.+)$")
+RE_LENH_NHAN_DIEN = re.compile(r"^(?:Sửa đổi|Bổ sung|Bãi bỏ|Bỏ|Thay thế|Thay)\b|\bđược\s+(?:sửa đổi|bổ sung|thay thế|bãi bỏ)\b", re.IGNORECASE)
 _LOAI = (("BỘ LUẬT", "bo_luat", "Bộ luật"), ("LUẬT", "luat", "Luật"), ("PHÁP LỆNH", "phap_lenh", "Pháp lệnh"),
          ("NGHỊ QUYẾT", "nghi_quyet", "Nghị quyết"))
 
@@ -247,6 +250,18 @@ def _clause_from(lines: list[str], start: int, end: int, ky_hieu: str, tieu_de: 
 # ---------------------------------------------------------------------------------------------------------------------
 # Parse
 
+def fix_stray_open_quotes(lines: list[str]) -> tuple[list[str], list[str]]:
+    """Một số văn bản gõ nhầm ” (đóng ngoặc) ở chỗ phải là “ (mở ngoặc), vd «cụm từ ”năm trăm nghìn đồng” thành…». Đổi ” đứng ở vị trí
+    mở ngoặc (sau khoảng trắng, liền trước chữ) thành “ và ghi cảnh báo từng dòng để người duyệt thấy; không đụng đến chỗ khác."""
+    out, warnings = [], []
+    for i, line in enumerate(lines):
+        fixed = RE_STRAY_OPEN.sub("“", line) if line.count("”") > line.count("“") else line
+        if fixed != line:
+            warnings.append(f"dòng {i}: dấu ” đứng ở vị trí mở ngoặc (gõ sai trong văn bản nguồn), đã đọc là “: {line[:60]!r}")
+        out.append(fixed)
+    return out, warnings
+
+
 def scan_structure(lines: list[str], start: int = 0) -> tuple[list[tuple[int, str, str]], list[tuple[int, int]], list[str]]:
     """Duyệt các dòng, trả về (Điều cấp cao, khối trích dẫn, cảnh báo).
     Điều cấp cao: [(chỉ số dòng, ký hiệu, tiêu đề)] chỉ tính khi KHÔNG nằm trong khối trích dẫn.
@@ -256,10 +271,21 @@ def scan_structure(lines: list[str], start: int = 0) -> tuple[list[tuple[int, st
     warnings: list[str] = []
     depth = 0
     block_start = -1
+    last_lenh = 0                         # số thứ tự lệnh cấp 1 gần nhất NGOÀI khối trích dẫn (để nhận ra khối thiếu dấu ” đóng)
     for i in range(start, len(lines)):
         line = lines[i]
+        if depth > 0:
+            mm = RE_LENH_SO.match(line)
+            if mm and int(mm.group(1)) == last_lenh + 1 and RE_LENH_NHAN_DIEN.search(mm.group(2)[:90]):
+                blocks.append((block_start, i - 1))                 # dòng này là lệnh kế tiếp, không phải chữ trong khối: khối thiếu dấu ” đóng
+                warnings.append(f"dòng {i - 1}: khối trích dẫn bắt đầu ở dòng {block_start} thiếu dấu ” đóng; tự đóng trước lệnh "
+                                f"{mm.group(1)} ở dòng {i}")
+                depth = 0
         opens, closes = line.count("“"), line.count("”")
         if depth == 0:
+            mm = RE_LENH_SO.match(line)
+            if mm and not line.startswith("“"):
+                last_lenh = int(mm.group(1))
             if line.startswith("“"):
                 block_start = i
                 depth = opens - closes
@@ -269,6 +295,7 @@ def scan_structure(lines: list[str], start: int = 0) -> tuple[list[tuple[int, st
                 continue
             m = RE_DIEU_TOP.match(line)
             if m:
+                last_lenh = 0
                 dieus.append((i, m.group(1), m.group(2).strip()))
             elif opens != closes:
                 warnings.append(f"dòng {i}: dấu “ ” không cân bằng ngoài khối trích dẫn: {line[:60]!r}")
@@ -297,7 +324,9 @@ def parse_amending_law(
     dieu_sua_doi: ký hiệu các Điều chứa lệnh sửa đổi; mặc định tự nhận theo tiêu đề bắt đầu bằng Sửa đổi/Bổ sung/Bãi bỏ/Thay thế."""
     aliases = {k.lower(): v for k, v in (aliases or {}).items()}
     trong = set(pham_vi_so_hieu) if pham_vi_so_hieu is not None else set(aliases.values())
+    lines, warnings0 = fix_stray_open_quotes(lines)
     dieus, blocks, warnings = scan_structure(lines)
+    warnings = warnings0 + warnings
 
     # ---- phần mở đầu và chân văn bản
     first_dieu = dieus[0][0] if dieus else len(lines)
@@ -345,6 +374,8 @@ def parse_amending_law(
             hl = _clause_from(lines, idx, end, ky, td)
         if "chuyển tiếp" in low:
             ct = _clause_from(lines, idx, end, ky, td)
+        if not td and hl is None and RE_HIEU_LUC.search("\n".join(lines[idx + 1:end])):          # Điều không có tiêu đề, vd luật cũ: «Điều 3.»
+            hl = _clause_from(lines, idx, end, ky, td)
     if hl:
         found = []
         for line in hl.noi_dung.split("\n"):
@@ -355,6 +386,9 @@ def parse_amending_law(
             meta.hieu_luc_ngoai_le = [{"cau": c, "ngay": d} for c, d in found[1:] if d != meta.ngay_hieu_luc]
 
     # ---- Điều sửa đổi
+    so_chung = ten_chung = None
+    if meta.ten_day_du and re.match(r"^(?:Luật|Bộ luật|Pháp lệnh|Nghị quyết)\s+sửa đổi", meta.ten_day_du, re.IGNORECASE):
+        so_chung, ten_chung = resolve_target_law(meta.ten_day_du, aliases)     # «Luật sửa đổi, bổ sung một số điều của Bộ luật hình sự»: mặc định sửa văn bản đó
     wanted = set(dieu_sua_doi) if dieu_sua_doi else None
     quotes: list[Quote] = []
     block_by_start = {a: (a, b) for a, b in blocks}
@@ -364,6 +398,8 @@ def parse_amending_law(
         if not is_amending:
             continue
         so, ten = resolve_target_law(td, aliases)
+        if so is None and re.search(r"\bĐiều\s+\d", td):          # tiêu đề chỉ rõ một nơi («… tại khoản 1 Điều 313») mà không nêu luật: lấy luật mà cả luật này sửa
+            so, ten = so_chung, ten_chung
         d = DieuSuaDoi(ky_hieu=ky, tieu_de=td, line_start=idx, line_end=end, van_ban_dich_so_hieu=so,
                        van_ban_dich_ten=ten, pham_vi=_pham_vi(so, trong))
         _parse_items(lines, d, block_by_start, quotes, aliases, trong, warnings)

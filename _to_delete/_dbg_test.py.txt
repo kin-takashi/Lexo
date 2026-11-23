@@ -1,0 +1,7 @@
+
+from test_cau_hoi import *
+def test_x(env, tmp_path):
+    idx = moi_chi_muc(env, tmp_path)
+    d = gom_dieu(idx); llm = LLMGia()
+    for k, v in d.items():
+        print("KEY", k, repr(v["tieu_de"]), len(sinh_mot(llm, v, 5)))

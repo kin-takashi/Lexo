@@ -67,6 +67,14 @@ def test_bang_xem_duyet_chia_tap_va_thoat_dau_gach():
     assert "| c | khác | 999 | ? |" in md                                   # Điều không có trong chỉ mục -> dấu hỏi, không lỗi
 
 
+def test_bang_xem_duyet_cau_nhieu_dieu_noi_bang_dau_cong():
+    tieu_de = {"dieu 173": "Điều 173. Tội trộm cắp tài sản", "dieu 178": "Điều 178. Tội hủy hoại hoặc cố ý làm hư hỏng tài sản"}
+    md = bang_xem_duyet([mot("a", q="trộm rồi đập", dieu=("173", "178"), loai="nhieu_dieu"), mot("b", q="hai đáp án chấp nhận", dieu=("173", "178"), tap="kiem_tra")], tieu_de)
+    assert "| a | trộm rồi đập | 173 + 178 | Tội trộm cắp tài sản + Tội hủy hoại hoặc cố ý làm hư hỏng tài sản |" in md
+    assert "| b | hai đáp án chấp nhận | 173, 178 | Tội trộm cắp tài sản; Tội hủy hoại hoặc cố ý làm hư hỏng tài sản |" in md     # loại don giữ nguyên cách ghi cũ
+    assert "nhiều hành vi" in md
+
+
 def test_thong_ke():
     tk = thong_ke([mot("a"), mot("b", q="q2", dieu=("174",), tap="kiem_tra", nguon="nguoi_dung")])
     assert tk["tap"] == {"dev": 1, "kiem_tra": 1} and tk["nguon"]["nguoi_dung"] == 1
@@ -93,3 +101,19 @@ def test_tap_phu_moi_dieu_mot_cau_don():
     assert all(x["loai"] == "don" and len(x["dieu"]) == 1 for x in phu)
     dieu = [x["dieu"][0] for x in phu]
     assert len(dieu) == len(set(dieu))                  # phủ nốt: mỗi Điều đúng một câu
+
+
+def test_loc_theo_id_khoang_danh_sach_va_loi():
+    import pytest
+    from src.index.bo_cau_hoi import BoCauHoiError, loc_theo_id
+    cau_ = [{"id": f"dn{i:02d}"} for i in (1, 2, 3, 4, 14, 15)] + [{"id": "qn01"}]
+    ids = lambda mo_ta: [x["id"] for x in loc_theo_id(cau_, mo_ta)]
+    assert ids("dn01-dn03") == ["dn01", "dn02", "dn03"]
+    assert ids("dn01-03, qn01") == ["dn01", "dn02", "dn03", "qn01"]          # tiền tố khoảng chỉ ghi một lần; giữ thứ tự gốc
+    assert ids("qn01,dn15") == ["dn15", "qn01"]
+    with pytest.raises(BoCauHoiError):
+        loc_theo_id(cau_, "dn01-dn09")                                       # dn05..dn09 không có
+    with pytest.raises(BoCauHoiError):
+        loc_theo_id(cau_, "dn04-dn02")                                       # khoảng ngược
+    with pytest.raises(BoCauHoiError):
+        loc_theo_id(cau_, "xx99")

@@ -9,7 +9,8 @@ Mỗi câu có: id, cau_hoi, dieu (danh sách số Điều), loai, tap, nguon, t
                     Chỉ đo với tham số đã chốt, không quét, không chỉnh theo kết quả.
   loai    don         `dieu` là các Điều CHẤP NHẬN: tìm được bất kỳ Điều nào trong danh sách là trúng.
           nhieu_dieu  `dieu` là các Điều CẦN TÌM ĐỦ (mỗi Điều ứng với một hành vi khác nhau của cùng tình huống).
-                      Các script chấm Hit@k hiện bỏ qua loại này (doc_bo(..., loai="don")), tránh chấm sai.
+                      Các script chấm Hit@k bỏ qua loại này (doc_bo(..., loai="don")), tránh chấm sai; chấm riêng bằng
+                      scripts/danh_gia_nhieu.py (số đo «tìm đủ», src/index/tim_du.py). Chỉ có ở tập dev và kiem_tra.
   nguon   claude | nguoi_dung | ban_an: ai soạn câu. Câu do cùng một mô hình soạn với dữ liệu huấn luyện sau này sẽ cho điểm
           cao hơn thực tế, nên báo cáo riêng theo nguồn.
   trang_thai   nhap | da_duyet
@@ -69,6 +70,28 @@ def doc_bo(duong_dan: str | Path = MAC_DINH, tap: str | None = None, loai: str |
         if not cau:
             raise BoCauHoiError(f"không có câu nào loại {loai!r} trong tập đã chọn")
     return cau
+
+
+def loc_theo_id(cau: list[dict], mo_ta: str) -> list[dict]:
+    """Giữ các câu có id nêu trong `mo_ta`: danh sách cách nhau dấu phẩy, mỗi mục là một id hoặc một khoảng cùng tiền tố ("dn01-dn14" hay "dn01-14").
+    Giữ nguyên thứ tự của `cau`. Id không có trong `cau` là lỗi, để gõ nhầm không làm mất câu âm thầm."""
+    muon: set[str] = set()
+    for muc in (m.strip() for m in mo_ta.split(",")):
+        if not muc:
+            continue
+        r = re.fullmatch(r"([^\W\d_]*)(\d+)-\1?(\d+)", muc)
+        if r:
+            tien_to, a, b = r.group(1), r.group(2), r.group(3)
+            if int(a) > int(b):
+                raise BoCauHoiError(f"khoảng id ngược: {muc}")
+            muon.update(f"{tien_to}{i:0{len(a)}d}" for i in range(int(a), int(b) + 1))
+        else:
+            muon.add(muc)
+    co = {x.get("id") for x in cau}
+    la = sorted(muon - co)
+    if la:
+        raise BoCauHoiError(f"id không có trong tập đã chọn: {', '.join(la[:8])}{'...' if len(la) > 8 else ''}")
+    return [x for x in cau if x.get("id") in muon]
 
 
 def kiem_tra_hop_le(cau: list[dict]) -> list[str]:
@@ -132,7 +155,9 @@ def bang_xem_duyet(cau: list[dict], tieu_de: dict[str, str]) -> str:
     """Bảng markdown để duyệt nhãn: id, câu hỏi, Điều, tiêu đề Điều; chia theo tập. `tieu_de`: {"dieu 173": "Điều 173. Tội trộm cắp tài sản"}."""
     dong = ["# Duyệt bộ câu hỏi", "",
             "Với mỗi câu: đọc câu hỏi, xem Điều ghi bên phải có ĐÚNG là điều luật người hỏi cần không. Báo lại id sai hoặc thiếu, "
-            "ví dụ: `sai e05 (thêm 176)`, hoặc `ok hết`. Câu hỏi nên là lời người dân, không lặp từ trong tên Điều.", ""]
+            "ví dụ: `sai e05 (thêm 176)`, hoặc `ok hết`. Câu hỏi nên là lời người dân, không lặp từ trong tên Điều. "
+            "Câu có nhiều Điều nối bằng dấu + là tình huống nhiều hành vi: phải tìm ĐỦ mọi Điều, mỗi Điều ứng với một hành vi bị xử riêng; "
+            "hãy xem mỗi Điều có đúng một hành vi trong câu và có hành vi nào thiếu Điều không.", ""]
     for tap in TAP:
         xs = [x for x in cau if x.get("tap") == tap]
         if not xs:
@@ -140,7 +165,8 @@ def bang_xem_duyet(cau: list[dict], tieu_de: dict[str, str]) -> str:
         dong += [f"## Tập {tap} ({len(xs)} câu)", "", "| id | câu hỏi | Điều | tiêu đề Điều |", "|---|---|---|---|"]
         for x in xs:
             q = str(x.get("cau_hoi", "")).replace("|", "\\|")
-            ti = "; ".join(_ten_dieu(tieu_de, d) for d in x.get("dieu", [])).replace("|", "\\|")
-            dong.append(f"| {x.get('id')} | {q} | {', '.join(x.get('dieu', []))} | {ti} |")
+            nhieu = x.get("loai") == "nhieu_dieu"
+            ti = ("; " if not nhieu else " + ").join(_ten_dieu(tieu_de, d) for d in x.get("dieu", [])).replace("|", "\\|")
+            dong.append(f"| {x.get('id')} | {q} | {(' + ' if nhieu else ', ').join(x.get('dieu', []))} | {ti} |")
         dong.append("")
     return "\n".join(dong) + "\n"

@@ -161,7 +161,12 @@ def validate_base_law(law: ParsedLaw) -> list[Flag]:
         flags.append(Flag(LOI, "hieu_luc_truoc_ban_hanh", f"Ngày hiệu lực {m.ngay_hieu_luc} sớm hơn ngày ban hành {m.ngay_ban_hanh}"))
     if not any(True for _ in law.footer if _.startswith(("Bộ luật này", "Luật này", "Pháp lệnh này", "Nghị quyết này"))):
         flags.append(Flag(CANH_BAO, "khong_thay_cau_thong_qua", "Không thấy câu chốt 'đã được Quốc hội ... thông qua' ở cuối văn bản"))
-    if m.ngay_hieu_luc:
+    ngoai = law.source.get("hieu_luc_ngoai_van_ban")
+    if m.ngay_hieu_luc and ngoai:
+        flags.append(Flag(CANH_BAO, "hieu_luc_ngoai_van_ban",
+                          f"Ngày hiệu lực {m.ngay_hieu_luc} KHÔNG đọc từ chính văn bản mà do người nhập theo căn cứ: {ngoai.get('can_cu')} "
+                          "— người duyệt phải đối chiếu căn cứ này với văn bản gốc"))
+    elif m.ngay_hieu_luc:
         flags.append(Flag(THONG_TIN, "hieu_luc_theo_van_ban",
                           "Ngày hiệu lực lấy theo chính văn bản; CHƯA tính nghị quyết hoãn/đình chỉ hiệu lực (nếu có) — xử lý ở Bước 2"))
     if law.source.get("homoglyphs_fixed"):
