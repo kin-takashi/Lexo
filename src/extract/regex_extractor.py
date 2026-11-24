@@ -20,11 +20,13 @@ from src.parse.fragment import locate, parse_fragment
 from src.parse.model import VN_LETTERS
 
 NAME = {"chuong": "Chương", "muc": "Mục", "dieu": "Điều", "khoan": "khoản", "diem": "điểm"}
-_VERB = r"(?:thay thế|thay|bổ sung|bỏ)"
+_VERB = r"(?:thay thế|thay|sửa đổi|bổ sung|bỏ)"
 _WORD = r"(?:cụm từ|từ|dấu)"
 _RE_Q = re.compile(r"“([^”]*)”")
 _RE_LEAD = re.compile(r"^(Sửa đổi, bổ sung|Sửa đổi|Bổ sung|Bãi bỏ|Thay thế|Bỏ)\b")
 _RE_QUOTE_HEAD = re.compile(r"^(Sửa đổi, bổ sung|Sửa đổi|Thay thế|Bổ sung)\s+(?P<body>.+?)\s+như sau\s*:?$")
+_RE_BI_DONG = re.compile(r"^(?P<body>.+?)\s+được\s+(?P<verb>sửa đổi, bổ sung|sửa đổi|thay thế)\s+như sau\s*:?$", re.I)   # «Điều 119 được sửa đổi, bổ sung như sau:»
+_RE_TEN_THANH = re.compile(r"”\s*được\s+sửa đổi\s+thành\s*“")                                                                 # «“Điều 84. A” được sửa đổi thành “Điều 84. B”»
 _SPLIT_COMMA = re.compile(rf",\s+(?=(?:{_VERB}\s+)?{_WORD}\s+⟦)", re.I)
 _SPLIT_VA = re.compile(rf"\s+và\s+(?=(?:{_VERB}\s+)?{_WORD}\s+⟦)", re.I)
 _SPLIT_ANCHOR = re.compile(rf"(?:,\s*|\s+và\s+)?(?=(?:trước|sau)\s+{_WORD}\s+⟦)", re.I)
@@ -73,6 +75,7 @@ class ExtractionResult:
     unparsed: list[Unparsed] = field(default_factory=list)
     containers: list[str] = field(default_factory=list)          # mục cha chỉ chứa mục con, không tự sinh lệnh
     n_leaf: int = 0                                              # số mục lá trong phạm vi
+    notes: list[str] = field(default_factory=list)               # điều bộ trích đã tự quyết nhưng người duyệt nên biết
 
     @property
     def n_parsed_leaf(self) -> int:
@@ -84,7 +87,8 @@ class ExtractionResult:
     def to_dict(self) -> dict:
         return {"so_hieu_nguon": self.so_hieu_nguon, "n_leaf": self.n_leaf, "n_parsed_leaf": self.n_parsed_leaf,
                 "coverage": round(self.coverage(), 4), "containers": self.containers,
-                "commands": [c.to_dict() for c in self.commands], "unparsed": [u.to_dict() for u in self.unparsed]}
+                "commands": [c.to_dict() for c in self.commands], "unparsed": [u.to_dict() for u in self.unparsed],
+                **({"notes": self.notes} if self.notes else {})}
 
 
 class _Fail(Exception):
@@ -115,9 +119,18 @@ def _quote_text(law: AmendingLaw, item: Item) -> str:
 def _from_quote(law: AmendingLaw, item: Item, text: str, ctx: PathT | None) -> list[ExtractedCommand]:
     m = _RE_QUOTE_HEAD.match(text)
     if not m:
+        mb = _RE_BI_DONG.match(text)
+        if mb:                                                                  # thể bị động: «Khoản 5 Điều 69 được sửa đổi, bổ sung như sau:»
+            text = f"{mb.group('verb')[0].upper()}{mb.group('verb')[1:]} {mb.group('body')} như sau:"
+            m = _RE_QUOTE_HEAD.match(text)
+    if not m:
         raise _Fail("câu lệnh có khối trích dẫn nhưng không theo mẫu '<Sửa đổi/Bổ sung> ... như sau:'")
     verb, body = m.group(1), m.group("body")
+    body = re.sub(r"\btên\s+(?=Điều\s+\d)", "tên điều ", body, flags=re.I)             # «Tên Điều 84» = tên của Điều 84 (cách viết có sẵn: «tên điều Điều 84»)
     quote = _quote_text(law, item)
+    mt = _RE_TEN_THANH.search(quote)
+    if mt and re.match(r"^tên\s+điều\b", body, re.I):                           # đổi tên Điều: lấy vế SAU «được sửa đổi thành»
+        quote = quote[mt.end():]
     frag = parse_fragment(quote)
     if not frag.nodes:
         raise _Fail("khối trích dẫn không đọc được thành Điều/khoản/điểm")
@@ -235,7 +248,7 @@ def _from_phrases(item: Item, text: str, ctx: PathT | None, ctx_verb: str | None
         m = re.match(rf"^(?P<v>{_VERB})\s+(?P<rest>.+)$", cl, re.I)
         if m:
             verb, body = m.group("v").lower(), m.group("rest")
-            if verb == "thay":                                          # "Thay cụm từ …" = "Thay thế cụm từ …"
+            if verb in ("thay", "sửa đổi"):                             # "Thay cụm từ …" / "Sửa đổi cụm từ …" = "Thay thế cụm từ …"
                 verb = "thay thế"
         else:
             body = cl
@@ -247,7 +260,7 @@ def _from_phrases(item: Item, text: str, ctx: PathT | None, ctx_verb: str | None
             ops.append((verb, "bai_bo", None, None, clause_targets(body) or None, None, body))
             continue
         if verb == "thay thế":
-            mm = re.match(rf"^{_WORD}\s+⟦(\d+)⟧\s+bằng\s+{_WORD}\s+⟦(\d+)⟧(?P<rest>.*)$", body, re.I)
+            mm = re.match(rf"^{_WORD}\s+⟦(\d+)⟧\s+(?:bằng|thành)\s+{_WORD}\s+⟦(\d+)⟧(?P<rest>.*)$", body, re.I)
             if not mm:
                 raise _Fail(f"mệnh đề thay thế không theo mẫu: {cl[:60]!r}")
             a, b, rest = int(mm.group(1)), int(mm.group(2)), mm.group("rest")
@@ -309,6 +322,8 @@ def _from_phrases(item: Item, text: str, ctx: PathT | None, ctx_verb: str | None
     nxt: list[Target] | None = None
     for op in reversed(ops):
         tg = op[4] if op[4] else nxt
+        if not tg and ctx:                                              # «Sửa đổi cụm từ “A” thành cụm từ “B”» dưới câu cha «… tại khoản 1 Điều 313 như sau:»
+            tg = [Target(list(ctx), "toan_bo", -1)]
         if not tg:
             raise _Fail("có mệnh đề không xác định được nơi áp dụng")
         resolved.append(tg)
@@ -363,12 +378,28 @@ def _split_head(r1: str) -> tuple[str, str]:
 # ---------------------------------------------------------------------------------------------------------------------
 # Duyệt cây mục lệnh
 
+def _ctx_tu_tieu_de(tieu_de: str) -> PathT | None:
+    """Tiêu đề Điều sửa đổi nêu ĐÚNG MỘT nơi áp dụng («Sửa đổi, bổ sung một số cụm từ tại khoản 1 Điều 313 như sau:») thì các mục con
+    kế thừa nơi đó làm ngữ cảnh. Tiêu đề chung chung («...một số điều của Bộ luật hình sự») không cho ngữ cảnh."""
+    clean = _RE_Q.sub(" ", tieu_de)
+    groups = find_groups(clean)
+    if not groups:
+        return None
+    targets, complete = resolve_targets(groups, clean, None)
+    return list(targets[0].path) if complete and len(targets) == 1 and targets[0].phan == "toan_bo" else None
+
+
 def extract_commands(law: AmendingLaw) -> ExtractionResult:
     res = ExtractionResult(so_hieu_nguon=law.meta.so_hieu)
 
     def leaf(item: Item, ctx: PathT | None, ctx_verb: str | None) -> None:
         res.n_leaf += 1
         text = _one_line(item.text)
+        rows = [x.strip() for x in item.text.split("\n") if x.strip()]
+        if len(rows) > 1 and not item.quote_ids and "“" not in rows[0] and any("“" in x for x in rows[1:]):
+            # dòng đầu chỉ nêu mục đích (không có cụm từ để thay), lệnh thật nằm ở các dòng sau: «Bỏ hình phạt tử hình ở các điều…» + «Sửa đổi cụm từ “…” thành…»
+            res.notes.append(f"{item.vi_tri_nguon}: dòng đầu là câu nêu mục đích ({rows[0][:80]!r}), chỉ dùng các dòng sau để trích lệnh")
+            text = _one_line(" ".join(rows[1:]))
         try:
             if item.quote_ids:
                 cmds = _from_quote(law, item, text, ctx)
@@ -403,6 +434,7 @@ def extract_commands(law: AmendingLaw) -> ExtractionResult:
             walk(ch, new_ctx, verb or (ctx_verb if ctx_verb else None))
 
     for d in law.dieu_sua_doi:
+        ctx = _ctx_tu_tieu_de(d.tieu_de)
         for it in d.items:
-            walk(it, None, None)
+            walk(it, ctx, None)
     return res

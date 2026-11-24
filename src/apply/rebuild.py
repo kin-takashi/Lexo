@@ -514,6 +514,20 @@ def _reset(conn: sqlite3.Connection, van_ban_id: int, base_date: str) -> None:
     conn.execute("UPDATE van_ban SET ngay_hieu_luc = ? WHERE id = ?", (base_date, van_ban_id))
 
 
+def _dong_het_hieu_luc(conn: sqlite3.Connection, van_ban_id: int) -> int:
+    """Văn bản có ngay_het_hieu_luc (bị bộ luật mới thay thế): đóng mọi phiên bản còn mở / kéo dài quá ngày đó, để tra «tại ngày X» và chỉ mục tìm kiếm
+    không trả lẫn bản của bộ luật cũ sau khi nó hết hiệu lực. Phiên bản bắt đầu sau ngày đó (luật sửa đổi hiệu lực muộn hơn: dữ liệu bất thường)
+    thành khoảng rỗng. Trả số phiên bản bị đóng."""
+    het = conn.execute("SELECT ngay_het_hieu_luc FROM van_ban WHERE id = ?", (van_ban_id,)).fetchone()[0]
+    if not het:
+        return 0
+    own = "(SELECT id FROM don_vi_luat WHERE van_ban_id = ?)"
+    cur = conn.execute(
+        f"""UPDATE phien_ban_noi_dung SET hieu_luc_den = CASE WHEN hieu_luc_tu > ? THEN hieu_luc_tu ELSE ? END
+            WHERE (hieu_luc_den IS NULL OR hieu_luc_den > ?) AND don_vi_id IN {own}""", (het, het, het, van_ban_id))
+    return cur.rowcount
+
+
 def clear_derived(conn: sqlite3.Connection, van_ban_id: int) -> None:
     """Xoá mọi phiên bản/nút dẫn xuất, trả văn bản gốc về nguyên trạng. Phải gọi TRƯỚC khi xoá dòng lenh_sua_doi
     (các phiên bản dẫn xuất tham chiếu tới lệnh), rồi rebuild lại. Không commit."""
@@ -558,6 +572,7 @@ def rebuild(
             results.append(res)
         report = RebuildReport(van_ban_id, base_date, results)
         if not report.n_loi or not strict:
+            _dong_het_hieu_luc(conn, van_ban_id)
             report.hieu_dinh = hd.ap_dung(conn, van_ban_id, hieu_dinh)
         if strict and report.n_loi:
             raise RebuildError(report)

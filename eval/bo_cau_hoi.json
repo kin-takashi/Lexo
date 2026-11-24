@@ -1,11 +1,11 @@
 {
  "phien_ban": 1,
- "ghi_chu": "MỘT file nguồn duy nhất cho mọi câu hỏi đánh giá (gom từ cau_hoi_dev.json, cau_hoi_dev2.json, cau_hoi_thu.json ngày 2026-10-13, giữ nguyên chữ và id). Chia tập bằng trường `tap`; quy ước các trường xem src/index/bo_cau_hoi.py. Sửa nhãn / thêm câu: chỉ sửa file này rồi chạy python scripts/kiem_tra_bo_cau_hoi.py. Tập xac_nhan, kiem_tra và phu chỉ chạy với tham số đã chốt, không quét, không chỉnh theo kết quả. Mọi câu hiện có do Claude soạn (nguon = claude); câu do bạn tự viết hoặc lấy từ bản án thật nên ghi nguon = nguoi_dung / ban_an để báo cáo riêng.",
+ "ghi_chu": "MỘT file nguồn duy nhất cho mọi câu hỏi đánh giá (gom từ cau_hoi_dev.json, cau_hoi_dev2.json, cau_hoi_thu.json ngày 2026-10-13, giữ nguyên chữ và id). Chia tập bằng trường `tap`; quy ước các trường xem src/index/bo_cau_hoi.py. Sửa nhãn / thêm câu: chỉ sửa file này rồi chạy python scripts/kiem_tra_bo_cau_hoi.py. Tập xac_nhan, kiem_tra và phu chỉ chạy với tham số đã chốt, không quét, không chỉnh theo kết quả. Mọi câu hiện có do Claude soạn (nguon = claude); câu do bạn tự viết hoặc lấy từ bản án thật nên ghi nguon = nguoi_dung / ban_an để báo cáo riêng. Ngày 2026-10-14: tập phu được người dùng duyệt (112 câu da_duyet); thêm 40 tình huống nhiều Điều (loai = nhieu_dieu): 14 vào dev (dn01-dn14), 26 vào kiem_tra (qn01-qn26). Các câu này do Claude soạn, đáp án gồm các Điều ứng với từng hành vi bị xử riêng; thang chấm tìm đủ xem scripts/danh_gia_nhieu.py. Câu do chính bạn viết hoặc lấy từ bản án thật nên ghi nguon = nguoi_dung / ban_an. Ngày 2026-10-16: thêm 20 tình huống nhiều Điều vào dev (dn15-dn34) để dev đủ 34 tình huống / 74 Điều đáp án; Claude soạn nháp (nguon = claude, trang_thai = nhap), tổ hợp Điều không trùng tổ hợp nào trong 450 mẫu học và 40 câu nhiều Điều cũ; chờ người dùng duyệt (xem eval/xem_duyet_dev_mo_rong.md).",
  "mo_ta_tap": {
-  "dev": "Tập DEV (chỉnh tham số / chẩn đoán), soạn nháp bởi Claude 2026-10-07, CHƯA được người dùng duyệt (trang_thai = nhap). Tách khỏi tập kiểm tra eval/cau_hoi_thu.json: không dùng để sinh câu hỏi cho LLM; đáp án nằm ở các Điều khác tập kiểm tra. Lưu ý: cùng một người soạn với tập kiểm tra và nhiều câu bám sát tên tội nên dễ hơn thực tế; nhờ người khác viết thêm sẽ tốt hơn.",
+  "dev": "Tập DEV (chỉnh tham số / chẩn đoán), soạn nháp bởi Claude 2026-10-07, CHƯA được người dùng duyệt (trang_thai = nhap). Tách khỏi tập kiểm tra eval/cau_hoi_thu.json: không dùng để sinh câu hỏi cho LLM; đáp án nằm ở các Điều khác tập kiểm tra. Lưu ý: cùng một người soạn với tập kiểm tra và nhiều câu bám sát tên tội nên dễ hơn thực tế; nhờ người khác viết thêm sẽ tốt hơn. Thêm 14 tình huống loai = nhieu_dieu (id dn01-dn14, 2026-10-14): mỗi tình huống có 2-3 hành vi, mỗi hành vi một Điều, dùng để chỉnh lời nhắc tách hành vi; Claude soạn nháp, chưa được duyệt. Ngày 2026-10-16 thêm 20 tình huống nhiều Điều dn15-dn34 (đo trên tổ hợp Điều chưa xuất hiện trong dữ liệu học; hành vi là mô tả đời thường, không kèm tên tội).",
   "xac_nhan": "Bộ dev2 (độc lập): 70 câu, mỗi câu một Điều, các Điều KHÔNG nằm trong đáp án của bộ dev lẫn bộ kiểm tra. Dùng để xác nhận độc lập cấu hình chọn trên bộ dev (xếp lại top 5 bằng Qwen3-8B, w = 0.25). Chưa duyệt nhãn (Claude soạn nháp). Không dùng để chỉnh tham số; không đưa nội dung câu vào lời nhắc của bất kỳ bộ sinh nào.",
-  "kiem_tra": "Soạn nháp bởi Claude, người dùng (Kintakashi) đã xem eval/xem_duyet.md và xác nhận ổn (2026-10-07). Tập KIỂM TRA: không được dùng để sinh dữ liệu hay chỉnh tham số theo từng câu.",
-  "phu": "Tập PHỦ NỐT: 112 câu, mỗi câu một Điều về tội phạm chưa có câu nào ở ba tập dev / xac_nhan / kiem_tra, soạn nháp bởi Claude 2026-10-13, CHƯA được người dùng duyệt (trang_thai = nhap). Dùng để đo độ phủ trên toàn bộ luật (mọi Điều về tội phạm có ít nhất một câu), không để chỉnh tham số. Lưu ý: các Điều anh em gần như trùng nghĩa (263/264, 270/271, 275/276, 138/139, 148/149, 411/412, 404/406...) chỉ khác nhau ở một động từ, nên nhãn dễ lệch; cần người duyệt."
+  "kiem_tra": "Soạn nháp bởi Claude, người dùng (Kintakashi) đã xem eval/xem_duyet.md và xác nhận ổn (2026-10-07). Tập KIỂM TRA: không được dùng để sinh dữ liệu hay chỉnh tham số theo từng câu. Thêm 26 tình huống loai = nhieu_dieu (id qn01-qn26, 2026-10-14): 2-3 hành vi mỗi tình huống, đáp án là TẬP các Điều phải tìm đủ. Do Claude soạn nháp (nguon = claude, trang_thai = nhap), chờ người dùng duyệt nhãn; tập này đóng băng, không dùng để chỉnh lời nhắc hay tham số.",
+  "phu": "Tập PHỦ NỐT: 112 câu, mỗi câu một Điều về tội phạm chưa có câu nào ở ba tập dev / xac_nhan / kiem_tra, soạn nháp bởi Claude 2026-10-13, người dùng (Kintakashi) đã duyệt nhãn 2026-10-14 (trang_thai = da_duyet). Dùng để đo độ phủ trên toàn bộ luật (mọi Điều về tội phạm có ít nhất một câu), không để chỉnh tham số. Lưu ý: các Điều anh em gần như trùng nghĩa (263/264, 270/271, 275/276, 138/139, 148/149, 411/412, 404/406...) chỉ khác nhau ở một động từ, nên nhãn dễ lệch; cần người có chuyên môn rà thêm."
  },
  "cau_hoi": [
   {
@@ -775,6 +775,420 @@
     "180"
    ],
    "loai": "don",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn01",
+   "cau_hoi": "Khuya hôm qua có hai thanh niên bịt mặt xông vào tiệm tạp hóa đầu ngõ nhà tôi, kề dao vào cổ cô chủ bắt giao hết tiền trong ngăn kéo, được hơn 15 triệu. Xong một tên còn lôi cô vào buồng sau, dùng sức ép cô quan hệ tình dục trong khi tên kia đứng canh cửa.",
+   "dieu": [
+    "168",
+    "141"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn02",
+   "cau_hoi": "Ông Thịnh thuê người khắc con dấu và soạn quyết định tuyển dụng giả mang tên ủy ban nhân dân huyện, rồi nói với sáu gia đình có con muốn vào biên chế rằng ông chạy được chỗ, mỗi người đưa 70 triệu. Lấy xong 420 triệu thì ông tắt máy biến mất, mọi người cầm tờ quyết định đi nộp mới biết là đồ giả.",
+   "dieu": [
+    "341",
+    "174"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn03",
+   "cau_hoi": "Tôi vay chị Lan 100 triệu để xoay vốn bán hàng, chị bắt trả 15 triệu tiền lãi mỗi tháng, tôi đã trả đủ năm tháng thì hết khả năng. Chị rủ hai người em kéo đến nhà đòi tiếp, lấy gậy đánh gãy tay tôi, giám định thương tích 18%. Chị ấy đã phạm những tội gì?",
+   "dieu": [
+    "201",
+    "134"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn04",
+   "cau_hoi": "Kế toán trưởng của một trung tâm y tế công lập đã rút dần 180 triệu từ quỹ cơ quan bỏ túi riêng. Để che lại, cô sửa số liệu trong sổ sách và lập vài phiếu chi khống cho khớp với phần tiền thiếu, đến lúc kiểm toán vào mới lộ ra.",
+   "dieu": [
+    "353",
+    "359"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn05",
+   "cau_hoi": "Anh Quang rủ khoảng 40 người góp vốn vào một sàn tiền ảo, hứa lãi 10% mỗi tuần, thực chất sàn không hề tồn tại và anh thu về tổng cộng hai tỷ đồng. Số tiền đó được anh chuyển qua nhiều tài khoản trung gian rồi mua một thửa đất đứng tên em gái để che nguồn gốc.",
+   "dieu": [
+    "174",
+    "324"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn06",
+   "cau_hoi": "Cậu em họ nợ tiền nên anh Hải dẫn về nhà nhốt trong phòng kho hai ngày liền, không cho ra ngoài. Trong thời gian đó anh lấy dây điện quất vào người cậu nhiều lần, kết quả giám định tổn hại sức khỏe là 21%.",
+   "dieu": [
+    "157",
+    "134"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn07",
+   "cau_hoi": "Công ty xây dựng của anh Bình chậm tiến độ, sợ bị phạt hợp đồng nên mang 80 triệu đến gặp trưởng ban quản lý dự án, nhờ ký nghiệm thu sớm dù công trình chưa xong. Ông trưởng ban nhận phong bì rồi ký xác nhận hoàn thành ngay trong tuần.",
+   "dieu": [
+    "354",
+    "364"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn08",
+   "cau_hoi": "Chủ quán karaoke biết nhiều nhóm khách thuê phòng để hút ma túy đá nhưng vẫn cho thuê, còn tính thêm tiền dọn dẹp. Ngoài ra anh còn bán từng gói ma túy tổng hợp cho khách ngay tại quán để kiếm thêm.",
+   "dieu": [
+    "256",
+    "251"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn09",
+   "cau_hoi": "Ông Sáu mở sới bạc ở nhà vườn, mỗi đêm khoảng 15 người đánh ăn thua mỗi ván cả chục triệu, ông thu tiền xâu. Khi công an ập vào bắt quả tang, ông giơ dao dọa chém tổ công tác nếu ai tiến lại gần để cản việc bắt giữ, may không ai bị thương.",
+   "dieu": [
+    "322",
+    "330"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn10",
+   "cau_hoi": "Một lập trình viên viết phần mềm chuyên dò mật khẩu để chiếm quyền tài khoản ngân hàng điện tử rồi rao bán trên mạng, thu 60 triệu. Người mua dùng chính phần mềm đó vào tài khoản của nhiều nạn nhân và chuyển đi hơn 300 triệu đồng.",
+   "dieu": [
+    "285",
+    "290"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn11",
+   "cau_hoi": "Cô kế toán dịch vụ in sẵn rồi bán 25 tờ hóa đơn giá trị gia tăng khống cho các doanh nghiệp, thu phí 60 triệu. Một công ty mua số hóa đơn này để ghi chi phí không có thật, nhờ vậy khai giảm số thuế phải nộp khoảng 180 triệu.",
+   "dieu": [
+    "203",
+    "200"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn12",
+   "cau_hoi": "Phó thủ trưởng một cơ quan điều tra cấp huyện nhận 90 triệu của gia đình nghi phạm rồi cố tình không ra quyết định khởi tố bị can, dù biết rõ người này đã đánh một người khác trọng thương. Hồ sơ cứ để đó cho đến khi hết thời hạn.",
+   "dieu": [
+    "354",
+    "369"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn13",
+   "cau_hoi": "Sau khi chia tay, anh Đạt nhắn tin cho Ngân nhiều lần nói sẽ đâm chết cô nếu cô quen người khác, khiến cô không dám ra khỏi nhà. Anh còn đăng ảnh riêng tư của cô kèm lời lẽ chửi rủa lên nhóm Facebook của khu phố, rồi viết đơn gửi công an tố cáo cô buôn bán ma túy dù biết đó là bịa đặt.",
+   "dieu": [
+    "133",
+    "155",
+    "156"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn14",
+   "cau_hoi": "Giám đốc một công ty vận tải biết rõ tài xế Hải đang bị tước giấy phép lái xe nhưng vẫn phân công anh chạy tuyến đường dài. Chạy đến nửa đường Hải ngủ gật, tông vào một xe máy làm người đi đường chết tại chỗ.",
+   "dieu": [
+    "260",
+    "263"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn15",
+   "cau_hoi": "Anh Tín chạy xe máy chở hơn 2 ký ma túy đá giấu trong cốp xe, nhận chở thuê từ biên giới về thành phố để lấy 30 triệu. Đến chốt kiểm soát bị yêu cầu mở cốp, anh rút dao bấm vung lên dọa rồi xô ngã một chiến sĩ công an để bỏ chạy.",
+   "dieu": [
+    "250",
+    "330"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn16",
+   "cau_hoi": "Công ty bán hàng trực tuyến của chị Mai bỗng bị một nhóm gửi hàng triệu lượt truy cập giả làm trang web sập suốt hai ngày, thiệt hại hơn 300 triệu đồng tiền đơn hàng. Sau đó có người nhắn tin bảo muốn trang chạy lại thì phải chuyển 200 triệu vào ví điện tử, nếu không sẽ đánh sập tiếp.",
+   "dieu": [
+    "287",
+    "170"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn17",
+   "cau_hoi": "Anh Quân bị tạm giữ ở công an huyện vì vụ đánh nhau. Người nhà đưa 50 triệu cho cán bộ giữ buồng giam sau khi anh này gợi ý sẽ lo cho ra. Nhận tiền xong, tối hôm sau cán bộ tự mở cửa buồng cho anh Quân về mà không có quyết định nào.",
+   "dieu": [
+    "378",
+    "354",
+    "364"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn18",
+   "cau_hoi": "Anh Bảo cãi nhau với hàng xóm về lối đi chung, từng bị công an xã phạt hành chính vì tự ý vào nhà người ta. Tối qua anh lại đạp cửa xông vào nhà ông Lộc, đập vỡ tivi và tủ kính thiệt hại hơn 20 triệu rồi chỉ vào mặt ông dọa sẽ cầm dao giết cả nhà.",
+   "dieu": [
+    "158",
+    "178",
+    "133"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn19",
+   "cau_hoi": "Công ty may của ông Hải đã ba năm không đóng bảo hiểm xã hội cho 200 công nhân, nợ gần 4 tỷ đồng dù bị nhắc nhiều lần. Cô phụ trách nhân sự của công ty còn lập hồ sơ nghỉ việc giả cho mười người quen để nhận trợ cấp thất nghiệp, chiếm hơn 250 triệu.",
+   "dieu": [
+    "216",
+    "214"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn20",
+   "cau_hoi": "Chủ cây xăng ở ngoại thành cho thợ chỉnh bộ đếm của cột bơm để mỗi lít xăng bán ra bị thiếu 50 mililit, nhiều năm liền thu lợi hơn 600 triệu. Ông còn không xuất hóa đơn, khai thấp doanh thu để trốn hơn 1,4 tỷ đồng tiền thuế.",
+   "dieu": [
+    "198",
+    "200"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn21",
+   "cau_hoi": "Ông Tám chuyên rủ ba đứa trẻ mười lăm, mười sáu tuổi trong xóm đi trộm xe máy và linh kiện, hứa chia tiền mỗi lần. Số hàng lấy được ông đem bán cho một tiệm sửa xe, chủ tiệm biết rõ là đồ ăn trộm nhưng vẫn mua giá rẻ.",
+   "dieu": [
+    "325",
+    "323"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn22",
+   "cau_hoi": "Ông Bảy dựng sới đá gà ăn tiền ở bãi đất sau nhà, thu tiền hồ của người xem, mỗi buổi vài chục triệu. Hôm công an ập vào bắt quả tang, anh Mạnh đang đặt cược liền vớ cây gậy quơ về phía tổ công tác để mọi người chạy thoát.",
+   "dieu": [
+    "322",
+    "321",
+    "330"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn23",
+   "cau_hoi": "Anh Lực trồng hơn 300 cây cần sa xen trong vườn rau sau nhà. Cây thu hoạch anh phơi khô, chia thành từng gói nhỏ bán cho thanh niên trong vùng, mỗi tháng kiếm vài chục triệu.",
+   "dieu": [
+    "247",
+    "251"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn24",
+   "cau_hoi": "Cơ sở của ông Tuấn pha bột sữa rẻ tiền với tinh bột rồi đóng vào hộp mang nhãn sữa dinh dưỡng cho trẻ em, bán ra thị trường hơn 3 tỷ đồng. Doanh thu này ông không khai, không xuất hóa đơn nên trốn hơn 600 triệu đồng tiền thuế.",
+   "dieu": [
+    "193",
+    "200"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn25",
+   "cau_hoi": "Sau trận lũ, ông chủ tịch xã nhận 400 triệu tiền cứu trợ về cho dân. Ông bỏ túi 150 triệu, số gạo và mì tôm còn lại thì phát cho họ hàng và người thân quen, trong khi nhiều hộ mất nhà thật sự không được nhận gì.",
+   "dieu": [
+    "353",
+    "231"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn26",
+   "cau_hoi": "Trong phiên xử vụ tranh chấp đất, thân nhân của bị cáo đứng giữa phòng xử la hét chửi chủ tọa và ném dép lên bàn hội đồng xét xử. Khi cảnh sát tư pháp tiến đến yêu cầu ra ngoài, một người xô mạnh và đạp vào chân anh ấy.",
+   "dieu": [
+    "391",
+    "330"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn27",
+   "cau_hoi": "Chị Ngọc bán mỹ phẩm online bị một người từng làm chung nhắn tin dọa sẽ tung lên mạng chuyện chị bán hàng giả, trừ khi chị đưa 50 triệu. Chị không đưa, người này liền đăng bài khắp các nhóm bịa chuyện chị lừa đảo, bán hàng giả khiến chị mất hết khách.",
+   "dieu": [
+    "170",
+    "156"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn28",
+   "cau_hoi": "Hai bảo vệ siêu thị nghi một cậu thanh niên lấy trộm đồ nên lôi vào phòng kho phía sau, khóa cửa nhốt gần năm tiếng. Trong lúc nhốt, một người rút dao dọa sẽ giết nếu cậu không nhận, người kia lấy gậy đánh khiến cậu bị tổn hại sức khỏe 16%.",
+   "dieu": [
+    "157",
+    "133",
+    "134"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn29",
+   "cau_hoi": "Giám đốc một công ty cổ phần cho làm giả báo cáo kiểm toán rồi nộp kèm hồ sơ xin phát hành cổ phiếu ra thị trường. Sau đó ông còn cho đăng lên website công ty bản báo cáo tài chính ghi doanh thu lớn gấp nhiều lần thực tế, làm nhà đầu tư tin theo mà mất hơn 80 tỷ.",
+   "dieu": [
+    "212",
+    "209"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn30",
+   "cau_hoi": "Chị Vân vay 20 triệu qua một ứng dụng cho vay với lãi hai phần trăm mỗi ngày, trả gần một năm vẫn còn nợ. Bên cho vay thu của hàng trăm người như vậy hơn 300 triệu tiền lãi, rồi gửi ảnh chị đã chỉnh sửa kèm lời chửi bới cho toàn bộ danh bạ, nhắn sẽ tìm đến nhà giết cả nhà chị nếu không trả.",
+   "dieu": [
+    "201",
+    "155",
+    "133"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn31",
+   "cau_hoi": "Xưởng gia công hóa chất của ông Vỹ thuê năm em mười bốn, mười lăm tuổi làm ở khu pha hóa chất độc hại, từng bị phạt hành chính vì việc này mà vẫn tiếp tục. Ông còn thu điện thoại, giấy tờ của công nhân và dọa đánh nếu ai không chịu làm thêm đến khuya.",
+   "dieu": [
+    "296",
+    "297"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn32",
+   "cau_hoi": "Một công ty bất động sản tự ý biến hàng chục héc-ta đất lúa thành khu phân lô bán nền khi chưa được chuyển mục đích sử dụng, thu lợi hơn 80 tỷ. Cán bộ địa chính huyện biết rõ vẫn ký cấp giấy chứng nhận cho các lô đất đó, làm Nhà nước thất thu nhiều tỷ đồng.",
+   "dieu": [
+    "228",
+    "229"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn33",
+   "cau_hoi": "Quán lẩu bò của bà Hoa dùng thịt đã ôi nhiều ngày nấu cho tiệc cưới, hơn 30 khách phải nhập viện vì ngộ độc. Trước đó quán còn mua thịt trâu đông lạnh nhưng ghi trong thực đơn và hóa đơn là bò Úc để bán giá gấp đôi, thu lợi hơn 120 triệu.",
+   "dieu": [
+    "317",
+    "198"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "dev",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "dn34",
+   "cau_hoi": "Anh Quyết ly hôn đã lâu nhưng vẫn nhiều lần tự ý vào nhà vợ cũ, từng bị công an xã lập biên bản phạt hành chính. Đêm qua anh lại đạp cửa xông vào nhà lúc nửa đêm, dùng gậy đánh chị khiến chị bị thương, tỷ lệ tổn thương cơ thể 18%.",
+   "dieu": [
+    "158",
+    "134"
+   ],
+   "loai": "nhieu_dieu",
    "tap": "dev",
    "nguon": "claude",
    "trang_thai": "nhap"
@@ -2194,6 +2608,322 @@
    "trang_thai": "da_duyet"
   },
   {
+   "id": "qn01",
+   "cau_hoi": "Ông Toàn muốn trúng gói thầu nên nhờ anh Khải, bạn thân của một phó giám đốc sở, đứng ra làm cầu nối. Khải nhận của ông Toàn 80 triệu, giữ lại 5 triệu tiền công rồi chuyển phần còn lại cho phó giám đốc; người này nhận tiền và chỉ đạo chọn đơn vị của ông Toàn.",
+   "dieu": [
+    "354",
+    "364",
+    "365"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn02",
+   "cau_hoi": "Tên Phúc dùng dao khống chế người đi đường để cướp chiếc xe máy trị giá 30 triệu. Anh trai Phúc biết rõ xe do em cướp mà vẫn đem bán lại cho một tiệm, còn người bạn thân thì cho Phúc ở nhờ và nói dối công an khi họ đến hỏi thăm. Không ai bàn bạc gì với nhau từ trước khi Phúc ra tay.",
+   "dieu": [
+    "168",
+    "323",
+    "389"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn03",
+   "cau_hoi": "Bị can Nam đang bị tạm giam thì trốn thoát lúc được đưa đi khám bệnh. Em trai anh là Sơn giả làm người nhà, gọi cán bộ canh giữ ra ngoài rồi cho Nam lẻn qua cửa phụ lên chiếc xe đã chờ sẵn.",
+   "dieu": [
+    "386",
+    "387"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn04",
+   "cau_hoi": "Cuối tuần nào ông Ba cũng cho nhóm bạn mượn sân nhà đánh xóc đĩa, mỗi lần khoảng 12 người, tổng tiền trên chiếu cả trăm triệu, ông thu 10% tiền xâu. Anh Tùng là một người chơi, riêng đêm hôm đó anh ăn thua hơn 30 triệu.",
+   "dieu": [
+    "321",
+    "322"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn05",
+   "cau_hoi": "Chủ nhà nghỉ Hạnh cho mấy cô gái thuê phòng cố định để tiếp khách, tiền phòng thu cao hơn bình thường. Anh Lộc mỗi tối đứng đầu phố chào mời khách đi đường rồi dẫn về nhà nghỉ đó, mỗi khách anh nhận 100 nghìn tiền công.",
+   "dieu": [
+    "327",
+    "328"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn06",
+   "cau_hoi": "Nhóm thanh niên uống rượu say kéo ra giữa chợ la hét, chặn xe cộ, hù dọa tiểu thương khiến cả khu chợ náo loạn cả buổi tối. Khi công an phường đến yêu cầu giải tán, một người ném chai bia vào tổ công tác để cản việc lập biên bản.",
+   "dieu": [
+    "318",
+    "330"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn07",
+   "cau_hoi": "Ông Đức cầm búa đập vào đầu người hàng xóm làm nạn nhân chết tại chỗ. Người cháu ruột của ông biết chuyện đã giúp khiêng xác đem chôn ngoài vườn và lau sạch vết máu, hai chú cháu không hề bàn bạc từ trước.",
+   "dieu": [
+    "123",
+    "389"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn08",
+   "cau_hoi": "Vì tranh chấp lối đi, ông Thủy nhắn tin dọa sẽ giết cả nhà hàng xóm, khiến gia đình họ hoảng sợ phải đi ở nhờ nơi khác. Hôm sau ông còn lấy búa đập nát chiếc ô tô trị giá 400 triệu đang đỗ trước cổng nhà họ.",
+   "dieu": [
+    "133",
+    "178"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn09",
+   "cau_hoi": "Say rượu, anh Quân vào quán nhậu gây sự, cầm ghế nhựa đánh vào đầu chủ quán khiến ông thương tật 14%. Sau đó anh hất đổ và đập vỡ tủ lạnh, máy lạnh, bàn ghế trong quán, thiệt hại ước tính 60 triệu.",
+   "dieu": [
+    "134",
+    "178"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn10",
+   "cau_hoi": "Khi khám nhà ông Hiển, công an phát hiện trong hầm chứa của ông có hai khẩu súng quân dụng cùng đạn của một đơn vị bộ đội cũ, và hơn 3 ký thuốc nổ dùng cho việc khai thác đá. Ông không có giấy phép nào cho những thứ này.",
+   "dieu": [
+    "304",
+    "305"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn11",
+   "cau_hoi": "Một cơ sở sao chép hàng nghìn đĩa phim và phần mềm có bản quyền rồi bán lại, thu lợi khoảng 150 triệu. Cũng cơ sở đó đặt may áo thun gắn mác một thương hiệu thể thao nổi tiếng khi chưa được cho phép, bán ra thị trường như hàng nhái với doanh thu hơn 400 triệu.",
+   "dieu": [
+    "225",
+    "226"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn12",
+   "cau_hoi": "Một thanh niên dùng kỹ thuật dò mật khẩu để xâm nhập vào máy chủ của công ty bán lẻ, tải về dữ liệu hơn 3.000 thẻ ngân hàng của khách hàng. Anh ta rao bán danh sách này trên mạng và thu được 45 triệu.",
+   "dieu": [
+    "289",
+    "291"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn13",
+   "cau_hoi": "Trong vụ kiện tranh chấp đất, ông Cường đưa 20 triệu nhờ anh Mạnh ra tòa khai là đã chứng kiến việc mua bán, dù thực tế anh không hề biết gì. Anh Mạnh nhận tiền và khai đúng như vậy với tư cách người làm chứng.",
+   "dieu": [
+    "382",
+    "384"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn14",
+   "cau_hoi": "Để thoát khỏi một vụ án, bị can Linh đưa cho một cán bộ cơ quan điều tra 80 triệu. Người này nhận tiền, rút bớt các bản lời khai bất lợi và sửa lại ngày tháng trong hồ sơ để vụ án không đủ căn cứ khởi tố.",
+   "dieu": [
+    "364",
+    "354",
+    "375"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn15",
+   "cau_hoi": "Chị Mai bị một đồng nghiệp cũ viết đơn gửi công an tố cáo chị biển thủ tiền quỹ, dù người này biết rõ chuyện đó không có thật. Cô ta còn lập một nhóm chat đăng ảnh chị kèm lời mạt sát, chế giễu ngoại hình để bôi nhọ chị trước toàn bộ nhân viên.",
+   "dieu": [
+    "155",
+    "156"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn16",
+   "cau_hoi": "Anh Tài lập hội nhóm kêu gọi thanh niên đua xe máy trên đường vành đai vào đêm cuối tuần, thu phí tham gia và nhận cá cược. Trong một cuộc đua, một người chạy quá nhanh đâm vào người đi đường, gây thương tích 40%.",
+   "dieu": [
+    "265",
+    "266"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn17",
+   "cau_hoi": "Chủ chuỗi nhà thuốc bán các hộp thuốc kháng sinh làm giả bao bì và hàm lượng, doanh thu từ số thuốc này hơn 500 triệu. Đồng thời ông không ghi vào sổ sách hơn 1,5 tỷ doanh thu bán hàng suốt hai năm để giảm thuế, số thuế thiếu khoảng 150 triệu.",
+   "dieu": [
+    "194",
+    "200"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn18",
+   "cau_hoi": "Trong trại tạm giam, quản giáo A thường xuyên đánh đập phạm nhân và bắt nhịn đói để hạ nhục. Còn điều tra viên B khi hỏi cung thì đe dọa sẽ bắt vợ con ông nếu không khai ra đồng bọn, ép ông ký vào biên bản.",
+   "dieu": [
+    "373",
+    "374"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn19",
+   "cau_hoi": "Người phụ trách đội xe của một công ty vận tải biết rõ chiếc xe khách đã hỏng phanh, thợ báo phải thay nhưng vẫn cho xuất bến để kịp lịch chạy. Trên đèo, tài xế còn chạy quá tốc độ cho phép ở đoạn dốc, xe mất phanh lao vào vách núi làm ba hành khách chết.",
+   "dieu": [
+    "262",
+    "260"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn20",
+   "cau_hoi": "Một chủ hàng thuê xe chở lậu lô hàng hóa trị giá hơn 1,2 tỷ đồng từ biên giới về nội địa. Để qua được trạm kiểm soát, ông đưa 60 triệu cho một cán bộ hải quan, người này nhận tiền và làm ngơ không kiểm tra.",
+   "dieu": [
+    "188",
+    "364",
+    "354"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn21",
+   "cau_hoi": "Anh Khôi chuốc say một nữ đồng nghiệp rồi quan hệ tình dục với cô trong lúc cô không còn biết gì và quay lại video. Ít hôm sau anh nhắn tin bắt cô chuyển 50 triệu, nếu không sẽ gửi clip cho chồng cô và đăng lên mạng.",
+   "dieu": [
+    "141",
+    "170"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn22",
+   "cau_hoi": "Công an bắt quả tang Hùng đang giao 20 gói ma túy tổng hợp cho một người mua. Khám xét nhà, họ còn phát hiện một khẩu súng ngắn quân dụng cùng đạn Hùng cất dưới gầm giường.",
+   "dieu": [
+    "251",
+    "304"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn23",
+   "cau_hoi": "Tối thứ bảy, hai thanh niên chạy xe máy áp sát rồi giật túi xách của một chị đang đi bộ bên lề đường, trong túi có điện thoại và 10 triệu. Sáng hôm sau, một trong hai người lẻn vào sân nhà dân lấy trộm chiếc xe đạp điện giá 12 triệu.",
+   "dieu": [
+    "171",
+    "173"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn24",
+   "cau_hoi": "Ông Thành không có chứng chỉ hành nghề nhưng mở phòng khám tại nhà, truyền dịch cho một bệnh nhân bị sốc phản vệ nên người này tử vong. Ông còn nhập thuốc bổ không rõ nguồn gốc, đóng gói lại bằng nhãn bệnh viện rồi bán như thuốc chữa tiểu đường.",
+   "dieu": [
+    "315",
+    "194"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn25",
+   "cau_hoi": "Anh Việt thua bạc nên vay nóng của anh Phong 30 triệu, mỗi tuần phải trả 3 triệu tiền lãi, anh Phong đã thu như vậy suốt ba tháng. Riêng trong đêm vay đó, Việt thua tổng cộng hơn 40 triệu trong ván xì tố với bạn bè.",
+   "dieu": [
+    "321",
+    "201"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
+   "id": "qn26",
+   "cau_hoi": "Chủ quán bar tổ chức tiệc riêng cho nhóm khách quen, chuẩn bị sẵn ma túy đá và thuốc lắc, hướng dẫn cả nhóm cách dùng. Một nhân viên nữ không muốn dùng nhưng bị ông chủ dọa đuổi việc, giữ lương nên đành phải hít theo.",
+   "dieu": [
+    "255",
+    "257"
+   ],
+   "loai": "nhieu_dieu",
+   "tap": "kiem_tra",
+   "nguon": "claude",
+   "trang_thai": "nhap"
+  },
+  {
    "id": "p001",
    "cau_hoi": "Một nhóm người lập tổ chức bí mật, rủ thêm người tham gia để tìm cách lật đổ chính quyền hiện hành thì kẻ cầm đầu bị phạt thế nào?",
    "dieu": [
@@ -2202,7 +2932,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p002",
@@ -2213,7 +2943,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p003",
@@ -2224,7 +2954,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p004",
@@ -2235,7 +2965,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p005",
@@ -2246,7 +2976,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p006",
@@ -2257,7 +2987,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p007",
@@ -2268,7 +2998,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p008",
@@ -2279,7 +3009,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p009",
@@ -2290,7 +3020,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p010",
@@ -2301,7 +3031,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p011",
@@ -2312,7 +3042,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p012",
@@ -2323,7 +3053,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p013",
@@ -2334,7 +3064,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p014",
@@ -2345,7 +3075,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p015",
@@ -2356,7 +3086,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p016",
@@ -2367,7 +3097,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p017",
@@ -2378,7 +3108,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p018",
@@ -2389,7 +3119,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p019",
@@ -2400,7 +3130,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p020",
@@ -2411,7 +3141,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p021",
@@ -2422,7 +3152,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p022",
@@ -2433,7 +3163,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p023",
@@ -2444,7 +3174,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p024",
@@ -2455,7 +3185,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p025",
@@ -2466,7 +3196,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p026",
@@ -2477,7 +3207,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p027",
@@ -2488,7 +3218,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p028",
@@ -2499,7 +3229,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p029",
@@ -2510,7 +3240,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p030",
@@ -2521,7 +3251,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p031",
@@ -2532,7 +3262,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p032",
@@ -2543,7 +3273,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p033",
@@ -2554,7 +3284,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p034",
@@ -2565,7 +3295,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p035",
@@ -2576,7 +3306,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p036",
@@ -2587,7 +3317,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p037",
@@ -2598,7 +3328,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p038",
@@ -2609,7 +3339,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p039",
@@ -2620,7 +3350,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p040",
@@ -2631,7 +3361,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p041",
@@ -2642,7 +3372,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p042",
@@ -2653,7 +3383,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p043",
@@ -2664,7 +3394,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p044",
@@ -2675,7 +3405,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p045",
@@ -2686,7 +3416,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p046",
@@ -2697,7 +3427,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p047",
@@ -2708,7 +3438,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p048",
@@ -2719,7 +3449,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p049",
@@ -2730,7 +3460,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p050",
@@ -2741,7 +3471,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p051",
@@ -2752,7 +3482,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p052",
@@ -2763,7 +3493,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p053",
@@ -2774,7 +3504,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p054",
@@ -2785,7 +3515,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p055",
@@ -2796,7 +3526,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p056",
@@ -2807,7 +3537,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p057",
@@ -2818,7 +3548,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p058",
@@ -2829,7 +3559,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p059",
@@ -2840,7 +3570,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p060",
@@ -2851,7 +3581,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p061",
@@ -2862,7 +3592,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p062",
@@ -2873,7 +3603,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p063",
@@ -2884,7 +3614,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p064",
@@ -2895,7 +3625,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p065",
@@ -2906,7 +3636,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p066",
@@ -2917,7 +3647,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p067",
@@ -2928,7 +3658,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p068",
@@ -2939,7 +3669,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p069",
@@ -2950,7 +3680,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p070",
@@ -2961,7 +3691,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p071",
@@ -2972,7 +3702,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p072",
@@ -2983,7 +3713,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p073",
@@ -2994,7 +3724,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p074",
@@ -3005,7 +3735,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p075",
@@ -3016,7 +3746,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p076",
@@ -3027,7 +3757,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p077",
@@ -3038,7 +3768,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p078",
@@ -3049,7 +3779,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p079",
@@ -3060,7 +3790,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p080",
@@ -3071,7 +3801,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p081",
@@ -3082,7 +3812,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p082",
@@ -3093,7 +3823,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p083",
@@ -3104,7 +3834,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p084",
@@ -3115,7 +3845,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p085",
@@ -3126,7 +3856,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p086",
@@ -3137,7 +3867,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p087",
@@ -3148,7 +3878,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p088",
@@ -3159,7 +3889,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p089",
@@ -3170,7 +3900,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p090",
@@ -3181,7 +3911,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p091",
@@ -3192,7 +3922,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p092",
@@ -3203,7 +3933,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p093",
@@ -3214,7 +3944,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p094",
@@ -3225,7 +3955,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p095",
@@ -3236,7 +3966,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p096",
@@ -3247,7 +3977,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p097",
@@ -3258,7 +3988,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p098",
@@ -3269,7 +3999,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p099",
@@ -3280,7 +4010,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p100",
@@ -3291,7 +4021,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p101",
@@ -3302,7 +4032,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p102",
@@ -3313,7 +4043,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p103",
@@ -3324,7 +4054,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p104",
@@ -3335,7 +4065,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p105",
@@ -3346,7 +4076,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p106",
@@ -3357,7 +4087,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p107",
@@ -3368,7 +4098,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p108",
@@ -3379,7 +4109,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p109",
@@ -3390,7 +4120,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p110",
@@ -3401,7 +4131,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p111",
@@ -3412,7 +4142,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   },
   {
    "id": "p112",
@@ -3423,7 +4153,7 @@
    "loai": "don",
    "tap": "phu",
    "nguon": "claude",
-   "trang_thai": "nhap"
+   "trang_thai": "da_duyet"
   }
  ]
 }

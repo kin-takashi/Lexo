@@ -58,7 +58,8 @@ def load_extraction(
                  duong_dan_raw)).lastrowid
         ghi_chu = (f"trích lệnh bằng regex; {result.n_leaf} mục lệnh trong phạm vi, hiểu {result.n_parsed_leaf} "
                    f"({result.coverage():.1%}), {len(result.commands)} lệnh; chưa hiểu {len(result.unparsed)}: "
-                   + ", ".join(u.item_id for u in result.unparsed[:20]))
+                   + ", ".join(u.item_id for u in result.unparsed[:20])
+                   + ("; ghi chú: " + " | ".join(result.notes[:10]) if result.notes else ""))
         log_id = conn.execute(
             "INSERT INTO log_nap (van_ban_id, file_nguon, duong_dan_raw, vai_tro, phuong_phap, mo_hinh_su_dung, ket_qua, ghi_chu) "
             "VALUES (?, ?, ?, 'sua_doi', 'regex', NULL, 'thanh_cong', ?)", (src_id, file_nguon, duong_dan_raw, ghi_chu)).lastrowid

@@ -11,7 +11,7 @@ import json
 import re
 import sqlite3
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 
 REF_RE = re.compile(r"^\s*Điều\s+(\d+[a-zđ]?)\s+([A-Za-zĐđ][A-Za-zĐđ0-9]*)(?:\s+(\d{4}))?\s*$", re.IGNORECASE)
 _LOAI_VB = {"luat": "Luật", "bo_luat": "Bộ luật", "nghi_quyet": "Nghị quyết", "phap_lenh": "Pháp lệnh", "nghi_dinh": "Nghị định"}
@@ -95,6 +95,26 @@ def find_van_ban(conn: sqlite3.Connection, viet_tat: str, nam: int | None = None
     return out
 
 
+def van_ban_goc(conn: sqlite3.Connection, viet_tat: str | None = None) -> list[sqlite3.Row]:
+    """Các bộ luật chính (có tên viết tắt) theo thứ tự bắt đầu hiệu lực. Cùng tên viết tắt = nhiều bộ luật nối tiếp nhau (BLHS 1999 → BLHS 2015)."""
+    q = "SELECT * FROM van_ban WHERE ten_viet_tat IS NOT NULL" + (" AND upper(ten_viet_tat) = upper(?)" if viet_tat else "")
+    return conn.execute(q + " ORDER BY COALESCE(ngay_hieu_luc, ngay_ban_hanh, ''), id", (viet_tat,) if viet_tat else ()).fetchall()
+
+
+def van_ban_hieu_luc_tai(conn: sqlite3.Connection, ngay: str, viet_tat: str | None = None) -> sqlite3.Row | None:
+    """Bộ luật chính đang có hiệu lực tại `ngay`: ngay_hieu_luc <= ngay < ngay_het_hieu_luc (NULL = chưa hết). Hai bộ luật chồng nhau thì lấy bộ
+    bắt đầu hiệu lực muộn hơn (luật mới). None nếu không có bộ nào (trước bộ luật đầu tiên đã nạp, hoặc giữa hai bộ luật có khoảng trống)."""
+    ds = [r for r in van_ban_goc(conn, viet_tat)
+          if (r["ngay_hieu_luc"] or "0001-01-01") <= ngay and (r["ngay_het_hieu_luc"] is None or ngay < r["ngay_het_hieu_luc"])]
+    return ds[-1] if ds else None
+
+
+def ngay_cuoi_hieu_luc(r: sqlite3.Row) -> str | None:
+    """Ngày CUỐI CÙNG văn bản còn hiệu lực (ngay_het_hieu_luc là ngày đầu tiên hết hiệu lực, khoảng nửa mở); None nếu chưa hết."""
+    den = r["ngay_het_hieu_luc"]
+    return (date.fromisoformat(den) - timedelta(days=1)).isoformat() if den else None
+
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Nguồn (provenance)
 
@@ -157,25 +177,32 @@ def _view(prov: _Prov, r: sqlite3.Row, children: list[UnitView], nguyen_van: boo
                     [] if nguyen_van else prov.hieu_dinh(r["hieu_dinh_json"]))
 
 
-def _load_children(conn: sqlite3.Connection, prov: _Prov, parent_id: int, ngay: str, nguyen_van: bool = False) -> list[UnitView]:
+_TAI_NGAY = "pb.hieu_luc_tu <= :d AND (pb.hieu_luc_den IS NULL OR :d < pb.hieu_luc_den)"
+_NHU_BAN_HANH = "pb.lenh_tao_ra_id IS NULL AND dv.lenh_tao_ra_id IS NULL"      # phiên bản gốc của nút gốc, bất kể khoảng hiệu lực
+
+
+def _load_children(conn: sqlite3.Connection, prov: _Prov, parent_id: int, ngay: str, nguyen_van: bool = False, goc: bool = False) -> list[UnitView]:
     rows = conn.execute(
-        _select(nguyen_van) + """ WHERE dv.cha_id = :p AND pb.hieu_luc_tu <= :d AND (pb.hieu_luc_den IS NULL OR :d < pb.hieu_luc_den)
+        _select(nguyen_van) + f""" WHERE dv.cha_id = :p AND {_NHU_BAN_HANH if goc else _TAI_NGAY}
                       ORDER BY pb.thu_tu, dv.id""", {"p": parent_id, "d": ngay}).fetchall()
-    return [_view(prov, r, _load_children(conn, prov, r["id"], ngay, nguyen_van), nguyen_van) for r in rows]
+    return [_view(prov, r, _load_children(conn, prov, r["id"], ngay, nguyen_van, goc), nguyen_van) for r in rows]
 
 
-def get_dieu(conn: sqlite3.Connection, van_ban_id: int, ky_hieu: str, ngay: str | None = None, nguyen_van: bool = False) -> UnitView | None:
+def get_dieu(conn: sqlite3.Connection, van_ban_id: int, ky_hieu: str, ngay: str | None = None, nguyen_van: bool = False,
+             goc: bool = False) -> UnitView | None:
     """Điều `ky_hieu` của văn bản tại ngày `ngay` (ISO; mặc định hôm nay). None nếu không có/không có hiệu lực tại ngày đó.
-    nguyen_van=True: văn bản như luật ban hành, KHÔNG kèm hiệu đính kỹ thuật (bảng hieu_dinh)."""
+    nguyen_van=True: văn bản như luật ban hành, KHÔNG kèm hiệu đính kỹ thuật (bảng hieu_dinh).
+    goc=True: Điều NHƯ KHI QUỐC HỘI THÔNG QUA, bỏ qua `ngay` và mọi lệnh sửa đổi (kể cả luật sửa đổi có hiệu lực cùng ngày với bộ luật,
+    khiến bản này chưa từng có hiệu lực); None nếu Điều do lệnh bổ sung tạo ra sau này."""
     ngay = ngay or date.today().isoformat()
     row = conn.execute(
-        _select(nguyen_van) + """ WHERE dv.van_ban_id = :vb AND dv.loai = 'dieu' AND pb.ky_hieu = :k
-                      AND pb.hieu_luc_tu <= :d AND (pb.hieu_luc_den IS NULL OR :d < pb.hieu_luc_den)""",
+        _select(nguyen_van) + f""" WHERE dv.van_ban_id = :vb AND dv.loai = 'dieu' AND pb.ky_hieu = :k
+                      AND {_NHU_BAN_HANH if goc else _TAI_NGAY}""",
         {"vb": van_ban_id, "k": ky_hieu, "d": ngay}).fetchone()
     if row is None:
         return None
     prov = _Prov(conn)
-    return _view(prov, row, _load_children(conn, prov, row["id"], ngay, nguyen_van), nguyen_van)
+    return _view(prov, row, _load_children(conn, prov, row["id"], ngay, nguyen_van, goc), nguyen_van)
 
 
 def get_cay(conn: sqlite3.Connection, van_ban_id: int, ngay: str | None = None, nguyen_van: bool = False) -> list[UnitView]:

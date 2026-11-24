@@ -24,8 +24,13 @@ def main() -> int:
     ap.add_argument("docx", type=Path)
     ap.add_argument("--so-hieu", help="chỉ cần khi parser không đọc được số hiệu")
     ap.add_argument("--dieu-sua-doi", help="ký hiệu các Điều chứa lệnh sửa đổi, cách nhau dấu phẩy (mặc định tự nhận theo tiêu đề)")
+    ap.add_argument("--pham-vi", help="số hiệu văn bản bị sửa, GHI ĐÈ pham_vi_sua_doi trong config (vd 15/1999/QH10 cho luật sửa đổi BLHS 1999; "
+                                      "khi đó «Bộ luật hình sự» không số hiệu trong luật này được hiểu là văn bản đó)")
     args = ap.parse_args()
     aliases, scope = amending_scope()
+    if args.pham_vi:
+        cu, scope = scope, {args.pham_vi}
+        aliases = {k: (args.pham_vi if v in cu else v) for k, v in aliases.items()}
     dieu = [x.strip() for x in args.dieu_sua_doi.split(",")] if args.dieu_sua_doi else None
     try:
         staged = stage_amending_law(args.docx, raw_dir(), aliases=aliases, pham_vi_so_hieu=scope,

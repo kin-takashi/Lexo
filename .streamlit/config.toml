@@ -1,0 +1,6 @@
+# Cau hinh Streamlit cho giao dien tra cuu Lexo (chay cuc bo, khong can mang).
+[browser]
+gatherUsageStats = false      # khong gui thong ke su dung ra ngoai
+
+[client]
+toolbarMode = "minimal"       # an nut Deploy/menu danh cho lap trinh vien

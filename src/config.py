@@ -34,3 +34,8 @@ def amending_scope() -> tuple[dict[str, str], set[str]]:
 def index_path() -> Path:
     """File chỉ mục tìm kiếm (dẫn xuất, dựng lại được). Mặc định db/chi_muc.sqlite."""
     return ROOT / ((load_config().get("paths") or {}).get("index") or "db/chi_muc.sqlite")
+
+
+def du_lieu_path() -> Path:
+    """File dữ liệu huấn luyện + đánh giá kèm nguồn gốc nhãn (src/dulieu). Mặc định db/du_lieu.sqlite."""
+    return ROOT / ((load_config().get("paths") or {}).get("du_lieu") or "db/du_lieu.sqlite")

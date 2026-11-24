@@ -39,12 +39,18 @@ def stage_base_law(
     *,
     ten_viet_tat: str | None = None,
     so_hieu: str | None = None,
+    ngay_hieu_luc: str | None = None,
+    can_cu_hieu_luc: str | None = None,
 ) -> Staged:
     docx_path = Path(docx_path)
     extracted = extract_docx(docx_path)
-    law = parse_base_law(
-        extracted.lines, extracted.header_text, ten_viet_tat=ten_viet_tat, so_hieu=so_hieu, source=extracted.source_info()
-    )
+    try:
+        law = parse_base_law(
+            extracted.lines, extracted.header_text, ten_viet_tat=ten_viet_tat, so_hieu=so_hieu, source=extracted.source_info(),
+            ngay_hieu_luc=ngay_hieu_luc, can_cu_hieu_luc=can_cu_hieu_luc,
+        )
+    except ValueError as e:
+        raise IngestError(str(e)) from None
     flags = validate_base_law(law)
     if not law.meta.so_hieu:
         raise IngestError("Không đọc được số hiệu; chạy lại với --so-hieu")
@@ -112,6 +118,9 @@ def ingest_base_law(conn: sqlite3.Connection, directory: str | Path, *, raw_root
     ghi_chu = f"parse regex; {len(flags)} cờ validator; miễn {len(waived)} lỗi: " + "; ".join(
         f"{k} => {v}" for k, v in sorted(waived.items())
     ) if waived else f"parse regex; {len(flags)} cờ validator; không miễn lỗi"
+    ngoai = law.source.get("hieu_luc_ngoai_van_ban")
+    if ngoai:
+        ghi_chu += f"; ngày hiệu lực {ngoai['ngay']} do người nhập (không có trong văn bản), căn cứ: {ngoai['can_cu']}"
     with conn:
         van_ban_id = conn.execute(
             """INSERT INTO van_ban (so_hieu, ten_viet_tat, ten_day_du, loai, ngay_ban_hanh, ngay_hieu_luc_theo_van_ban,

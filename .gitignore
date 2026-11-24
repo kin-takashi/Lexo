@@ -25,3 +25,6 @@ env/
 
 # Bản xuất dẫn xuất (dựng lại được từ CSDL)
 /xuat/
+
+# Bản xuất SFT dẫn xuất từ train/tinh_huong.json (dựng lại bằng scripts/xuat_sft.py)
+/train/sft_*.jsonl

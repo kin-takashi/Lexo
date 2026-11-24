@@ -21,9 +21,12 @@ def main() -> int:
     ap.add_argument("docx", type=Path)
     ap.add_argument("--ten-viet-tat", help="tên viết tắt dùng để tra cứu, vd BLHS")
     ap.add_argument("--so-hieu", help="chỉ cần khi parser không đọc được số hiệu")
+    ap.add_argument("--ngay-hieu-luc", help="YYYY-MM-DD; chỉ dùng khi chính văn bản không ghi ngày có hiệu lực (vd BLHS 1999: 2000-07-01); bắt buộc kèm --can-cu-hieu-luc")
+    ap.add_argument("--can-cu-hieu-luc", help='căn cứ của ngày trên, vd "Nghị quyết 32/1999/QH10 ngày 21/12/1999: BLHS có hiệu lực từ 01/7/2000"')
     args = ap.parse_args()
     try:
-        staged = stage_base_law(args.docx, raw_dir(), ten_viet_tat=args.ten_viet_tat, so_hieu=args.so_hieu)
+        staged = stage_base_law(args.docx, raw_dir(), ten_viet_tat=args.ten_viet_tat, so_hieu=args.so_hieu,
+                                ngay_hieu_luc=args.ngay_hieu_luc, can_cu_hieu_luc=args.can_cu_hieu_luc)
     except IngestError as e:
         print(f"LỖI: {e}", file=sys.stderr)
         return 2

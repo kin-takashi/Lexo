@@ -138,9 +138,18 @@ def test_bat_muc_nhay_so():
 
 def test_bat_dau_ngoac_khong_can_bang():
     lines = list(LINES)
-    lines[lines.index("b) mức hai.”")] = "b) mức hai."          # quên đóng khối
+    lines[lines.index("Nội dung.”")] = "Nội dung."               # quên đóng khối cuối cùng: không có lệnh nào sau đó để biết khối dừng ở đâu
     flags = validate_amending_law(parse(lines))
     assert any("không bao giờ đóng" in f.message or "không cân bằng" in f.message for f in flags)
+
+
+def test_khoi_thieu_dau_dong_giua_van_ban_duoc_tu_dong_truoc_lenh_ke_tiep_va_canh_bao():
+    lines = list(LINES)
+    lines[lines.index("b) mức hai.”")] = "b) mức hai."          # quên đóng khối, ngay sau là «2. Bổ sung Điều 5a…»
+    law = parse(lines)
+    flags = validate_amending_law(law)
+    assert any("thiếu dấu ” đóng" in f.message and f.level == CANH_BAO for f in flags) and not has_errors(flags)
+    assert law.quote("Q1").text.endswith("b) mức hai.") and law.dieu_sua_doi[0].items[1].quote_ids == ["Q2"]
 
 
 def test_bat_thieu_ngay():

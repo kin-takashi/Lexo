@@ -41,3 +41,12 @@ def parse_vn_date(text: str) -> str | None:
     """Ngày đầu tiên dạng 'ngày 27 tháng 11 năm 2015' trong text, thành 'YYYY-MM-DD'."""
     m = DATE_RE.search(text)
     return date_from_match(m) if m else None
+
+
+def parse_iso_date(value: str) -> str:
+    """Chuẩn hoá một ngày dạng YYYY-MM-DD (ném ValueError nếu sai); dùng cho ngày do người nhập."""
+    from datetime import date
+    try:
+        return date.fromisoformat(value).isoformat()
+    except (TypeError, ValueError):
+        raise ValueError(f"Ngày phải có dạng YYYY-MM-DD, nhận được {value!r}") from None

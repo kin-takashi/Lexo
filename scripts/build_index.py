@@ -4,6 +4,7 @@
   python scripts/build_index.py --thu 200        # thử: tính vector cho 200 đoạn đầu chưa có
   python scripts/build_index.py                  # chạy đủ (khoảng 1 giờ trên CPU), Ctrl+C lúc nào cũng được, chạy lại sẽ làm tiếp
   python scripts/build_index.py --don-dep        # xoá vector của chữ không còn dùng
+  python scripts/build_index.py --tat-ca         # dựng chung cho mọi bộ luật đã nạp (khi kho có nhiều bộ luật nối tiếp nhau: BLHS 1999, BLHS 2015)
 
 Đọc CSDL luật ở chế độ chỉ-đọc; ghi vào file chỉ mục riêng (config.yaml: paths.index). Vector được lưu theo MÃ BĂM CHỮ,
 nên sau khi duyệt hiệu đính chỉ những đoạn đổi chữ phải tính lại.
@@ -41,7 +42,9 @@ def main() -> int:
         if hasattr(s, "reconfigure"):
             s.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--van-ban", default="100/2015/QH13", help="số hiệu văn bản gốc (mặc định BLHS 2015)")
+    ap.add_argument("--van-ban", action="append", default=None,
+                    help="số hiệu bộ luật cần dựng chỉ mục (mặc định BLHS 2015); nêu nhiều lần để dựng chung một chỉ mục cho nhiều bộ luật")
+    ap.add_argument("--tat-ca", action="store_true", help="dựng cho MỌI bộ luật chính (có tên viết tắt) đã nạp, vd BLHS 1999 và BLHS 2015")
     ap.add_argument("--db", type=Path, default=None)
     ap.add_argument("--index", type=Path, default=None)
     ap.add_argument("--model", default=None, help="tên model Ollama (mặc định lấy từ config.yaml, bge-m3)")
@@ -56,10 +59,18 @@ def main() -> int:
     cfg = load_config()
     src_db = args.db or db_path()
     main_conn = mo_chi_doc(src_db)
-    vb = main_conn.execute("SELECT id FROM van_ban WHERE so_hieu = ?", (args.van_ban,)).fetchone()
-    if not vb:
-        sys.exit(f"LỖI: không có văn bản {args.van_ban} trong {src_db}")
-    chunks = build_chunks(main_conn, vb["id"])
+    if args.tat_ca:
+        ids = [r["id"] for r in main_conn.execute("SELECT id FROM van_ban WHERE ten_viet_tat IS NOT NULL ORDER BY id")]
+    else:
+        ids = []
+        for so_hieu in args.van_ban or ["100/2015/QH13"]:
+            vb = main_conn.execute("SELECT id FROM van_ban WHERE so_hieu = ?", (so_hieu,)).fetchone()
+            if not vb:
+                sys.exit(f"LỖI: không có văn bản {so_hieu} trong {src_db}")
+            ids.append(vb["id"])
+    if not ids:
+        sys.exit(f"LỖI: {src_db} chưa có bộ luật nào có tên viết tắt.")
+    chunks = [c for i in sorted(set(ids)) for c in build_chunks(main_conn, i)]        # thứ tự theo id: khớp kiểm tra «chỉ mục cũ» của agent
     main_conn.close()
     loai = {}
     for c in chunks:

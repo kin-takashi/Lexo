@@ -228,3 +228,65 @@ def test_roundtrip_rejects_unknown_format():
     d["format_version"] = 999
     with pytest.raises(ValueError):
         ParsedLaw.from_dict(d)
+
+
+# ---------- bộ luật cũ (BLHS 1999): Phần đặt tên, "e )" có dấu cách, tên cùng dòng, ngày hiệu lực ngoài văn bản ----------
+
+BODY_CU = [
+    "PHẦN CHUNG", "Chương I", "ĐIỀU KHOẢN CƠ BẢN",
+    "Điều 1. Nhiệm vụ",
+    "1. Khoản có điểm:", "a) một;", "b) hai;", "c) ba;", "d) bốn;", "đ) năm;", "e ) sáu;", "g) bảy.",
+    "Điều 2.Cơ sở", "Nội dung điều hai.",
+    "PHẦN CÁC TỘI PHẠM", "Chương II", "CÁC TỘI XÂM PHẠM", "Điều 3. Tội thử", "Người nào phạm tội thì bị phạt.",
+]
+CLOSING_CU = ["Bộ luật này đã được Quốc hội khóa X thông qua ngày 21 tháng 12 năm 1999."]
+HEAD_CU = ["BỘ LUẬT HÌNH SỰ", "CỦA NƯỚC CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM SỐ 99/2098/QH99", "LỜI NÓI ĐẦU", "Pháp luật hình sự rất quan trọng."]
+
+
+def make_cu(**kw):
+    return parse_base_law(HEAD_CU + BODY_CU + CLOSING_CU, "Số: 99/2098/QH99", ten_viet_tat="BLTN", **kw)
+
+
+def test_phan_dat_ten_khong_nuot_vao_dieu_truoc():
+    law = make_cu()
+    phans = [r for r in law.roots if r.loai == "phan"]
+    assert [(p.ky_hieu, p.tieu_de) for p in phans] == [("chung", "CHUNG"), ("các tội phạm", "CÁC TỘI PHẠM")]
+    assert [c.ky_hieu for c in phans[0].children] == ["I"] and [c.ky_hieu for c in phans[1].children] == ["II"]
+    d2 = next(n for n in law.iter_nodes() if n.loai == "dieu" and n.ky_hieu == "2")
+    assert d2.noi_dung == "Nội dung điều hai." and "PHẦN" not in d2.noi_dung          # dòng «PHẦN CÁC TỘI PHẠM» không bị nối vào Điều trước
+
+
+def test_diem_co_dau_cach_truoc_ngoac():
+    law = make_cu()
+    khoan = next(n for n in law.iter_nodes() if n.loai == "khoan")
+    assert [p.ky_hieu for p in khoan.children] == list("abcdđeg")
+    assert khoan.children[5].noi_dung == "sáu;"
+    assert "diem_sai_thu_tu" not in codes(law, LOI)
+
+
+def test_ten_cung_dong_voi_loai_van_ban():
+    law = make_cu()
+    assert (law.meta.loai, law.meta.ten_day_du, law.meta.ten_viet_tat) == ("bo_luat", "Bộ luật hình sự", "BLTN")
+    assert law.meta.so_hieu == "99/2098/QH99" and law.meta.ngay_ban_hanh == "1999-12-21"
+    assert "thieu_ten" not in codes(law)
+
+
+def test_thieu_ngay_hieu_luc_khi_van_ban_khong_ghi():
+    assert "thieu_ngay_hieu_luc" in codes(make_cu(), LOI)
+
+
+def test_ngay_hieu_luc_ngoai_van_ban_can_can_cu_va_bi_canh_bao():
+    law = make_cu(ngay_hieu_luc="2000-07-01", can_cu_hieu_luc="Nghị quyết 32/1999/QH10")
+    assert law.meta.ngay_hieu_luc == "2000-07-01"
+    assert LOI not in [f.level for f in validate_base_law(law)]
+    assert "hieu_luc_ngoai_van_ban" in codes(law, CANH_BAO) and "hieu_luc_theo_van_ban" not in codes(law)
+    assert law.to_dict()["source"]["hieu_luc_ngoai_van_ban"] == {"ngay": "2000-07-01", "can_cu": "Nghị quyết 32/1999/QH10"}
+    with pytest.raises(ValueError, match="căn cứ"):
+        make_cu(ngay_hieu_luc="2000-07-01")
+    with pytest.raises(ValueError, match="YYYY-MM-DD"):
+        make_cu(ngay_hieu_luc="01/07/2000", can_cu_hieu_luc="x")
+
+
+def test_van_ban_co_dieu_hieu_luc_van_dung_nhu_cu():
+    law = make(GOOD_BODY[:-2])
+    assert law.meta.ngay_hieu_luc == "2099-07-01" and "hieu_luc_theo_van_ban" in codes(law)
